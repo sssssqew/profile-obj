@@ -6,15 +6,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Profile app</title>
 </head>
-<body style="border:1px solid red; margin:0; padding:0; font-family:sans-serif; width:100%; height:100vh;">
-  <div id="root" style="border:1px solid green;">
+<body style="margin:0; padding:0; font-family:sans-serif;">
+  <div id="root">
 
-    <div id="profile-home">
+    <div id="profile-home" style="width:100%; height:100vh;">
 
       <div id="profile-nav">
-        <div id="nav-component">
-          <button data-url="/">Home</button>
-          <button data-url="/about">About</button>   
+        <div id="nav-component" style="display:flex;">
+          <button data-url="/" style="border:3px solid white; background:#F2A405; flex:1; height:50px; font-size:20px; color:white;">Home</button>
+          <button data-url="/about" style="border:3px solid white; background:#F2A405; flex:1; height:50px; font-size:20px; color:white;">About</button>   
         </div>
       </div>
 
