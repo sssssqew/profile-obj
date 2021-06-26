@@ -11,23 +11,27 @@
 
     <div id="profile-home" style="width:100%; height:100vh;">
 
-      <div id="profile-nav">
-        <div id="nav-component" style="display:flex;">
-          <button data-url="/" style="margin:5px; border:none; background:#F2A405; flex:1; height:50px; font-size:20px; color:white; cursor:pointer;">Home</button>
-          <button data-url="/about" style="margin:5px; border:none; background:#F2A405; flex:1; height:50px; font-size:20px; color:white; cursor:pointer;">About</button>   
-        </div>
-      </div>
-
-      <div id="profile-card">
-        <div id="card-component">
-          <div id="card-picture">
-            <img src="#" alt="#"/>
+      <div id="profile-main" style="height:100%; display:flex; flex-direction: column; ">
+        <div id="profile-nav">
+          <div id="nav-component" style="display:flex;">
+            <button data-url="/" style="margin:5px; border:none; background:#F6BB43; flex:1; height:50px; font-size:20px; color:white; cursor:pointer;">Home</button>
+            <button data-url="/about" style="margin:5px; border:none; background:#F6BB43; flex:1; height:50px; font-size:20px; color:white; cursor:pointer;">About</button>   
           </div>
-          <div id="card-name">#</div>
         </div>
-        <button id="profile-submit">
-          submit profile
-        </button>
+  
+        <div id="profile-card" style="flex:1; display:flex; justify-content:center; align-items:center;">
+          <div style="width:25%; height:60%; display:flex; flex-direction:column;">
+            <div id="card-component" style="box-shadow:3px 3px 30px 3px #FADB9B; overflow:hidden; flex:1; display:flex; flex-direction:column; margin-bottom: 10px;">
+              <div id="card-picture" style="overflow:hidden; flex:1;">
+                <img src="" alt="" onerror="this.style.display='none';" style="width:100%; height:100%;"/>
+              </div>
+              <div id="card-name" style="margin:15px; font-size:20px; font-weight:600; color:#F8AD7B; text-align:center">sylee</div>
+            </div>
+            <button id="profile-submit" style="border:none; background:	#F6BB43; height:50px; font-size:20px; color:white; cursor:pointer;">
+              submit profile
+            </button>
+          </div>
+        </div>
       </div>
 
       <div id="profile-modal">
