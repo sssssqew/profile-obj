@@ -14,15 +14,15 @@
       <div id="profile-main" style="height:100%; display:flex; flex-direction: column; ">
         <div id="profile-nav">
           <div id="nav-component" style="display:flex;">
-            <button data-url="/" style="margin:5px; border:none; background:#F6BB43; flex:1; height:50px; font-size:20px; color:white; cursor:pointer;">Home</button>
-            <button data-url="/about" style="margin:5px; border:none; background:#F6BB43; flex:1; height:50px; font-size:20px; color:white; cursor:pointer;">About</button>   
+            <button data-url="/" style="margin:5px; border:none; background:#F6BB43; flex-grow:1; height:50px; font-size:20px; color:white; cursor:pointer;">Home</button>
+            <button data-url="/about" style="margin:5px; border:none; background:#F6BB43; flex-grow:1; height:50px; font-size:20px; color:white; cursor:pointer;">About</button>   
           </div>
         </div>
   
-        <div id="profile-card" style="flex:1; display:flex; justify-content:center; align-items:center;">
+        <div id="profile-card" style="flex-grow:1; display:flex; justify-content:center; align-items:center;">
           <div style="width:25%; height:60%; display:flex; flex-direction:column;">
-            <div id="card-component" style="box-shadow:3px 3px 30px 3px #FADB9B; overflow:hidden; flex:1; display:flex; flex-direction:column; margin-bottom: 10px;">
-              <div id="card-picture" style="overflow:hidden; flex:1;">
+            <div id="card-component" style="box-shadow:3px 3px 30px 3px #FADB9B; overflow:hidden; flex-grow:1; display:flex; flex-direction:column; margin-bottom: 10px;">
+              <div id="card-picture" style="overflow:hidden; flex-grow:1;">
                 <img src="" alt="" onerror="this.style.display='none';" style="width:100%; height:100%;"/>
               </div>
               <div id="card-name" style="margin:15px; font-size:20px; font-weight:600; color:#F8AD7B; text-align:center">sylee</div>
@@ -40,8 +40,8 @@
             Select profile picture & save your info.
             <button style="width:50px; height:50px; border:2px solid rgba(0,0,0,0.9); border-radius:50%; font-size:20px; font-weight:600; background:white; cursor:pointer; transition:all 0.3s" onmouseover="this.style.transform='rotate(-60deg)'" onmouseleave="this.style.transform='rotate(0deg)'" onclick="document.getElementById('profile-modal').style.display='none'">X</button>
           </div>
-          <div id="modal-contents" style="flex:1; margin:20px;">
-            <div id="modal-filezone" style="display:flex; align-items:center;">
+          <div id="modal-contents" style="flex-grow:1; margin:20px;">
+            <div id="modal-filezone" style="display:flex; flex-wrap:wrap; align-items:center;">
               <input id="modal-file" type="file" accept="image/*" style="display:none;" onchange="document.getElementById('modal-filename').innerText=this.files.item(0).name"/>
               <button id="modal-select" style="margin-bottom:10px; padding:8px; border:none; background:#F6BB43; font-size:15px; font-weight:600; color:white; cursor:pointer; border-radius: 10px;" onclick="document.getElementById('modal-file').click()">Select picture</button>
               <div id="modal-filename" style="color:#F6BB43; font-weight:600; margin-left:20px;">No file selected</div>
@@ -52,7 +52,7 @@
               <input type="text" id="modal-info-gender"  placeholder="YOUR GENDER" style="outline:none; border:none; background:none; border-bottom:2px solid #F6BB43; color:#F6BB43; font-weight:600; padding-bottom:5px; margin-bottom:7px;"/>
             </div>
           </div>
-          <div id="modal-footer" style="display:flex; justify-content:end;">
+          <div id="modal-footer" style="display:flex; justify-content:flex-end;">
             <button id="modal-save" style="padding:10px; border:none; background:#F8AD7B; font-size:15px; font-weight:600; color:white; cursor:pointer; border-radius:10px; margin-right:10px; margin-bottom:10px;" onclick="document.getElementById('profile-modal').style.display='none'; ">
               Save profile
             </button>
