@@ -5,17 +5,48 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Profile app</title>
+  <style>
+    /* Global style */
+    body{
+      margin:0; 
+      padding:0; 
+      font-family:sans-serif;
+    }
+    #profile-home{
+      width:100%;
+      height:100vh;
+    }
+    #profile-main{
+      height:100%; 
+      display:flex; 
+      flex-direction: column;
+    }
+    /* nav component style */
+    #nav-component{
+      display:flex;
+    }
+    .nav-btns{
+      margin:5px; 
+      border:none; 
+      background:#F6BB43; 
+      flex-grow:1; 
+      height:50px; 
+      font-size:20px; 
+      color:white; 
+      cursor:pointer;
+    }
+  </style>
 </head>
-<body style="margin:0; padding:0; font-family:sans-serif;">
+<body>
   <div id="root">
 
-    <div id="profile-home" style="width:100%; height:100vh;">
+    <div id="profile-home">
 
-      <div id="profile-main" style="height:100%; display:flex; flex-direction: column; ">
+      <div id="profile-main">
         <div id="profile-nav">
-          <div id="nav-component" style="display:flex;">
-            <button data-url="/" style="margin:5px; border:none; background:#F6BB43; flex-grow:1; height:50px; font-size:20px; color:white; cursor:pointer;">Home</button>
-            <button data-url="/about" style="margin:5px; border:none; background:#F6BB43; flex-grow:1; height:50px; font-size:20px; color:white; cursor:pointer;">About</button>   
+          <div id="nav-component">
+            <button class="nav-btns" data-url="/">Home</button>
+            <button class="nav-btns" data-url="/about">About</button>   
           </div>
         </div>
   
