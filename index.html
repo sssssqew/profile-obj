@@ -12,6 +12,7 @@
       padding:0; 
       font-family:sans-serif;
     }
+
     #profile-home{
       width:100%;
       height:100vh;
@@ -35,6 +36,53 @@
       color:white; 
       cursor:pointer;
     }
+    #profile-card{
+      flex-grow:1; 
+      display:flex; 
+      justify-content:center; 
+      align-items:center;
+    }
+    #profile-card-container{
+      width:25%; 
+      height:60%; 
+      display:flex; 
+      flex-direction:column;
+    }
+    /* card component style */
+    #card-component{
+      box-shadow:3px 3px 30px 3px #FADB9B; 
+      overflow:hidden; 
+      flex-grow:1; 
+      display:flex; 
+      flex-direction:column; 
+      margin-bottom: 10px;
+    }
+    #card-picture{
+      overflow:hidden; 
+      flex-grow:1;
+    }
+    #card-picture img{
+      width:100%; 
+      height:100%;
+    }
+    #card-name{
+      margin:15px; 
+      font-size:20px; 
+      font-weight:600; 
+      color:#F8AD7B; 
+      text-align:center;
+    }
+
+    #profile-submit{
+      border:none; 
+      background:	#F6BB43; 
+      height:50px; 
+      font-size:20px; 
+      color:white; 
+      cursor:pointer;
+    }
+
+    
   </style>
 </head>
 <body>
@@ -50,15 +98,15 @@
           </div>
         </div>
   
-        <div id="profile-card" style="flex-grow:1; display:flex; justify-content:center; align-items:center;">
-          <div style="width:25%; height:60%; display:flex; flex-direction:column;">
-            <div id="card-component" style="box-shadow:3px 3px 30px 3px #FADB9B; overflow:hidden; flex-grow:1; display:flex; flex-direction:column; margin-bottom: 10px;">
-              <div id="card-picture" style="overflow:hidden; flex-grow:1;">
-                <img src="" alt="" onerror="this.style.display='none';" style="width:100%; height:100%;"/>
+        <div id="profile-card">
+          <div id="profile-card-container">
+            <div id="card-component">
+              <div id="card-picture">
+                <img src="" alt="" onerror="this.style.display='none';"/>
               </div>
-              <div id="card-name" style="margin:15px; font-size:20px; font-weight:600; color:#F8AD7B; text-align:center"></div>
+              <div id="card-name"></div>
             </div>
-            <button id="profile-submit" style="border:none; background:	#F6BB43; height:50px; font-size:20px; color:white; cursor:pointer;" onclick="document.getElementById('profile-modal').style.display='block'">
+            <button id="profile-submit" onclick="document.getElementById('profile-modal').style.display='block'">
               submit profile
             </button>
           </div>
