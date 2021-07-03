@@ -1,244 +1,317 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Profile app</title>
-  <style>
-    /* Global style */
-    body{
-      margin:0; 
-      padding:0; 
-      font-family:sans-serif;
-    }
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Profile app</title>
+    <style>
+      /* Global style */
+      body {
+        margin: 0;
+        padding: 0;
+        font-family: sans-serif;
+      }
 
-    #profile-home{
-      width:100%;
-      height:100vh;
-    }
-    #profile-main{
-      height:100%; 
-      display:flex; 
-      flex-direction: column;
-    }
-    /* nav component style */
-    #nav-component{
-      display:flex;
-    }
-    .nav-btns{
-      margin:5px; 
-      border:none; 
-      background:#F6BB43; 
-      flex-grow:1; 
-      height:50px; 
-      font-size:20px; 
-      color:white; 
-      cursor:pointer;
-    }
-    #profile-card{
-      flex-grow:1; 
-      display:flex; 
-      justify-content:center; 
-      align-items:center;
-    }
-    #profile-card-container{
-      width:30%; 
-      height:400px;
-      display:flex; 
-      flex-direction:column;
-    }
-    /* card component style */
-    #card-component{
-      box-shadow:3px 3px 30px 3px #FADB9B; 
-      overflow:hidden; 
-      flex-grow:1; 
-      display:flex; 
-      flex-direction:column; 
-      margin-bottom: 10px;
-    }
-    #card-picture{
-      overflow:hidden; 
-      flex-grow:1;
-    }
-    #card-picture img{
-      width:100%; 
-      height:100%;
-    }
-    #card-name{
-      margin:15px; 
-      font-size:20px; 
-      font-weight:600; 
-      color:#F8AD7B; 
-      text-align:center;
-    }
+      #profile-home {
+        width: 100%;
+        height: 100vh;
+      }
+      #profile-main {
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+      }
+      /* nav component style */
+      #nav-component {
+        display: flex;
+      }
+      .nav-btns {
+        margin: 5px;
+        border: none;
+        background: #f6bb43;
+        flex-grow: 1;
+        height: 50px;
+        font-size: 20px;
+        color: white;
+        cursor: pointer;
+      }
+      #profile-card {
+        flex-grow: 1;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      #profile-card-container {
+        width: 30%;
+        height: 400px;
+        display: flex;
+        flex-direction: column;
+      }
+      /* card component style */
+      #card-component {
+        box-shadow: 3px 3px 30px 3px #fadb9b;
+        overflow: hidden;
+        flex-grow: 1;
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 10px;
+      }
+      #card-picture {
+        overflow: hidden;
+        flex-grow: 1;
+      }
+      #card-picture img {
+        width: 100%;
+        height: 100%;
+      }
+      #card-name {
+        margin: 15px;
+        font-size: 20px;
+        font-weight: 600;
+        color: #f8ad7b;
+        text-align: center;
+      }
 
-    #profile-submit{
-      border:none; 
-      background:	#F6BB43; 
-      height:50px; 
-      font-size:20px; 
-      color:white; 
-      cursor:pointer;
-    }
+      #profile-submit {
+        border: none;
+        background: #f6bb43;
+        height: 50px;
+        font-size: 20px;
+        color: white;
+        cursor: pointer;
+      }
 
-    #profile-modal{
-      display:none; 
-      position:fixed; 
-      z-index:1; 
-      left:0; 
-      top:0; 
-      width:100%; 
-      height:100vh; 
-      background-color:rgba(0,0,0,0.95);
-    }
+      #profile-modal {
+        display: none;
+        position: fixed;
+        z-index: 1;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100vh;
+        background-color: rgba(0, 0, 0, 0.95);
+      }
 
-    /* modal component style */
-    #modal-component{
-      border:2px solid #F8AD7B; 
-      background:rgba(0,0,0,0.3); 
-      position:absolute; 
-      top:50%; 
-      left:50%; 
-      transform: translate(-50%, -50%); 
-      display:flex; 
-      flex-direction:column; 
-      width:30%;
-    }
-    #modal-header{
-      color: white; 
-      background:#F8AD7B; 
-      text-align:center; 
-      font-size:20px; 
-      font-weight:600; 
-      padding:10px;
-    }
-    #modal-cancel{
-      width:50px; 
-      height:50px; 
-      border:2px solid rgba(0,0,0,0.95); 
-      border-radius:50%; 
-      font-size:20px; 
-      font-weight:600; 
-      background:white; 
-      cursor:pointer; 
-      transition:all 0.3s;
-    }
-    #modal-contents{
-      flex-grow:1; 
-      margin:20px;
-    }
-    #modal-filezone{
-      display:flex; 
-      flex-wrap:wrap; 
-      align-items:center;
-    }
-    #modal-file{
-      display:none;
-    }
-    #modal-select{
-      margin-bottom:10px; 
-      padding:8px; border:none; 
-      background:#F6BB43; 
-      font-size:15px; 
-      font-weight:600; 
-      color:white; 
-      cursor:pointer; 
-      border-radius: 10px;
-    }
-    #modal-filename{
-      color:#F6BB43; 
-      font-weight:600; 
-      margin-left:20px;
-    }
-    #modal-info{
-      display:flex; 
-      flex-direction:column;
-    }
-    .modal-info-inputs{
-      outline:none; 
-      border:none; 
-      background:none; 
-      border-bottom:2px solid #F6BB43; 
-      color:#F6BB43; 
-      font-weight:600; 
-      padding-bottom:5px; 
-      margin-bottom:7px;
-    }
-    #modal-footer{
-      display:flex; 
-      justify-content:flex-end;
-    }
-    #modal-save{
-      padding:10px; 
-      border:none; 
-      background:#F8AD7B; 
-      font-size:15px; 
-      font-weight:600; 
-      color:white; 
-      cursor:pointer; 
-      border-radius:10px; 
-      margin-right:10px; 
-      margin-bottom:10px;
-    }
-  </style>
-</head>
-<body>
-  <div id="root">
-
-    <div id="profile-home">
-
-      <div id="profile-main">
-        <div id="profile-nav">
-          <div id="nav-component">
-            <button class="nav-btns" data-url="/">Home</button>
-            <button class="nav-btns" data-url="/about">About</button>   
+      /* modal component style */
+      #modal-component {
+        border: 2px solid #f8ad7b;
+        background: rgba(0, 0, 0, 0.3);
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        display: flex;
+        flex-direction: column;
+        width: 30%;
+      }
+      #modal-header {
+        color: white;
+        background: #f8ad7b;
+        text-align: center;
+        font-size: 20px;
+        font-weight: 600;
+        padding: 10px;
+      }
+      #modal-cancel {
+        width: 50px;
+        height: 50px;
+        border: 2px solid rgba(0, 0, 0, 0.95);
+        border-radius: 50%;
+        font-size: 20px;
+        font-weight: 600;
+        background: white;
+        cursor: pointer;
+        transition: all 0.3s;
+      }
+      #modal-contents {
+        flex-grow: 1;
+        margin: 20px;
+      }
+      #modal-filezone {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+      }
+      #modal-file {
+        display: none;
+      }
+      #modal-select {
+        margin-bottom: 10px;
+        padding: 8px;
+        border: none;
+        background: #f6bb43;
+        font-size: 15px;
+        font-weight: 600;
+        color: white;
+        cursor: pointer;
+        border-radius: 10px;
+      }
+      #modal-filename {
+        color: #f6bb43;
+        font-weight: 600;
+        margin-left: 20px;
+      }
+      #modal-info {
+        display: flex;
+        flex-direction: column;
+      }
+      .modal-info-inputs {
+        outline: none;
+        border: none;
+        background: none;
+        border-bottom: 2px solid #f6bb43;
+        color: #f6bb43;
+        font-weight: 600;
+        padding-bottom: 5px;
+        margin-bottom: 7px;
+      }
+      #modal-footer {
+        display: flex;
+        justify-content: flex-end;
+      }
+      #modal-save {
+        padding: 10px;
+        border: none;
+        background: #f8ad7b;
+        font-size: 15px;
+        font-weight: 600;
+        color: white;
+        cursor: pointer;
+        border-radius: 10px;
+        margin-right: 10px;
+        margin-bottom: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root">
+      <div id="profile-home">
+        <div id="profile-main">
+          <div id="profile-nav">
+            <div id="nav-component">
+              <button class="nav-btns" data-url="/">Home</button>
+              <button class="nav-btns" data-url="/about">About</button>
+            </div>
           </div>
-        </div>
-  
-        <div id="profile-card">
-          <div id="profile-card-container">
-            <div id="card-component">
-              <div id="card-picture">
-                <img src="" alt="" onerror="this.style.display='none';"/>
+
+          <div id="profile-card">
+            <div id="profile-card-container">
+              <div id="card-component">
+                <div id="card-picture">
+                  <img src="" alt="" onerror="this.style.display='none';" />
+                </div>
+                <div id="card-name"></div>
               </div>
-              <div id="card-name"></div>
+              <button id="profile-submit" onclick="handleProfileSubmit()">
+                submit profile
+              </button>
             </div>
-            <button id="profile-submit" onclick="document.getElementById('profile-modal').style.display='block'">
-              submit profile
-            </button>
+          </div>
+        </div>
+
+        <div id="profile-modal">
+          <div id="modal-component">
+            <div id="modal-header">
+              Select profile picture & save your info.
+              <button
+                id="modal-cancel"
+                onmouseover="this.style.transform='rotate(-60deg)'"
+                onmouseleave="this.style.transform='rotate(0deg)'"
+                onclick="handleModalCancel()"
+              >
+                X
+              </button>
+            </div>
+            <div id="modal-contents">
+              <div id="modal-filezone">
+                <input
+                  id="modal-file"
+                  type="file"
+                  accept="image/*"
+                  onchange="handlePictureUpload(event)"
+                />
+                <button
+                  id="modal-select"
+                  onclick="handlePictureSelect()"
+                >
+                  Select picture
+                </button>
+                <div id="modal-filename">No file selected</div>
+              </div>
+              <div id="modal-info">
+                <input
+                  type="text"
+                  id="modal-info-name"
+                  class="modal-info-inputs"
+                  placeholder="YOUR NAME"
+                />
+                <input
+                  type="text"
+                  id="modal-info-age"
+                  class="modal-info-inputs"
+                  placeholder="YOUR AGE"
+                />
+                <input
+                  type="text"
+                  id="modal-info-gender"
+                  class="modal-info-inputs"
+                  placeholder="YOUR GENDER"
+                />
+              </div>
+            </div>
+            <div id="modal-footer">
+              <button
+                id="modal-save"
+                onclick="handleModalSave()"
+              >
+                Save profile
+              </button>
+            </div>
           </div>
         </div>
       </div>
-
-      <div id="profile-modal">
-        <div id="modal-component">
-          <div id="modal-header">
-            Select profile picture & save your info.
-            <button id="modal-cancel" onmouseover="this.style.transform='rotate(-60deg)'" onmouseleave="this.style.transform='rotate(0deg)'" onclick="document.getElementById('profile-modal').style.display='none'; document.getElementById('card-picture').firstElementChild.src=''; document.getElementById('modal-info-name').value=''; document.getElementById('modal-info-age').value=''; document.getElementById('modal-info-gender').value=''; document.getElementById('modal-filename').innerText='No file selected';">X</button>
-          </div>
-          <div id="modal-contents">
-            <div id="modal-filezone">
-              <input id="modal-file" type="file" accept="image/*" onchange="document.getElementById('modal-filename').innerText=this.files.item(0).name; console.log(this.files.item(0)); var reader = new FileReader(); reader.onload=function(e){console.log('loaded profile picture!'); console.log(document.getElementById('card-picture').firstElementChild); document.getElementById('card-picture').firstElementChild.src=e.target.result; document.getElementById('card-picture').firstElementChild.style.display='block'}; reader.readAsDataURL(this.files.item(0));"/>
-              <button id="modal-select" onclick="document.getElementById('modal-file').click()">Select picture</button>
-              <div id="modal-filename">No file selected</div>
-            </div>
-            <div id="modal-info">
-              <input type="text" id="modal-info-name" class="modal-info-inputs" placeholder="YOUR NAME"/>
-              <input type="text" id="modal-info-age" class="modal-info-inputs" placeholder="YOUR AGE"/>
-              <input type="text" id="modal-info-gender" class="modal-info-inputs" placeholder="YOUR GENDER"/>
-            </div>
-          </div>
-          <div id="modal-footer">
-            <button id="modal-save" onclick="document.getElementById('profile-modal').style.display='none'; document.getElementById('card-name').innerText=document.getElementById('modal-info-name').value; document.getElementById('modal-info-name').value=''; document.getElementById('modal-info-age').value=''; document.getElementById('modal-info-gender').value=''; document.getElementById('modal-filename').innerText='No file selected';">
-              Save profile
-            </button>
-          </div>
-
-        </div>
-      </div>
-      
     </div>
-  </div>
-</body>
+
+    <script type="text/javascript">
+    // Define Event handlers
+      function handleProfileSubmit(){
+        document.getElementById('profile-modal').style.display='block';
+      }
+      function handleModalCancel(){
+        document.getElementById('profile-modal').style.display='none'; 
+        document.getElementById('card-picture').firstElementChild.src=''; 
+
+        document.getElementById('modal-info-name').value=''; 
+        document.getElementById('modal-info-age').value=''; 
+        document.getElementById('modal-info-gender').value=''; 
+        document.getElementById('modal-filename').innerText='No file selected';
+      }
+      function handlePictureSelect(){
+        document.getElementById('modal-file').click()
+      }
+      function handlePictureUpload(event){
+        document.getElementById('modal-filename').innerText=event.target.files[0].name; 
+        console.log(event.target.files[0]); 
+        
+        var reader = new FileReader(); 
+        reader.onload=function(e){
+          console.log('loaded profile picture!'); 
+          console.log(document.getElementById('card-picture').firstElementChild); 
+          document.getElementById('card-picture').firstElementChild.src=e.target.result; 
+          document.getElementById('card-picture').firstElementChild.style.display='block'
+        }; 
+        reader.readAsDataURL(event.target.files[0]);
+      }
+      function handleModalSave(){
+        document.getElementById('profile-modal').style.display='none'; 
+        document.getElementById('card-name').innerText=document.getElementById('modal-info-name').value; 
+        
+        document.getElementById('modal-info-name').value=''; 
+        document.getElementById('modal-info-age').value=''; 
+        document.getElementById('modal-info-gender').value=''; 
+        document.getElementById('modal-filename').innerText='No file selected';
+      }
+    </script>
+  </body>
 </html>
