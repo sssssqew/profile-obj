@@ -274,6 +274,12 @@
     </div>
 
     <script type="text/javascript">
+      function showModal(){
+        document.getElementById('profile-modal').style.display='block';
+      }
+      function hideModal(){
+        document.getElementById('profile-modal').style.display='none'; 
+      }
       function clearModal(){
         document.getElementById('modal-info-name').value=''; 
         document.getElementById('modal-info-age').value=''; 
@@ -282,10 +288,10 @@
       }
     // Define Event handlers
       function handleProfileSubmit(){
-        document.getElementById('profile-modal').style.display='block';
+        showModal();
       }
       function handleModalCancel(){
-        document.getElementById('profile-modal').style.display='none'; 
+        hideModal();
         document.getElementById('card-picture').firstElementChild.src=''; 
         clearModal();
       }
@@ -306,7 +312,7 @@
         reader.readAsDataURL(event.target.files[0]);
       }
       function handleModalSave(){
-        document.getElementById('profile-modal').style.display='none'; 
+        hideModal();
         document.getElementById('card-name').innerText=document.getElementById('modal-info-name').value; 
         clearModal();
       }
