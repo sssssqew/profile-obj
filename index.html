@@ -277,6 +277,15 @@
     <script type="text/javascript">
       var loadedPictureData = "";
 
+      function loadPictureData(fileData){
+        var reader = new FileReader(); 
+        reader.onload=function(e){
+          console.log('loaded profile picture!'); 
+          loadedPictureData = e.target.result;
+          console.log(loadedPictureData)
+        }; 
+        reader.readAsDataURL(fileData);
+      }
       function showModal(){
         document.getElementById('profile-modal').style.display='block';
       }
@@ -312,18 +321,11 @@
       function handlePictureUpload(event){
         // validation check of uploading file
         const selectedFiles = event.target.files;
-        console.log(event.target.files.length)
         if(selectedFiles.length < 1) return;
         document.getElementById('modal-filename').innerText=selectedFiles[0].name; 
         console.log(selectedFiles[0]); 
-        
-        var reader = new FileReader(); 
-        reader.onload=function(e){
-          console.log('loaded profile picture!'); 
-          loadedPictureData = e.target.result;
-          console.log(loadedPictureData)
-        }; 
-        reader.readAsDataURL(selectedFiles[0]);
+      
+        loadPictureData(selectedFiles[0])
       }
       function handleModalSave(){
         document.getElementById('card-name').innerText=document.getElementById('modal-info-name').value; 
