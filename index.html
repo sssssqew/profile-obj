@@ -277,6 +277,56 @@
     <script type="text/javascript">
       var loadedPictureData = "";
 
+      function checkIfStringHasSpecialCharacter(str){
+        const re = /[ `!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/;
+        return re.test(str);
+      }
+      function checkIfStringHasNumbers(str){
+        return /\d/.test(str); 
+      }
+      function checkIfStringIsOnlyNumbers(str){
+        return /^\d+$/.test(str);
+      }
+      function checkIfNumberIsInteger(num){
+        return num % 1 === 0;
+      }
+      function checkIfAgeIsValid(str){
+        const age = Number(str);
+        if(!checkIfNumberIsInteger(age)) return; // check already on checkIfStringIsOnlyNumbers function (useless code)
+        if(age < 1 || age > 150) return;
+        return true;
+      }
+      function checkIfGenderIsValid(str){
+        if(str !== "male" && str !== "female") return;
+        return true;
+      }
+
+      function validateFileExtension(){}
+      function validateUserInfo(){
+        const userName = document.getElementById('modal-info-name').value;
+        const userAge = document.getElementById('modal-info-age').value;
+        const userGender = document.getElementById('modal-info-gender').value;
+
+        if(userName === "" || checkIfStringHasSpecialCharacter(userName) || checkIfStringHasNumbers(userName)){
+          return;
+        }
+        if(userAge === "" || !checkIfStringIsOnlyNumbers(userAge) || !checkIfAgeIsValid(userAge)){
+          return;
+        }
+        if(userGender === "" || !checkIfGenderIsValid(userGender)){
+          return;
+        }
+        return true;
+      }
+      function validateInputData(){
+        if(!validateUserInfo()){
+          console.log("user info not valid!")
+          return;
+        }
+        return true;
+        
+        // validateFileExtension();
+      }
       function loadPictureData(fileData){
         var reader = new FileReader(); 
         reader.onload=function(e){
@@ -319,6 +369,7 @@
         document.getElementById('modal-file').click()
       }
       function handlePictureUpload(event){
+        // TODO : 파일 확장자 유효성 검사
         // validation check of uploading file
         const selectedFiles = event.target.files;
         if(selectedFiles.length < 1) return;
@@ -328,6 +379,8 @@
         loadPictureData(selectedFiles[0])
       }
       function handleModalSave(){
+        // TODO:  입력 데이터 검증
+        if(!validateInputData()) alert("user information is not valid :(");
         document.getElementById('card-name').innerText=document.getElementById('modal-info-name').value; 
         setProfilePicture();
         clearModal();
