@@ -229,6 +229,7 @@
                   id="modal-file"
                   type="file"
                   accept="image/*"
+                  onclick="clearFileCash(event)"
                   onchange="handlePictureUpload(event)"
                 />
                 <button
@@ -295,6 +296,9 @@
         profileImg.style.display='block';
       }
     // Define Event handlers
+      function clearFileCash(event){
+        event.target.value = null;
+      }
       function handleProfileSubmit(){
         showModal();
       }
@@ -308,6 +312,7 @@
       function handlePictureUpload(event){
         // validation check of uploading file
         const selectedFiles = event.target.files;
+        console.log(event.target.files.length)
         if(selectedFiles.length < 1) return;
         document.getElementById('modal-filename').innerText=selectedFiles[0].name; 
         console.log(selectedFiles[0]); 
