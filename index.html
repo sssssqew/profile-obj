@@ -299,8 +299,11 @@
         document.getElementById('modal-file').click()
       }
       function handlePictureUpload(event){
-        document.getElementById('modal-filename').innerText=event.target.files[0].name; 
-        console.log(event.target.files[0]); 
+        // validation check of uploading file
+        const selectedFiles = event.target.files;
+        if(selectedFiles.length < 1) return;
+        document.getElementById('modal-filename').innerText=selectedFiles[0].name; 
+        console.log(selectedFiles[0]); 
         
         var reader = new FileReader(); 
         reader.onload=function(e){
@@ -309,7 +312,7 @@
           document.getElementById('card-picture').firstElementChild.src=e.target.result; 
           document.getElementById('card-picture').firstElementChild.style.display='block'
         }; 
-        reader.readAsDataURL(event.target.files[0]);
+        reader.readAsDataURL(selectedFiles[0]);
       }
       function handleModalSave(){
         hideModal();
