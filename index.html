@@ -274,6 +274,8 @@
     </div>
 
     <script type="text/javascript">
+      var loadedPictureData = "";
+
       function showModal(){
         document.getElementById('profile-modal').style.display='block';
       }
@@ -281,19 +283,24 @@
         document.getElementById('profile-modal').style.display='none'; 
       }
       function clearModal(){
+        loadedPictureData = ""
         document.getElementById('modal-info-name').value=''; 
         document.getElementById('modal-info-age').value=''; 
         document.getElementById('modal-info-gender').value=''; 
         document.getElementById('modal-filename').innerText='No file selected';
+      }
+      function setProfilePicture(){
+        const profileImg = document.getElementById('card-picture').firstElementChild;
+        profileImg.src=loadedPictureData; 
+        profileImg.style.display='block';
       }
     // Define Event handlers
       function handleProfileSubmit(){
         showModal();
       }
       function handleModalCancel(){
-        hideModal();
-        document.getElementById('card-picture').firstElementChild.src=''; 
         clearModal();
+        hideModal();
       }
       function handlePictureSelect(){
         document.getElementById('modal-file').click()
@@ -308,16 +315,16 @@
         var reader = new FileReader(); 
         reader.onload=function(e){
           console.log('loaded profile picture!'); 
-          console.log(document.getElementById('card-picture').firstElementChild); 
-          document.getElementById('card-picture').firstElementChild.src=e.target.result; 
-          document.getElementById('card-picture').firstElementChild.style.display='block'
+          loadedPictureData = e.target.result;
+          console.log(loadedPictureData)
         }; 
         reader.readAsDataURL(selectedFiles[0]);
       }
       function handleModalSave(){
-        hideModal();
         document.getElementById('card-name').innerText=document.getElementById('modal-info-name').value; 
+        setProfilePicture();
         clearModal();
+        hideModal();
       }
     </script>
   </body>
