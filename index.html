@@ -300,8 +300,6 @@
         if(str !== "male" && str !== "female") return;
         return true;
       }
-
-      function validateFileExtension(){}
       function validateUserInfo(){
         const userName = document.getElementById('modal-info-name').value;
         const userAge = document.getElementById('modal-info-age').value;
@@ -319,20 +317,21 @@
         return true;
       }
       function validateInputData(){
-        if(!validateUserInfo()){
-          console.log("user info not valid!")
-          return;
-        }
+        if(!validateUserInfo()) return;
         return true;
-        
-        // validateFileExtension();
+      }
+      function validateFileExtension(event){
+        const fileType = event.target.files[0].type;
+        const ext = fileType.split("/")[0];
+        if(ext !== "image") return;
+        return true;
       }
       function loadPictureData(fileData){
         var reader = new FileReader(); 
         reader.onload=function(e){
           console.log('loaded profile picture!'); 
           loadedPictureData = e.target.result;
-          console.log(loadedPictureData)
+          // console.log(loadedPictureData)
         }; 
         reader.readAsDataURL(fileData);
       }
@@ -368,8 +367,12 @@
       function handlePictureSelect(){
         document.getElementById('modal-file').click()
       }
-      function handlePictureUpload(event){
+      function handlePictureUpload(event){ // 파일 취소시 해당 이벤트로 들어오지 않음
         // TODO : 파일 확장자 유효성 검사
+        if(!validateFileExtension(event)){
+          alert("uploaded files is not valid");
+          return;
+        } 
         // validation check of uploading file
         const selectedFiles = event.target.files;
         if(selectedFiles.length < 1) return;
@@ -380,11 +383,14 @@
       }
       function handleModalSave(){
         // TODO:  입력 데이터 검증
-        if(!validateInputData()) alert("user information is not valid :(");
-        document.getElementById('card-name').innerText=document.getElementById('modal-info-name').value; 
-        setProfilePicture();
-        clearModal();
-        hideModal();
+        if(!validateInputData()){
+          alert("user information is not valid :(");
+        }else{
+          document.getElementById('card-name').innerText=document.getElementById('modal-info-name').value; 
+          setProfilePicture();
+          clearModal();
+          hideModal();
+        }
       }
     </script>
   </body>
