@@ -301,9 +301,9 @@
         return true;
       }
       function validateUserInfo(){
-        const userName = document.getElementById('modal-info-name').value;
-        const userAge = document.getElementById('modal-info-age').value;
-        const userGender = document.getElementById('modal-info-gender').value;
+        const userName = document.getElementById('modal-info-name').value.trim();
+        const userAge = document.getElementById('modal-info-age').value.trim();
+        const userGender = document.getElementById('modal-info-gender').value.trim();
 
         if(userName === "" || checkIfStringHasSpecialCharacter(userName) || checkIfStringHasNumbers(userName)){
           return;
