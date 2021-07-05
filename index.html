@@ -126,7 +126,7 @@
         font-weight: 600;
         padding: 10px;
       }
-      #modal-cancel {
+      .modal-cancel {
         width: 50px;
         height: 50px;
         border: 2px solid rgba(0, 0, 0, 0.95);
@@ -136,6 +136,9 @@
         background: white;
         cursor: pointer;
         transition: all 0.3s;
+      }
+      .modal-cancel:hover{
+        transform:rotate(-60deg);
       }
       #modal-contents {
         flex-grow: 1;
@@ -235,8 +238,7 @@
               Select profile picture & save your info.
               <button
                 id="modal-cancel"
-                onmouseover="this.style.transform='rotate(-60deg)'"
-                onmouseleave="this.style.transform='rotate(0deg)'"
+                class="modal-cancel"
                 onclick="handleModalCancel()"
               >
                 X
