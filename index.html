@@ -320,8 +320,8 @@
         if(!validateUserInfo()) return;
         return true;
       }
-      function validateFileExtension(event){
-        const fileType = event.target.files[0].type;
+      function validateFileExtension(fileData){
+        const fileType = fileData.type;
         const ext = fileType.split("/")[0];
         if(ext !== "image") return;
         return true;
@@ -353,6 +353,12 @@
         profileImg.src=loadedPictureData; 
         profileImg.style.display='block';
       }
+      function setProfileName(){
+        document.getElementById('card-name').innerText=document.getElementById('modal-info-name').value; 
+      }
+      function setUploadedFileName(fileData){
+        document.getElementById('modal-filename').innerText=fileData.name; 
+      }
     // Define Event handlers
       function clearFileCash(event){
         event.target.value = null;
@@ -368,25 +374,24 @@
         document.getElementById('modal-file').click()
       }
       function handlePictureUpload(event){ // 파일 취소시 해당 이벤트로 들어오지 않음
-        // TODO : 파일 확장자 유효성 검사
-        if(!validateFileExtension(event)){
+        // 파일 존재여부 검사
+        const selectedFiles = event.target.files;
+        if(selectedFiles.length < 1) return;
+
+        // 파일 확장자 유효성 검사
+        if(!validateFileExtension(selectedFiles[0])){
           alert("uploaded files is not valid");
           return;
         } 
-        // validation check of uploading file
-        const selectedFiles = event.target.files;
-        if(selectedFiles.length < 1) return;
-        document.getElementById('modal-filename').innerText=selectedFiles[0].name; 
-        console.log(selectedFiles[0]); 
-      
+        setUploadedFileName(selectedFiles[0]);
         loadPictureData(selectedFiles[0])
       }
       function handleModalSave(){
-        // TODO:  입력 데이터 검증
+        // 입력 데이터 검증
         if(!validateInputData()){
           alert("user information is not valid :(");
         }else{
-          document.getElementById('card-name').innerText=document.getElementById('modal-info-name').value; 
+          setProfileName();
           setProfilePicture();
           clearModal();
           hideModal();
