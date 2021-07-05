@@ -297,6 +297,7 @@
 
     <script type="text/javascript">
       var loadedPictureData = "";
+      var userInfoData = {};
 
       function checkIfStringHasSpecialCharacter(str){
         const re = /[ `!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/;
@@ -321,10 +322,7 @@
         if(str !== "male" && str !== "female") return;
         return true;
       }
-      function validateUserInfo(){
-        const userName = document.getElementById('modal-info-name').value.trim();
-        const userAge = document.getElementById('modal-info-age').value.trim();
-        const userGender = document.getElementById('modal-info-gender').value.trim();
+      function validateUserInfo(userName, userAge, userGender){
 
         if(userName === "" || checkIfStringHasSpecialCharacter(userName) || checkIfStringHasNumbers(userName)){
           return;
@@ -337,8 +335,8 @@
         }
         return true;
       }
-      function validateInputData(){
-        if(!validateUserInfo()) return;
+      function validateInputData(userName, userAge, userGender){
+        if(!validateUserInfo(userName, userAge, userGender)) return;
         return true;
       }
       function validateFileExtension(fileData){
@@ -363,7 +361,7 @@
         document.getElementById('profile-modal').classList.remove('show-modal');
       }
       function clearModal(){
-        loadedPictureData = ""
+        loadedPictureData = "";
         document.getElementById('modal-info-name').value=''; 
         document.getElementById('modal-info-age').value=''; 
         document.getElementById('modal-info-gender').value=''; 
@@ -379,6 +377,11 @@
       }
       function setUploadedFileName(fileData){
         document.getElementById('modal-filename').innerText=fileData.name; 
+      }
+      function saveUserInfo(userName, userAge, userGender){
+        userInfoData.userName = userName;
+        userInfoData.userAge = userAge;
+        userInfoData.userGender = userGender;
       }
     // Define Event handlers
       function hideProfileImg(event){
@@ -411,14 +414,20 @@
         loadPictureData(selectedFiles[0])
       }
       function handleModalSave(){
+        const userName = document.getElementById('modal-info-name').value.trim();
+        const userAge = document.getElementById('modal-info-age').value.trim();
+        const userGender = document.getElementById('modal-info-gender').value.trim();
+
         // 입력 데이터 검증
-        if(!validateInputData()){
+        if(!validateInputData(userName, userAge, userGender)){
           alert("user information is not valid :(");
         }else{
+          saveUserInfo(userName, userAge, userGender); // 프로필 정보 페이지에서 사용할 데이터 저장
           setProfileName();
           setProfilePicture();
           clearModal();
           hideModal();
+          console.log(userInfoData)
         }
       }
     </script>
