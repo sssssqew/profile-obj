@@ -372,8 +372,8 @@
         profileImg.src=loadedPictureData; 
         profileImg.classList.add('show-profileImg');
       }
-      function setProfileName(){
-        document.getElementById('card-name').innerText=document.getElementById('modal-info-name').value; 
+      function setProfileName(userName){
+        document.getElementById('card-name').innerText = userName; 
       }
       function setUploadedFileName(fileData){
         document.getElementById('modal-filename').innerText=fileData.name; 
@@ -423,7 +423,7 @@
           alert("user information is not valid :(");
         }else{
           saveUserInfo(userName, userAge, userGender); // 프로필 정보 페이지에서 사용할 데이터 저장
-          setProfileName();
+          setProfileName(userName);
           setProfilePicture();
           clearModal();
           hideModal();
