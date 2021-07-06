@@ -6,6 +6,5 @@ function hideProfileImg(event){
 
 // 컴포넌트 생성
 
-
 // 이벤트 핸들러 연결
 document.getElementById('card-picture').firstElementChild.addEventListener('error', hideProfileImg);
