@@ -436,6 +436,15 @@
   var loadedPictureData = "";
   var userInfoData = {};
 
+  // 익스플로러 9버전 이하에서 호환하기 위한 이벤트핸들러 연결방법
+  function addEvent(obj, type, handler){
+    if(obj && obj.addEventListener){
+      obj.addEventListener(type, handler);
+    }else if(obj && obj.attachEvent){
+      obj.attachEvent('on'+type, handler);
+    }
+  }
+
   function checkIfStringHasSpecialCharacter(str){
     const re = /[ `!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/;
     return re.test(str);
@@ -568,14 +577,14 @@
     }
   }
 
-  // attach eventhandlers
-  document.getElementById('card-picture').firstElementChild.addEventListener('error', hideProfileImg);
-  document.getElementById('profile-submit').addEventListener('click', handleProfileSubmit);
-  document.getElementById('modal-cancel').addEventListener('click', handleModalCancel);
-  document.getElementById('modal-file').addEventListener('click', clearFileCash);
-  document.getElementById('modal-file').addEventListener('change', handlePictureUpload);
-  document.getElementById('modal-select').addEventListener('click', handlePictureSelect);
-  document.getElementById('modal-save').addEventListener('click', handleModalSave);
+  // 익스플로러 9버전 이하에서도 동작하기 위한 핸들러 연결방법
+  addEvent(document.getElementById('card-picture').firstElementChild, 'error', hideProfileImg);
+  addEvent(document.getElementById('profile-submit'), 'click', handleProfileSubmit);
+  addEvent(document.getElementById('modal-cancel'), 'click', handleModalCancel);
+  addEvent(document.getElementById('modal-file'), 'click', clearFileCash);
+  addEvent(document.getElementById('modal-file'), 'change', handlePictureUpload);
+  addEvent(document.getElementById('modal-select'), 'click', handlePictureSelect);
+  addEvent(document.getElementById('modal-save'), 'click', handleModalSave);
 </script>
   </body>
 </html>
