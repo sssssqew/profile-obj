@@ -1,5 +1,9 @@
+import Card from './components/Card.js';
+
 var loadedPictureData = "";
 var userInfoData = {};
+
+console.log(Card)
 
 function checkIfStringHasSpecialCharacter(str) {
   const re = /[ `!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/;
