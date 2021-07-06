@@ -3,7 +3,7 @@ import Card from './components/Card.js';
 var loadedPictureData = "";
 var userInfoData = {};
 
-console.log(Card)
+Card(); // 컴포넌트 초기 렌더링
 
 function checkIfStringHasSpecialCharacter(str) {
   const re = /[ `!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/;
