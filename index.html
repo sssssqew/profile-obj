@@ -88,6 +88,16 @@
   var loadedPictureData = "";
   var userInfoData = {};
 
+  // helper
+  function buildElement(type, props){
+    const el = document.createElement(type);
+
+    for(let prop in props){
+      el.setAttribute(prop, props[prop]);
+    }
+    return el;
+  }
+
   // 익스플로러 9버전 이하에서 호환하기 위한 이벤트핸들러 연결방법
   function addEvent(obj, type, handler){
     if(obj && obj.addEventListener){
@@ -228,6 +238,22 @@
       console.log(userInfoData)
     }
   }
+
+  // TODO: 컴포넌트 생성
+
+  // Card 생성
+  const cardPictureImg = buildElement('img', {className: 'card-picture-img', src: '', alt: ''})
+  const cardPicture = buildElement('div', {id: 'card-picture'});
+  cardPicture.appendChild(cardPictureImg);
+
+  const cardName = buildElement('div', {id: 'card-name'});
+  const cardComponent = buildElement('div', {id: 'card-component'});
+  cardComponent.appendChild(cardPicture);
+  cardComponent.appendChild(cardName);
+
+  const profileCardContainer = document.getElementById('profile-card-container');
+  profileCardContainer.insertBefore(cardComponent, profileCardContainer.firstChild);
+
 
   // 익스플로러 9버전 이하에서도 동작하기 위한 핸들러 연결방법
   addEvent(document.getElementById('card-picture').firstElementChild, 'error', hideProfileImg);
