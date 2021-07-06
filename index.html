@@ -221,11 +221,11 @@
             <div id="profile-card-container">
               <div id="card-component">
                 <div id="card-picture">
-                  <img class="card-picture-img" src="" alt="" onerror="hideProfileImg(event)" />
+                  <img class="card-picture-img" src="" alt=""  />
                 </div>
                 <div id="card-name"></div>
               </div>
-              <button id="profile-submit" onclick="handleProfileSubmit()">
+              <button id="profile-submit">
                 submit profile
               </button>
             </div>
@@ -238,9 +238,7 @@
               Select profile picture & save your info.
               <button
                 id="modal-cancel"
-                class="modal-cancel"
-                onclick="handleModalCancel()"
-              >
+                class="modal-cancel">
                 X
               </button>
             </div>
@@ -249,14 +247,9 @@
                 <input
                   id="modal-file"
                   type="file"
-                  accept="image/*"
-                  onclick="clearFileCash(event)"
-                  onchange="handlePictureUpload(event)"
-                />
+                  accept="image/*"/>
                 <button
-                  id="modal-select"
-                  onclick="handlePictureSelect()"
-                >
+                  id="modal-select">
                   Select picture
                 </button>
                 <div id="modal-filename">No file selected</div>
@@ -284,9 +277,7 @@
             </div>
             <div id="modal-footer">
               <button
-                id="modal-save"
-                onclick="handleModalSave()"
-              >
+                id="modal-save">
                 Save profile
               </button>
             </div>
@@ -295,7 +286,7 @@
       </div>
     </div>
 
-    <script type="text/javascript">
+    <script type="module">
       var loadedPictureData = "";
       var userInfoData = {};
 
@@ -430,6 +421,15 @@
           console.log(userInfoData)
         }
       }
+
+      // attach eventhandlers
+      document.getElementById('card-picture').firstElementChild.addEventListener('error', hideProfileImg);
+      document.getElementById('profile-submit').addEventListener('click', handleProfileSubmit);
+      document.getElementById('modal-cancel').addEventListener('click', handleModalCancel);
+      document.getElementById('modal-file').addEventListener('click', clearFileCash);
+      document.getElementById('modal-file').addEventListener('change', handlePictureUpload);
+      document.getElementById('modal-select').addEventListener('click', handlePictureSelect);
+      document.getElementById('modal-save').addEventListener('click', handleModalSave);
     </script>
   </body>
 </html>
