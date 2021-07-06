@@ -86,9 +86,9 @@ var loadedPictureData = "";
         userInfoData.userGender = userGender;
       }
     // Define Event handlers
-      function hideProfileImg(event){
-        event.target.classList.remove('show-profileImg');
-      }
+      // function hideProfileImg(event){
+      //   event.target.classList.remove('show-profileImg');
+      // }
       function clearFileCash(event){
         event.target.value = null;
       }
@@ -134,7 +134,7 @@ var loadedPictureData = "";
       }
 
       // attach eventhandlers
-      document.getElementById('card-picture').firstElementChild.addEventListener('error', hideProfileImg);
+      // document.getElementById('card-picture').firstElementChild.addEventListener('error', hideProfileImg);
       document.getElementById('profile-submit').addEventListener('click', handleProfileSubmit);
       document.getElementById('modal-cancel').addEventListener('click', handleModalCancel);
       document.getElementById('modal-file').addEventListener('click', clearFileCash);
