@@ -1,8 +1,10 @@
 import Card from './components/Card.js';
 import Modal from './components/Modal.js';
 
-var loadedPictureData = "";
-var userInfoData = {};
+var pageVariables = {
+  loadedPictureData: "",
+  userInfoData: {}
+};
 
 function showModal() {
   document.getElementById("profile-modal").classList.add("show-modal");
@@ -22,4 +24,4 @@ document
 
 // 컴포넌트 초기 렌더링
 Card(); 
-Modal();
+Modal(pageVariables);

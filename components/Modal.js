@@ -1,9 +1,9 @@
 import buildElement from "../lib/helpers.js";
 
-function Modal() {
+function Modal(pageVariables) {
   // 지역함수
   function clearModal() {
-    loadedPictureData = "";
+    pageVariables.loadedPictureData = "";
     document.getElementById("modal-info-name").value = "";
     document.getElementById("modal-info-age").value = "";
     document.getElementById("modal-info-gender").value = "";
@@ -25,8 +25,8 @@ function Modal() {
     var reader = new FileReader();
     reader.onload = function (e) {
       console.log("loaded profile picture!");
-      loadedPictureData = e.target.result;
-      // console.log(loadedPictureData)
+      pageVariables.loadedPictureData = e.target.result;
+      // console.log(pageVariables.loadedPictureData)
     };
     reader.readAsDataURL(fileData);
   }
@@ -81,16 +81,16 @@ function Modal() {
     return true;
   }
   function saveUserInfo(userName, userAge, userGender) {
-    userInfoData.userName = userName;
-    userInfoData.userAge = userAge;
-    userInfoData.userGender = userGender;
+    pageVariables.userInfoData.userName = userName;
+    pageVariables.userInfoData.userAge = userAge;
+    pageVariables.userInfoData.userGender = userGender;
   }
   function setProfileName(userName) {
     document.getElementById("card-name").innerText = userName;
   }
   function setProfilePicture() {
     const profileImg = document.getElementById("card-picture").firstElementChild;
-    profileImg.src = loadedPictureData;
+    profileImg.src = pageVariables.loadedPictureData;
     profileImg.classList.add("show-profileImg");
   }
 
@@ -133,7 +133,7 @@ function Modal() {
       setProfilePicture();
       clearModal();
       hideModal();
-      console.log(userInfoData);
+      console.log(pageVariables.userInfoData);
     }
   }
 
