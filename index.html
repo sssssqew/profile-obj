@@ -206,6 +206,54 @@
   const profileCardContainer = document.getElementById('profile-card-container');
   profileCardContainer.insertBefore(cardComponent, profileCardContainer.firstChild);
 
+  // Modal 생성
+  
+  // 모달 헤더
+  const modalCancel = buildElement('button', {id: 'modal-cancel', class: 'modal-cancel'});
+  modalCancel.innerText = 'X';
+  const modalHeader = buildElement('div', {id: 'modal-header'});
+  modalHeader.innerText = 'Select profile picture & save your info.';
+  modalHeader.appendChild(modalCancel);
+
+  // 모달 컨텐츠 - 파일존
+  const modalFile = buildElement('input', {id: 'modal-file', type: 'file', accept: 'image/*'});
+  const modalSelect = buildElement('button', {id: 'modal-select'});
+  modalSelect.innerText = 'Select picture';
+  const modalFilename = buildElement('div', {id: 'modal-filename'});
+  modalFilename.innerText = 'No file selected';
+  const modalFilezone = buildElement('div', {id: 'modal-filezone'});
+  modalFilezone.appendChild(modalFile);
+  modalFilezone.appendChild(modalSelect);
+  modalFilezone.appendChild(modalFilename);
+
+  // 모달 컨텐츠 - 인포
+  const modalInfoName = buildElement('input', {type: 'text', id: 'modal-info-name', class: 'modal-info-inputs', placeholder: 'YOUR NAME'});
+  const modalInfoAge = buildElement('input', {type: 'text', id: 'modal-info-age', class: 'modal-info-inputs', placeholder: 'YOUR AGE'});
+  const modalInfoGender = buildElement('input', {type: 'text', id: 'modal-info-gender', class: 'modal-info-inputs', placeholder: 'YOUR GENDER'});
+  const modalInfo = buildElement('div', {id: 'modal-info'});
+  modalInfo.appendChild(modalInfoName);
+  modalInfo.appendChild(modalInfoAge);
+  modalInfo.appendChild(modalInfoGender);
+  const modalContents = buildElement('div', {id: 'modal-contents'});
+
+  modalContents.appendChild(modalFilezone);
+  modalContents.appendChild(modalInfo);
+
+  //모달 풋터
+  const modalSave = buildElement('button', {id: 'modal-save'});
+  modalSave.innerText = 'Save profile';
+  const modalFooter = buildElement('div', {id: 'modal-footer'});
+  modalFooter.appendChild(modalSave);
+
+  const modalComponent = buildElement('div', {id: 'modal-component'});
+  modalComponent.appendChild(modalHeader);
+  modalComponent.appendChild(modalContents);
+  modalComponent.appendChild(modalFooter);
+  
+  const profileModal = document.getElementById('profile-modal');
+  profileModal.appendChild(modalComponent);
+  console.log(modalComponent);
+
 
   // 익스플로러 9버전 이하에서도 동작하기 위한 핸들러 연결방법
   addEvent(document.getElementById('card-picture').firstElementChild, 'error', hideProfileImg);
