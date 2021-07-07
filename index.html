@@ -29,55 +29,7 @@
         </div>
 
         <div id="profile-modal" class="profile-modal">
-          <div id="modal-component">
-            <div id="modal-header">
-              Select profile picture & save your info.
-              <button
-                id="modal-cancel"
-                class="modal-cancel">
-                X
-              </button>
-            </div>
-            <div id="modal-contents">
-              <div id="modal-filezone">
-                <input
-                  id="modal-file"
-                  type="file"
-                  accept="image/*"/>
-                <button
-                  id="modal-select">
-                  Select picture
-                </button>
-                <div id="modal-filename">No file selected</div>
-              </div>
-              <div id="modal-info">
-                <input
-                  type="text"
-                  id="modal-info-name"
-                  class="modal-info-inputs"
-                  placeholder="YOUR NAME"
-                />
-                <input
-                  type="text"
-                  id="modal-info-age"
-                  class="modal-info-inputs"
-                  placeholder="YOUR AGE"
-                />
-                <input
-                  type="text"
-                  id="modal-info-gender"
-                  class="modal-info-inputs"
-                  placeholder="YOUR GENDER"
-                />
-              </div>
-            </div>
-            <div id="modal-footer">
-              <button
-                id="modal-save">
-                Save profile
-              </button>
-            </div>
-          </div>
+          
         </div>
       </div>
     </div>
@@ -242,7 +194,7 @@
   // TODO: 컴포넌트 생성
 
   // Card 생성
-  const cardPictureImg = buildElement('img', {className: 'card-picture-img', src: '', alt: ''})
+  const cardPictureImg = buildElement('img', {class: 'card-picture-img', src: '', alt: ''})
   const cardPicture = buildElement('div', {id: 'card-picture'});
   cardPicture.appendChild(cardPictureImg);
 

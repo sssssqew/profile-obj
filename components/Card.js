@@ -7,7 +7,7 @@ function Card(){
   }
   // 컴포넌트 생성
   function buildComponent(){
-    const cardPictureImg = buildElement('img', {className: 'card-picture-img', src: '', alt: ''})
+    const cardPictureImg = buildElement('img', {class: 'card-picture-img', src: '', alt: ''})
     const cardPicture = buildElement('div', {id: 'card-picture'});
     cardPicture.appendChild(cardPictureImg);
 
