@@ -51,15 +51,18 @@
   display: flex;
   flex-direction: column;
   margin-bottom: 10px;
+  height: 100%; /* 익스플로러 10에서 사진크기에 따라 스크롤 생겨서 추가함 */
 }
 #card-picture {
   overflow: hidden;
   flex-grow: 1;
+  height: 100%; /* 익스플로러 10에서 사진크기에 따라 사진이 짤려서 추가함 */
 }
 .card-picture-img {
   display: none;
   width: 100%;
   height: 100%;
+  image-rendering: -webkit-optimize-contrast;
 }
 .show-profileImg{
   display: block !important;
