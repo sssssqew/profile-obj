@@ -12,10 +12,7 @@
       <div id="profile-home">
         <div id="profile-main">
           <div id="profile-nav">
-            <div id="nav-component">
-              <button class="nav-btns" data-url="/">Home</button>
-              <button class="nav-btns" data-url="/about">About</button>
-            </div>
+            
           </div>
 
           <div id="profile-card">
@@ -192,6 +189,17 @@
   }
 
   // TODO: 컴포넌트 생성
+
+  // Nav 생성
+  const homeNavBtn = buildElement('button', {class: 'nav-btns', 'data-url':'/'});
+  homeNavBtn.innerText = 'Home';
+  const aboutNavBtn = buildElement('button', {class: 'nav-btns', 'data-url':'/about'});
+  aboutNavBtn.innerText = 'About';
+  const navComponent = buildElement('div', {id:'nav-component'});
+  navComponent.appendChild(homeNavBtn);
+  navComponent.appendChild(aboutNavBtn);
+
+  document.getElementById('profile-nav').appendChild(navComponent);
 
   // Card 생성
   const cardPictureImg = buildElement('img', {class: 'card-picture-img', src: '', alt: ''})

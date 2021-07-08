@@ -1,3 +1,4 @@
+import Nav from './components/Nav.js';
 import Card from './components/Card.js';
 import Modal from './components/Modal.js';
 
@@ -28,5 +29,6 @@ document
 
 
 // 컴포넌트 초기 렌더링
+Nav();
 Card(); 
 Modal(pageVariables);
