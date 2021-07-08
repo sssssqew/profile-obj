@@ -5,12 +5,10 @@ function Nav(){
   
   // 컴포넌트 생성
   function buildComponent(){
-   const homeNavBtn = buildElement('button', {'class': 'nav-btns', 'data-url':'/'});
-   homeNavBtn.innerText = 'Home';
-   const aboutNavBtn = buildElement('button', {'class': 'nav-btns', 'data-url':'/about'});
-   aboutNavBtn.innerText = 'About';
-   const navComponent = buildElement('div', {'id':'nav-component'});
-   navComponent.append(homeNavBtn, aboutNavBtn);
+   const navComponent = buildElement('div', {'id':'nav-component'}, [
+    buildElement('button', {'class': 'nav-btns', 'data-url':'/'}, ['Home']),
+    buildElement('button', {'class': 'nav-btns', 'data-url':'/about'}, ['About'])
+   ]);
 
    document.getElementById('profile-nav').appendChild(navComponent);
   }
