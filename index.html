@@ -145,7 +145,7 @@
   function hideProfileImg(event){
     event.target.classList.remove("show-profileImg");
   }
-  function clearFileCash(event){
+  function clearFileCash(event){ // 익스플로러 10에서는 동작하지 않음
     console.log(event.target);
     event.target.value = null;
   }
@@ -197,19 +197,19 @@
   homeNavBtn.innerText = 'Home';
   var aboutNavBtn = buildElement('button', {'class': 'nav-btns', 'data-url':'/about'});
   aboutNavBtn.innerText = 'About';
-  var navComponent = buildElement('div', {id:'nav-component'});
+  var navComponent = buildElement('div', {'id':'nav-component'});
   navComponent.appendChild(homeNavBtn);
   navComponent.appendChild(aboutNavBtn);
 
   document.getElementById('profile-nav').appendChild(navComponent);
 
   // Card 생성
-  var cardPictureImg = buildElement('img', {'class': 'card-picture-img', src: '', alt: ''})
-  var cardPicture = buildElement('div', {id: 'card-picture'});
+  var cardPictureImg = buildElement('img', {'class': 'card-picture-img', 'src': '', 'alt': ''})
+  var cardPicture = buildElement('div', {'id': 'card-picture'});
   cardPicture.appendChild(cardPictureImg);
 
-  var cardName = buildElement('div', {id: 'card-name'});
-  var cardComponent = buildElement('div', {id: 'card-component'});
+  var cardName = buildElement('div', {'id': 'card-name'});
+  var cardComponent = buildElement('div', {'id': 'card-component'});
   cardComponent.appendChild(cardPicture);
   cardComponent.appendChild(cardName);
 
@@ -219,43 +219,43 @@
   // Modal 생성
   
   // 모달 헤더
-  var modalCancel = buildElement('button', {id: 'modal-cancel', 'class': 'modal-cancel'});
+  var modalCancel = buildElement('button', {'id': 'modal-cancel', 'class': 'modal-cancel'});
   modalCancel.innerText = 'X';
-  var modalHeader = buildElement('div', {id: 'modal-header'});
+  var modalHeader = buildElement('div', {'id': 'modal-header'});
   modalHeader.innerText = 'Select profile picture & save your info.';
   modalHeader.appendChild(modalCancel);
 
   // 모달 컨텐츠 - 파일존
-  var modalFile = buildElement('input', {id: 'modal-file', type: 'file', accept: 'image/*'});
-  var modalSelect = buildElement('button', {id: 'modal-select'});
+  var modalFile = buildElement('input', {'id': 'modal-file', 'type': 'file', 'accept': 'image/*'});
+  var modalSelect = buildElement('button', {'id': 'modal-select'});
   modalSelect.innerText = 'Select picture';
-  var modalFilename = buildElement('div', {id: 'modal-filename'});
+  var modalFilename = buildElement('div', {'id': 'modal-filename'});
   modalFilename.innerText = 'No file selected';
-  var modalFilezone = buildElement('div', {id: 'modal-filezone'});
+  var modalFilezone = buildElement('div', {'id': 'modal-filezone'});
   modalFilezone.appendChild(modalFile);
   modalFilezone.appendChild(modalSelect);
   modalFilezone.appendChild(modalFilename);
 
   // 모달 컨텐츠 - 인포
-  var modalInfoName = buildElement('input', {type: 'text', id: 'modal-info-name', 'class': 'modal-info-inputs', placeholder: 'YOUR NAME'});
-  var modalInfoAge = buildElement('input', {type: 'text', id: 'modal-info-age', 'class': 'modal-info-inputs', placeholder: 'YOUR AGE'});
-  var modalInfoGender = buildElement('input', {type: 'text', id: 'modal-info-gender', 'class': 'modal-info-inputs', placeholder: 'YOUR GENDER'});
-  var modalInfo = buildElement('div', {id: 'modal-info'});
+  var modalInfoName = buildElement('input', {'type': 'text', 'id': 'modal-info-name', 'class': 'modal-info-inputs', 'placeholder': 'YOUR NAME'});
+  var modalInfoAge = buildElement('input', {'type': 'text', 'id': 'modal-info-age', 'class': 'modal-info-inputs', 'placeholder': 'YOUR AGE'});
+  var modalInfoGender = buildElement('input', {'type': 'text', 'id': 'modal-info-gender', 'class': 'modal-info-inputs', 'placeholder': 'YOUR GENDER'});
+  var modalInfo = buildElement('div', {'id': 'modal-info'});
   modalInfo.appendChild(modalInfoName);
   modalInfo.appendChild(modalInfoAge);
   modalInfo.appendChild(modalInfoGender);
-  var modalContents = buildElement('div', {id: 'modal-contents'});
+  var modalContents = buildElement('div', {'id': 'modal-contents'});
 
   modalContents.appendChild(modalFilezone);
   modalContents.appendChild(modalInfo);
 
   //모달 풋터
-  var modalSave = buildElement('button', {id: 'modal-save'});
+  var modalSave = buildElement('button', {'id': 'modal-save'});
   modalSave.innerText = 'Save profile';
-  var modalFooter = buildElement('div', {id: 'modal-footer'});
+  var modalFooter = buildElement('div', {'id': 'modal-footer'});
   modalFooter.appendChild(modalSave);
 
-  var modalComponent = buildElement('div', {id: 'modal-component'});
+  var modalComponent = buildElement('div', {'id': 'modal-component'});
   modalComponent.appendChild(modalHeader);
   modalComponent.appendChild(modalContents);
   modalComponent.appendChild(modalFooter);

@@ -7,12 +7,12 @@ function Card(){
   }
   // 컴포넌트 생성
   function buildComponent(){
-    const cardPictureImg = buildElement('img', {class: 'card-picture-img', src: '', alt: ''})
-    const cardPicture = buildElement('div', {id: 'card-picture'});
+    const cardPictureImg = buildElement('img', {'class': 'card-picture-img', 'src': '', 'alt': ''})
+    const cardPicture = buildElement('div', {'id': 'card-picture'});
     cardPicture.appendChild(cardPictureImg);
 
-    const cardName = buildElement('div', {id: 'card-name'});
-    const cardComponent = buildElement('div', {id: 'card-component'});
+    const cardName = buildElement('div', {'id': 'card-name'});
+    const cardComponent = buildElement('div', {'id': 'card-component'});
     cardComponent.appendChild(cardPicture);
     cardComponent.appendChild(cardName);
 
