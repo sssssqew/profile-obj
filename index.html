@@ -39,9 +39,9 @@
 
   // helper
   function buildElement(type, props){
-    const el = document.createElement(type);
+    var el = document.createElement(type);
 
-    for(let prop in props){
+    for(var prop in props){
       el.setAttribute(prop, props[prop]);
     }
     return el;
@@ -57,7 +57,7 @@
   }
 
   function checkIfStringHasSpecialCharacter(str){
-    const re = /[ `!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/;
+    var re = /[ `!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/;
     return re.test(str);
   }
   function checkIfStringHasNumbers(str){
@@ -70,7 +70,7 @@
     return num % 1 === 0;
   }
   function checkIfAgeIsValid(str){
-    const age = Number(str);
+    var age = Number(str);
     if(!checkIfNumberIsInteger(age)) return; // check already on checkIfStringIsOnlyNumbers function (useless code)
     if(age < 1 || age > 150) return;
     return true;
@@ -97,8 +97,8 @@
     return true;
   }
   function validateFileExtension(fileData){
-    const fileType = fileData.type;
-    const ext = fileType.split("/")[0];
+    var fileType = fileData.type;
+    var ext = fileType.split("/")[0];
     if(ext !== "image") return;
     return true;
   }
@@ -125,7 +125,7 @@
     document.getElementById('modal-filename').innerText='No file selected';
   }
   function setProfilePicture(){
-    const profileImg = document.getElementById('card-picture').firstElementChild;
+    var profileImg = document.getElementById('card-picture').firstElementChild;
     profileImg.src=loadedPictureData; 
     profileImg.classList.add('show-profileImg');
   }
@@ -159,7 +159,7 @@
   }
   function handlePictureUpload(event){ // 파일 취소시 해당 이벤트로 들어오지 않음
     // 파일 존재여부 검사
-    const selectedFiles = event.target.files;
+    var selectedFiles = event.target.files;
     if(selectedFiles.length < 1) return;
 
     // 파일 확장자 유효성 검사
@@ -171,9 +171,9 @@
     loadPictureData(selectedFiles[0])
   }
   function handleModalSave(){
-    const userName = document.getElementById('modal-info-name').value.trim();
-    const userAge = document.getElementById('modal-info-age').value.trim();
-    const userGender = document.getElementById('modal-info-gender').value.trim();
+    var userName = document.getElementById('modal-info-name').value.trim();
+    var userAge = document.getElementById('modal-info-age').value.trim();
+    var userGender = document.getElementById('modal-info-gender').value.trim();
 
     // 입력 데이터 검증
     if(!validateInputData(userName, userAge, userGender)){
@@ -191,74 +191,74 @@
   // TODO: 컴포넌트 생성
 
   // Nav 생성
-  const homeNavBtn = buildElement('button', {class: 'nav-btns', 'data-url':'/'});
+  var homeNavBtn = buildElement('button', {class: 'nav-btns', 'data-url':'/'});
   homeNavBtn.innerText = 'Home';
-  const aboutNavBtn = buildElement('button', {class: 'nav-btns', 'data-url':'/about'});
+  var aboutNavBtn = buildElement('button', {class: 'nav-btns', 'data-url':'/about'});
   aboutNavBtn.innerText = 'About';
-  const navComponent = buildElement('div', {id:'nav-component'});
+  var navComponent = buildElement('div', {id:'nav-component'});
   navComponent.appendChild(homeNavBtn);
   navComponent.appendChild(aboutNavBtn);
 
   document.getElementById('profile-nav').appendChild(navComponent);
 
   // Card 생성
-  const cardPictureImg = buildElement('img', {class: 'card-picture-img', src: '', alt: ''})
-  const cardPicture = buildElement('div', {id: 'card-picture'});
+  var cardPictureImg = buildElement('img', {class: 'card-picture-img', src: '', alt: ''})
+  var cardPicture = buildElement('div', {id: 'card-picture'});
   cardPicture.appendChild(cardPictureImg);
 
-  const cardName = buildElement('div', {id: 'card-name'});
-  const cardComponent = buildElement('div', {id: 'card-component'});
+  var cardName = buildElement('div', {id: 'card-name'});
+  var cardComponent = buildElement('div', {id: 'card-component'});
   cardComponent.appendChild(cardPicture);
   cardComponent.appendChild(cardName);
 
-  const profileCardContainer = document.getElementById('profile-card-container');
+  var profileCardContainer = document.getElementById('profile-card-container');
   profileCardContainer.insertBefore(cardComponent, profileCardContainer.firstChild);
 
   // Modal 생성
   
   // 모달 헤더
-  const modalCancel = buildElement('button', {id: 'modal-cancel', class: 'modal-cancel'});
+  var modalCancel = buildElement('button', {id: 'modal-cancel', class: 'modal-cancel'});
   modalCancel.innerText = 'X';
-  const modalHeader = buildElement('div', {id: 'modal-header'});
+  var modalHeader = buildElement('div', {id: 'modal-header'});
   modalHeader.innerText = 'Select profile picture & save your info.';
   modalHeader.appendChild(modalCancel);
 
   // 모달 컨텐츠 - 파일존
-  const modalFile = buildElement('input', {id: 'modal-file', type: 'file', accept: 'image/*'});
-  const modalSelect = buildElement('button', {id: 'modal-select'});
+  var modalFile = buildElement('input', {id: 'modal-file', type: 'file', accept: 'image/*'});
+  var modalSelect = buildElement('button', {id: 'modal-select'});
   modalSelect.innerText = 'Select picture';
-  const modalFilename = buildElement('div', {id: 'modal-filename'});
+  var modalFilename = buildElement('div', {id: 'modal-filename'});
   modalFilename.innerText = 'No file selected';
-  const modalFilezone = buildElement('div', {id: 'modal-filezone'});
+  var modalFilezone = buildElement('div', {id: 'modal-filezone'});
   modalFilezone.appendChild(modalFile);
   modalFilezone.appendChild(modalSelect);
   modalFilezone.appendChild(modalFilename);
 
   // 모달 컨텐츠 - 인포
-  const modalInfoName = buildElement('input', {type: 'text', id: 'modal-info-name', class: 'modal-info-inputs', placeholder: 'YOUR NAME'});
-  const modalInfoAge = buildElement('input', {type: 'text', id: 'modal-info-age', class: 'modal-info-inputs', placeholder: 'YOUR AGE'});
-  const modalInfoGender = buildElement('input', {type: 'text', id: 'modal-info-gender', class: 'modal-info-inputs', placeholder: 'YOUR GENDER'});
-  const modalInfo = buildElement('div', {id: 'modal-info'});
+  var modalInfoName = buildElement('input', {type: 'text', id: 'modal-info-name', class: 'modal-info-inputs', placeholder: 'YOUR NAME'});
+  var modalInfoAge = buildElement('input', {type: 'text', id: 'modal-info-age', class: 'modal-info-inputs', placeholder: 'YOUR AGE'});
+  var modalInfoGender = buildElement('input', {type: 'text', id: 'modal-info-gender', class: 'modal-info-inputs', placeholder: 'YOUR GENDER'});
+  var modalInfo = buildElement('div', {id: 'modal-info'});
   modalInfo.appendChild(modalInfoName);
   modalInfo.appendChild(modalInfoAge);
   modalInfo.appendChild(modalInfoGender);
-  const modalContents = buildElement('div', {id: 'modal-contents'});
+  var modalContents = buildElement('div', {id: 'modal-contents'});
 
   modalContents.appendChild(modalFilezone);
   modalContents.appendChild(modalInfo);
 
   //모달 풋터
-  const modalSave = buildElement('button', {id: 'modal-save'});
+  var modalSave = buildElement('button', {id: 'modal-save'});
   modalSave.innerText = 'Save profile';
-  const modalFooter = buildElement('div', {id: 'modal-footer'});
+  var modalFooter = buildElement('div', {id: 'modal-footer'});
   modalFooter.appendChild(modalSave);
 
-  const modalComponent = buildElement('div', {id: 'modal-component'});
+  var modalComponent = buildElement('div', {id: 'modal-component'});
   modalComponent.appendChild(modalHeader);
   modalComponent.appendChild(modalContents);
   modalComponent.appendChild(modalFooter);
   
-  const profileModal = document.getElementById('profile-modal');
+  var profileModal = document.getElementById('profile-modal');
   profileModal.appendChild(modalComponent);
   console.log(modalComponent);
 
