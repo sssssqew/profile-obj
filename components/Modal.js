@@ -153,23 +153,18 @@ function Modal(pageVariables) {
     const modalFilename = buildElement('div', {'id': 'modal-filename'});
     modalFilename.innerText = 'No file selected';
     const modalFilezone = buildElement('div', {'id': 'modal-filezone'});
-    modalFilezone.appendChild(modalFile);
-    modalFilezone.appendChild(modalSelect);
-    modalFilezone.appendChild(modalFilename);
+    modalFilezone.append(modalFile, modalSelect, modalFilename);
 
     // 모달 컨텐츠 - 인포
     const modalInfoName = buildElement('input', {'type': 'text', 'id': 'modal-info-name', 'class': 'modal-info-inputs', 'placeholder': 'YOUR NAME'});
     const modalInfoAge = buildElement('input', {'type': 'text', 'id': 'modal-info-age', 'class': 'modal-info-inputs', 'placeholder': 'YOUR AGE'});
     const modalInfoGender = buildElement('input', {'type': 'text', 'id': 'modal-info-gender', 'class': 'modal-info-inputs', 'placeholder': 'YOUR GENDER'});
     const modalInfo = buildElement('div', {'id': 'modal-info'});
-    modalInfo.appendChild(modalInfoName);
-    modalInfo.appendChild(modalInfoAge);
-    modalInfo.appendChild(modalInfoGender);
+    modalInfo.append(modalInfoName, modalInfoAge, modalInfoGender);
+    
     const modalContents = buildElement('div', {'id': 'modal-contents'});
-
-    modalContents.appendChild(modalFilezone);
-    modalContents.appendChild(modalInfo);
-
+    modalContents.append(modalFilezone, modalInfo);
+   
     //모달 풋터
     const modalSave = buildElement('button', {'id': 'modal-save'});
     modalSave.innerText = 'Save profile';
@@ -177,9 +172,7 @@ function Modal(pageVariables) {
     modalFooter.appendChild(modalSave);
 
     const modalComponent = buildElement('div', {'id': 'modal-component'});
-    modalComponent.appendChild(modalHeader);
-    modalComponent.appendChild(modalContents);
-    modalComponent.appendChild(modalFooter);
+    modalComponent.append(modalHeader, modalContents, modalFooter);
     
     const profileModal = document.getElementById('profile-modal');
     profileModal.appendChild(modalComponent);

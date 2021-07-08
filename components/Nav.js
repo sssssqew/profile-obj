@@ -10,8 +10,7 @@ function Nav(){
    const aboutNavBtn = buildElement('button', {'class': 'nav-btns', 'data-url':'/about'});
    aboutNavBtn.innerText = 'About';
    const navComponent = buildElement('div', {'id':'nav-component'});
-   navComponent.appendChild(homeNavBtn);
-   navComponent.appendChild(aboutNavBtn);
+   navComponent.append(homeNavBtn, aboutNavBtn);
 
    document.getElementById('profile-nav').appendChild(navComponent);
   }

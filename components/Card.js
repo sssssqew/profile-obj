@@ -13,8 +13,7 @@ function Card(){
 
     const cardName = buildElement('div', {'id': 'card-name'});
     const cardComponent = buildElement('div', {'id': 'card-component'});
-    cardComponent.appendChild(cardPicture);
-    cardComponent.appendChild(cardName);
+    cardComponent.append(cardPicture, cardName);
 
     const profileCardContainer = document.getElementById('profile-card-container');
     profileCardContainer.insertBefore(cardComponent, profileCardContainer.firstChild);
