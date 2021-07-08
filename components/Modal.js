@@ -136,6 +136,11 @@ function Modal(pageVariables) {
       console.log(pageVariables.userInfoData);
     }
   }
+  function handleEnterKeyPress(event){
+    if(event.keyCode === 13){
+      handleModalSave();
+    }
+  }
 
   // 컴포넌트 생성
   function buildComponent() {
@@ -198,7 +203,11 @@ document
 document
   .getElementById("modal-save")
   .addEventListener("click", handleModalSave);
+
+  document.getElementById("modal-info-gender").addEventListener("keypress", handleEnterKeyPress);
   }
+
+  
 
   function init(){
     buildComponent();
