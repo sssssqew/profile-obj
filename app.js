@@ -1,6 +1,8 @@
-import Home from './pages/Home.js';
+import router from './lib/router.js';
 
-Home();
+router('/');
+
+
 
 
 

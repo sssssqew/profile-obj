@@ -48,7 +48,6 @@ function Home(){
   }
   // 하위 컴포넌트 생성
   function addComponents(){
-    // 컴포넌트 초기 렌더링
     Nav();
     Card(); 
     Modal(pageVariables);
