@@ -9,26 +9,7 @@
   </head>
   <body>
     <div id="root">
-      <div id="profile-home">
-        <div id="profile-main">
-          <div id="profile-nav">
-            
-          </div>
-
-          <div id="profile-card">
-            <div id="profile-card-container">
-            
-              <button id="profile-submit">
-                submit profile
-              </button>
-            </div>
-          </div>
-        </div>
-
-        <div id="profile-modal" class="profile-modal">
-          
-        </div>
-      </div>
+     
     </div>
 
     <script type="module" src="app.js"></script>
@@ -213,6 +194,19 @@
   }
 
   // Home 페이지 생성
+  var homePage = buildElement('div', {'id': 'profile-home'}, [
+      buildElement('div', {'id': 'profile-main'}, [
+        buildElement('div', {'id': 'profile-nav'}),
+        buildElement('div', {'id': 'profile-card'}, [
+          buildElement('div', {'id': 'profile-card-container'}, [
+            buildElement('button', {'id': 'profile-submit'}, ['submit profile'])
+          ])
+        ])
+      ]),
+      buildElement('div', {'id': 'profile-modal', 'class': 'profile-modal'})
+    ]);
+
+    document.getElementById('root').appendChild(homePage);
 
   // 컴포넌트 생성
 
