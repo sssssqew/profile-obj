@@ -39,12 +39,28 @@
   var userInfoData = {};
 
   // helper
-  function buildElement(type, props){
-    var el = document.createElement(type);
-
-    for(var prop in props){
-      el.setAttribute(prop, props[prop]);
+  function setProperties(el, attrs){
+    if(attrs === undefined || attrs === null || Object.keys(attrs).length === 0) return;
+    for(var attr in attrs){
+      el.setAttribute(attr, attrs[attr]);
     }
+  }
+  function setContents(el, contents){
+    if(contents === undefined || contents === null || contents.length === 0) return;
+    contents.forEach(function(content){
+      // console.log(content, content instanceof Node)
+      if(content instanceof Node){
+        el.appendChild(content);
+      }else{
+        el.innerText = content;
+      }
+    })
+  }
+
+  function buildElement(type, attrs, contents){
+    var el = document.createElement(type);
+    setProperties(el, attrs);
+    setContents(el, contents);
     return el;
   }
 
@@ -199,76 +215,49 @@
   // TODO: 컴포넌트 생성
 
   // Nav 생성
-  var homeNavBtn = buildElement('button', {'class': 'nav-btns', 'data-url':'/'});
-  homeNavBtn.innerText = 'Home';
-  var aboutNavBtn = buildElement('button', {'class': 'nav-btns', 'data-url':'/about'});
-  aboutNavBtn.innerText = 'About';
-  var navComponent = buildElement('div', {'id':'nav-component'});
-  navComponent.appendChild(homeNavBtn);
-  navComponent.appendChild(aboutNavBtn);
+  var navComponent = buildElement('div', {'id':'nav-component'}, [
+    buildElement('button', {'class': 'nav-btns', 'data-url':'/'}, ['Home']),
+    buildElement('button', {'class': 'nav-btns', 'data-url':'/about'}, ['About'])
+  ]);
 
   document.getElementById('profile-nav').appendChild(navComponent);
 
   // Card 생성
-  var cardPictureImg = buildElement('img', {'class': 'card-picture-img', 'src': '', 'alt': ''})
-  var cardPicture = buildElement('div', {'id': 'card-picture'});
-  cardPicture.appendChild(cardPictureImg);
-
-  var cardName = buildElement('div', {'id': 'card-name'});
-  var cardComponent = buildElement('div', {'id': 'card-component'});
-  cardComponent.appendChild(cardPicture);
-  cardComponent.appendChild(cardName);
+  var cardComponent = buildElement('div', {'id': 'card-component'}, [
+    buildElement('div', {'id': 'card-picture'}, [
+      buildElement('img', {'class': 'card-picture-img', 'src': '', 'alt': ''})
+    ]),
+    buildElement('div', {'id': 'card-name'})
+  ]);
 
   var profileCardContainer = document.getElementById('profile-card-container');
   profileCardContainer.insertBefore(cardComponent, profileCardContainer.firstChild);
 
   // Modal 생성
-  
-  // 모달 헤더
-  var modalCancel = buildElement('button', {'id': 'modal-cancel', 'class': 'modal-cancel'});
-  modalCancel.innerText = 'X';
-  var modalHeader = buildElement('div', {'id': 'modal-header'});
-  modalHeader.innerText = 'Select profile picture & save your info.';
-  modalHeader.appendChild(modalCancel);
+  var modalComponent = buildElement('div', {'id': 'modal-component'}, [
+    buildElement('div', {'id': 'modal-header'}, [
+      'Select profile picture & save your info.',
+      buildElement('button', {'id': 'modal-cancel', 'class': 'modal-cancel'}, ['X'])
+    ]),
+    buildElement('div', {'id': 'modal-contents'}, [
+      buildElement('div', {'id': 'modal-filezone'}, [
+        buildElement('input', {'id': 'modal-file', 'type': 'file', 'accept': 'image/*'}),
+        buildElement('button', {'id': 'modal-select'}, ['Select picture']),
+        buildElement('div', {'id': 'modal-filename'}, ['No file selected'])
+      ]),
+      buildElement('div', {'id': 'modal-info'}, [
+        buildElement('input', {'type': 'text', 'id': 'modal-info-name', 'class': 'modal-info-inputs', 'placeholder': 'YOUR NAME'}),
+        buildElement('input', {'type': 'text', 'id': 'modal-info-age', 'class': 'modal-info-inputs', 'placeholder': 'YOUR AGE'}),
+        buildElement('input', {'type': 'text', 'id': 'modal-info-gender', 'class': 'modal-info-inputs', 'placeholder': 'YOUR GENDER'})
+      ])
+    ]),
+    buildElement('div', {'id': 'modal-footer'}, [
+      buildElement('button', {'id': 'modal-save'}, ['Save profile'])
+    ])
+  ]);
 
-  // 모달 컨텐츠 - 파일존
-  var modalFile = buildElement('input', {'id': 'modal-file', 'type': 'file', 'accept': 'image/*'});
-  var modalSelect = buildElement('button', {'id': 'modal-select'});
-  modalSelect.innerText = 'Select picture';
-  var modalFilename = buildElement('div', {'id': 'modal-filename'});
-  modalFilename.innerText = 'No file selected';
-  var modalFilezone = buildElement('div', {'id': 'modal-filezone'});
-  modalFilezone.appendChild(modalFile);
-  modalFilezone.appendChild(modalSelect);
-  modalFilezone.appendChild(modalFilename);
-
-  // 모달 컨텐츠 - 인포
-  var modalInfoName = buildElement('input', {'type': 'text', 'id': 'modal-info-name', 'class': 'modal-info-inputs', 'placeholder': 'YOUR NAME'});
-  var modalInfoAge = buildElement('input', {'type': 'text', 'id': 'modal-info-age', 'class': 'modal-info-inputs', 'placeholder': 'YOUR AGE'});
-  var modalInfoGender = buildElement('input', {'type': 'text', 'id': 'modal-info-gender', 'class': 'modal-info-inputs', 'placeholder': 'YOUR GENDER'});
-  var modalInfo = buildElement('div', {'id': 'modal-info'});
-  modalInfo.appendChild(modalInfoName);
-  modalInfo.appendChild(modalInfoAge);
-  modalInfo.appendChild(modalInfoGender);
-  var modalContents = buildElement('div', {'id': 'modal-contents'});
-
-  modalContents.appendChild(modalFilezone);
-  modalContents.appendChild(modalInfo);
-
-  //모달 풋터
-  var modalSave = buildElement('button', {'id': 'modal-save'});
-  modalSave.innerText = 'Save profile';
-  var modalFooter = buildElement('div', {'id': 'modal-footer'});
-  modalFooter.appendChild(modalSave);
-
-  var modalComponent = buildElement('div', {'id': 'modal-component'});
-  modalComponent.appendChild(modalHeader);
-  modalComponent.appendChild(modalContents);
-  modalComponent.appendChild(modalFooter);
-  
   var profileModal = document.getElementById('profile-modal');
   profileModal.appendChild(modalComponent);
-  console.log(modalComponent);
 
 
   // 익스플로러 9버전 이하에서도 동작하기 위한 핸들러 연결방법
