@@ -38,7 +38,9 @@ function Home(){
       buildElement('div', {'id': 'profile-modal', 'class': 'profile-modal'})
     ]);
 
-    document.getElementById('root').appendChild(homePage);
+    const rootEl = document.getElementById('root');
+    rootEl.innerHTML = '';
+    rootEl.appendChild(homePage);
   }
   // 이벤트 핸들러 연결
   function attachHandlers(){
