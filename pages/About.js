@@ -12,9 +12,9 @@ function About(){
     const aboutPage = buildElement('div', {'id': 'profile-about'}, [
       buildElement('div', {'id': 'profile-nav'}),
       buildElement('div', {'id': 'profile-contents'}, [
-        buildElement('p', {'id': 'profile-name'}, [userInfoData.userName]),
-        buildElement('p', {'id': 'profile-age'}, [userInfoData.userAge]),
-        buildElement('p', {'id': 'profile-gender'}, [userInfoData.userGender])
+        buildElement('p', {'id': 'profile-name'}, [userInfoData? userInfoData.userName: 'No name']),
+        buildElement('p', {'id': 'profile-age'}, [userInfoData? userInfoData.userAge: 'No age']),
+        buildElement('p', {'id': 'profile-gender'}, [userInfoData? userInfoData.userGender: 'No gender'])
       ]),
     ]);
     const rootEl = document.getElementById('root');
