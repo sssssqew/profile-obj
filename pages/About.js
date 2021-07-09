@@ -8,9 +8,14 @@ function About(){
   
   // 컴포넌트 생성
   function buildComponent(){
+    const userInfoData = JSON.parse(sessionStorage.getItem('userInfoData'));
     const aboutPage = buildElement('div', {'id': 'profile-about'}, [
       buildElement('div', {'id': 'profile-nav'}),
-      buildElement('div', {'id': 'profile-contents'}, ['About page']),
+      buildElement('div', {'id': 'profile-contents'}, [
+        buildElement('p', {'id': 'profile-name'}, [userInfoData.userName]),
+        buildElement('p', {'id': 'profile-age'}, [userInfoData.userAge]),
+        buildElement('p', {'id': 'profile-gender'}, [userInfoData.userGender])
+      ]),
     ]);
     const rootEl = document.getElementById('root');
     rootEl.innerHTML = '';

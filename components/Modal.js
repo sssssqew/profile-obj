@@ -81,9 +81,8 @@ function Modal(pageVariables) {
     return true;
   }
   function saveUserInfo(userName, userAge, userGender) {
-    pageVariables.userInfoData.userName = userName;
-    pageVariables.userInfoData.userAge = userAge;
-    pageVariables.userInfoData.userGender = userGender;
+    const userInfoData = {userName, userAge, userGender};
+    sessionStorage.setItem('userInfoData', JSON.stringify(userInfoData));
   }
   function setProfileName(userName) {
     document.getElementById("card-name").innerText = userName;
