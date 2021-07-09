@@ -168,7 +168,7 @@ function Modal(pageVariables) {
   
     const profileModal = document.getElementById('profile-modal');
     profileModal.appendChild(modalComponent);
-    console.log(modalComponent);
+    // console.log(modalComponent);
   }
 
   // 이벤트 핸들러 연결
