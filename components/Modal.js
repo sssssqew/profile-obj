@@ -1,6 +1,6 @@
 import buildElement from "../lib/helpers.js";
 
-function Modal({setProfilePicture}) {
+function Modal({setProfilePicture, setProfileName}) {
   const state = {
     loadedPictureData: ""
   }
@@ -87,9 +87,6 @@ function Modal({setProfilePicture}) {
     const userInfoData = {userName, userAge, userGender, userProfileImg: state.loadedPictureData};
     sessionStorage.setItem('userInfoData', JSON.stringify(userInfoData));
   }
-  function setProfileName(userName) {
-    document.getElementById("card-name").innerText = userName;
-  }
   
 
   // 이벤트 핸들러 정의
@@ -127,8 +124,8 @@ function Modal({setProfilePicture}) {
       alert("user information is not valid :(");
     } else {
       saveUserInfo(userName, userAge, userGender); // 프로필 정보 페이지에서 사용할 데이터 저장
-      setProfileName(userName);
       setProfilePicture(state.loadedPictureData);
+      setProfileName(userName);
       clearModal();
       hideModal();
     }

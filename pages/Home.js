@@ -22,7 +22,21 @@ function Home(){
     profileImg.src = userProfileImg;
     profileImg.classList.add("show-profileImg");
   }
-
+  function setProfileName(userName) {
+    document.getElementById("card-name").innerText = userName;
+  }
+  
+  // 새로고침 후에도 사진 데이터가 사라지지 않음
+  function fetchServer(){
+    const userInfoData = JSON.parse(sessionStorage.getItem('userInfoData'));
+    if(userInfoData && userInfoData.userProfileImg && userInfoData.userName){
+      setProfilePicture(userInfoData.userProfileImg);
+      setProfileName(userInfoData.userName);
+    }else{
+      console.log('No profile image yet :(');
+    }
+  }
+  
   // 이벤트 핸들러 정의
   function showModal() {
     document.getElementById("profile-modal").classList.add("show-modal");
@@ -59,13 +73,17 @@ function Home(){
   function addComponents(){
     Nav();
     Card(); 
-    Modal({setProfilePicture});
+    Modal({setProfilePicture, setProfileName});
+  }
+  function doSomethingRendering(){
+    fetchServer();
   }
 
   function init(){
     buildComponent();
     attachHandlers();
     addComponents();
+    doSomethingRendering(); // 렌더 이후 처리함수 (예 - 서버접속)
   }
   init(); // 컴포넌트 생성 + 이벤트핸들러 연결
 }
