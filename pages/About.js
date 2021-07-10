@@ -4,7 +4,9 @@ import Nav from '../components/Nav.js';
 
 function About(){
   // 이벤트 핸들러 정의
-  
+  function hideProfileImg(event) {
+    event.target.classList.remove("show-profileImg");
+  }
   
   // 컴포넌트 생성
   function buildComponent(){
@@ -32,7 +34,7 @@ function About(){
   }
   // 이벤트 핸들러 연결
   function attachHandlers(){
-  
+    document.getElementById('userInfo-profile').firstElementChild.addEventListener("error", hideProfileImg);
   }
   // 하위 컴포넌트 생성
   function addComponents(){
