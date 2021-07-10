@@ -75,7 +75,7 @@ function Home(){
     Card(); 
     Modal({setProfilePicture, setProfileName});
   }
-  function doSomethingRendering(){
+  function doSomethingAfterRendering(){
     fetchServer();
   }
 
@@ -83,7 +83,7 @@ function Home(){
     buildComponent();
     attachHandlers();
     addComponents();
-    doSomethingRendering(); // 렌더 이후 처리함수 (예 - 서버접속)
+    doSomethingAfterRendering(); // 렌더 이후 처리함수 (예 - 서버접속)
   }
   init(); // 컴포넌트 생성 + 이벤트핸들러 연결
 }

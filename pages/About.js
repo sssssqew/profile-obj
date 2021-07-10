@@ -41,7 +41,7 @@ function About(){
     Nav();
   }
 
-  function doSomethingRendering(){
+  function doSomethingAfterRendering(){
     const userInfoData = JSON.parse(sessionStorage.getItem('userInfoData'));
     if(userInfoData && userInfoData.userProfileImg){
       document.getElementById('userInfo-profile').firstElementChild.classList.add('show-profileImg'); // 프로필 사진 보여주기
@@ -52,7 +52,7 @@ function About(){
     buildComponent();
     attachHandlers();
     addComponents();
-    doSomethingRendering();
+    doSomethingAfterRendering();
   }
   init(); // 컴포넌트 생성 + 이벤트핸들러 연결
 }
