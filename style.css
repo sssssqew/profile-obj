@@ -1,3 +1,10 @@
+@import url('css/pages/home.css');
+@import url('css/pages/about.css');
+
+@import url('css/components/nav.css');
+@import url('css/components/card.css');
+@import url('css/components/modal.css');
+
  /* Global style */
  body {
   margin: 0;
@@ -5,197 +12,10 @@
   font-family: sans-serif;
 }
 
-#profile-home {
-  width: 100%;
-  height: 100vh;
-}
-#profile-main {
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-}
-/* nav component style */
-#nav-component {
-  display: flex;
-}
-.nav-btns {
-  margin: 5px;
-  border: none;
-  background: #f6bb43;
-  flex-grow: 1;
-  height: 50px;
-  font-size: 20px;
-  color: white;
-  cursor: pointer;
-}
-.nav-btns:hover{
-  background: #F2A405;
-}
-#profile-card {
-  flex-grow: 1;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-#profile-card-container {
-  width: 30%;
-  height: 400px;
-  display: flex;
-  flex-direction: column;
-}
-/* card component style */
-#card-component {
-  box-shadow: 3px 3px 30px 3px #fadb9b;
-  overflow: hidden;
-  flex-grow: 1;
-  display: flex;
-  flex-direction: column;
-  margin-bottom: 10px;
-  height: 100%; /* 익스플로러 10에서 사진크기에 따라 스크롤 생겨서 추가함 */
-}
-#card-picture {
-  overflow: hidden;
-  flex-grow: 1;
-  height: 100%; /* 익스플로러 10에서 사진크기에 따라 사진이 짤려서 추가함 */
-}
-.card-picture-img {
-  display: none;
-  width: 100%;
-  height: 100%;
-  image-rendering: -webkit-optimize-contrast;
-}
-.show-profileImg{
-  display: block !important;
-}
-#card-name {
-  margin: 15px;
-  font-size: 20px;
-  font-weight: 600;
-  color: #f8ad7b;
-  text-align: center;
-}
 
-#profile-submit {
-  border: none;
-  background: #f6bb43;
-  height: 50px;
-  font-size: 20px;
-  color: white;
-  cursor: pointer;
-}
-#profile-submit:hover{
-  background: #F2A405;
-}
 
-.profile-modal {
-  display: none;
-  position: fixed;
-  z-index: 1;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100vh;
-  background-color: rgba(0, 0, 0, 0.95);
-}
-.show-modal{
-  display: block;
-}
 
-/* modal component style */
-#modal-component {
-  border: 2px solid #f8ad7b;
-  background: rgba(0, 0, 0, 0.3);
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  display: flex;
-  flex-direction: column;
-  width: 30%;
-}
-#modal-header {
-  color: white;
-  background: #f8ad7b;
-  text-align: center;
-  font-size: 20px;
-  font-weight: 600;
-  padding: 10px;
-}
-.modal-cancel {
-  width: 50px;
-  height: 50px;
-  border: 2px solid rgba(0, 0, 0, 0.95);
-  border-radius: 50%;
-  font-size: 20px;
-  font-weight: 600;
-  background: white;
-  cursor: pointer;
-  transition: all 0.3s;
-}
-.modal-cancel:hover{
-  transform:rotate(-60deg);
-}
-#modal-contents {
-  flex-grow: 1;
-  margin: 20px;
-}
-#modal-filezone {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-}
-#modal-file {
-  display: none;
-}
-#modal-select {
-  margin-bottom: 10px;
-  padding: 8px;
-  border: none;
-  background: #f6bb43;
-  font-size: 15px;
-  font-weight: 600;
-  color: white;
-  cursor: pointer;
-  border-radius: 10px;
-}
-#modal-select:hover{
-  background: #F2A405;
-}
-#modal-filename {
-  color: #f6bb43;
-  font-weight: 600;
-  margin-left: 20px;
-}
-#modal-info {
-  display: flex;
-  flex-direction: column;
-}
-.modal-info-inputs {
-  outline: none;
-  border: none;
-  background: none;
-  border-bottom: 2px solid #f6bb43;
-  color: #f6bb43;
-  font-weight: 600;
-  padding-bottom: 5px;
-  margin-bottom: 7px;
-}
-#modal-footer {
-  display: flex;
-  justify-content: flex-end;
-}
-#modal-save {
-  padding: 10px;
-  border: none;
-  background: #f8ad7b;
-  font-size: 15px;
-  font-weight: 600;
-  color: white;
-  cursor: pointer;
-  border-radius: 10px;
-  margin-right: 10px;
-  margin-bottom: 10px;
-}
-#modal-save:hover{
-  background: #F78574;
-}
+
+
+
+

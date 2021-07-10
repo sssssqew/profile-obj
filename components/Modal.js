@@ -1,9 +1,12 @@
 import buildElement from "../lib/helpers.js";
 
-function Modal(pageVariables) {
+function Modal() {
+  const state = {
+    loadedPictureData: ""
+  }
   // 지역함수
   function clearModal() {
-    pageVariables.loadedPictureData = "";
+    state.loadedPictureData = "";
     document.getElementById("modal-info-name").value = "";
     document.getElementById("modal-info-age").value = "";
     document.getElementById("modal-info-gender").value = "";
@@ -25,8 +28,8 @@ function Modal(pageVariables) {
     var reader = new FileReader();
     reader.onload = function (e) {
       console.log("loaded profile picture!");
-      pageVariables.loadedPictureData = e.target.result;
-      // console.log(pageVariables.loadedPictureData)
+      state.loadedPictureData = e.target.result;
+      // console.log(state.loadedPictureData)
     };
     reader.readAsDataURL(fileData);
   }
@@ -81,7 +84,7 @@ function Modal(pageVariables) {
     return true;
   }
   function saveUserInfo(userName, userAge, userGender) {
-    const userInfoData = {userName, userAge, userGender};
+    const userInfoData = {userName, userAge, userGender, userProfileImg: state.loadedPictureData};
     sessionStorage.setItem('userInfoData', JSON.stringify(userInfoData));
   }
   function setProfileName(userName) {
@@ -89,7 +92,7 @@ function Modal(pageVariables) {
   }
   function setProfilePicture() {
     const profileImg = document.getElementById("card-picture").firstElementChild;
-    profileImg.src = pageVariables.loadedPictureData;
+    profileImg.src = state.loadedPictureData;
     profileImg.classList.add("show-profileImg");
   }
 
@@ -132,7 +135,6 @@ function Modal(pageVariables) {
       setProfilePicture();
       clearModal();
       hideModal();
-      console.log(pageVariables.userInfoData);
     }
   }
   function handleEnterKeyPress(event){

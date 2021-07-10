@@ -1,0 +1,17 @@
+/* nav component style */
+#nav-component {
+  display: flex;
+}
+.nav-btns {
+  margin: 5px;
+  border: none;
+  background: #f6bb43;
+  flex-grow: 1;
+  height: 50px;
+  font-size: 20px;
+  color: white;
+  cursor: pointer;
+}
+.nav-btns:hover{
+  background: #F2A405;
+}
