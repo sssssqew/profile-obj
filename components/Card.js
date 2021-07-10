@@ -6,13 +6,10 @@ function Card(){
     event.target.classList.remove("show-profileImg");
   }
   // 컴포넌트 생성
-  function buildComponent(){
-    const userInfoData = JSON.parse(sessionStorage.getItem('userInfoData'));
-    if(userInfoData) console.log(userInfoData.userName);
-    
+  function buildComponent(){  
     const cardComponent = buildElement('div', {'id': 'card-component'}, [
       buildElement('div', {'id': 'card-picture'}, [
-        buildElement('img', {'class': 'card-picture-img', 'src': `${(userInfoData && userInfoData.userProfileImg)? userInfoData.userProfileImg: ''}`, 'alt': ''})
+        buildElement('img', {'class': 'card-picture-img', 'src': '', 'alt': ''})
       ]),
       buildElement('div', {'id': 'card-name'})
     ]);

@@ -16,10 +16,12 @@ function About(){
           buildElement('div',{'id': 'userInfo-profile'}, [
             buildElement('img', {'class': 'userInfo-profile-img', 'src': `${(userInfoData && userInfoData.userProfileImg)? userInfoData.userProfileImg: ''}`, 'alt': ''})
           ]),
-          buildElement('div', {'id': 'userInfo-info'}, [
-            buildElement('p', {'id': 'profile-name'}, [(userInfoData && userInfoData.userName)? userInfoData.userName: '']),
-            buildElement('p', {'id': 'profile-age'}, [(userInfoData && userInfoData.userAge)? userInfoData.userAge: '']),
-            buildElement('p', {'id': 'profile-gender'}, [(userInfoData && userInfoData.userGender)? userInfoData.userGender: ''])
+          buildElement('div', {'id': 'userInfo-container'}, [
+            buildElement('div', {'id': 'userInfo-info'}, [
+              buildElement('p', {'id': 'profile-name'}, [(userInfoData && userInfoData.userName)? `Name: ${userInfoData.userName}`: '']),
+              buildElement('p', {'id': 'profile-age'}, [(userInfoData && userInfoData.userAge)? `Age: ${userInfoData.userAge}`: '']),
+              buildElement('p', {'id': 'profile-gender'}, [(userInfoData && userInfoData.userGender)? `Gender: ${userInfoData.userGender}`: ''])
+            ])
           ])
         ])
       ]),
@@ -37,10 +39,15 @@ function About(){
     Nav();
   }
 
+  function doSomethingRendering(){
+    document.getElementById('userInfo-profile').firstElementChild.classList.add('show-profileImg'); // 프로필 사진 보여주기
+  }
+
   function init(){
     buildComponent();
     attachHandlers();
     addComponents();
+    doSomethingRendering();
   }
   init(); // 컴포넌트 생성 + 이벤트핸들러 연결
 }
