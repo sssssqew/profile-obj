@@ -90,9 +90,9 @@ function Modal() {
   function setProfileName(userName) {
     document.getElementById("card-name").innerText = userName;
   }
-  function setProfilePicture() {
+  function setProfilePicture(userProfileImg) {
     const profileImg = document.getElementById("card-picture").firstElementChild;
-    profileImg.src = state.loadedPictureData;
+    profileImg.src = userProfileImg;
     profileImg.classList.add("show-profileImg");
   }
 
@@ -132,7 +132,7 @@ function Modal() {
     } else {
       saveUserInfo(userName, userAge, userGender); // 프로필 정보 페이지에서 사용할 데이터 저장
       setProfileName(userName);
-      setProfilePicture();
+      setProfilePicture(state.loadedPictureData);
       clearModal();
       hideModal();
     }
