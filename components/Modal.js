@@ -1,6 +1,6 @@
 import buildElement from "../lib/helpers.js";
 
-function Modal() {
+function Modal({setProfilePicture}) {
   const state = {
     loadedPictureData: ""
   }
@@ -90,11 +90,7 @@ function Modal() {
   function setProfileName(userName) {
     document.getElementById("card-name").innerText = userName;
   }
-  function setProfilePicture(userProfileImg) {
-    const profileImg = document.getElementById("card-picture").firstElementChild;
-    profileImg.src = userProfileImg;
-    profileImg.classList.add("show-profileImg");
-  }
+  
 
   // 이벤트 핸들러 정의
   function handleModalCancel() {

@@ -16,6 +16,13 @@ function Home(){
     // 컴포넌트에서는 {name, age, gender} 처럼 플어서 내부에서 참조하면 된다
   };
 
+  // 지역함수
+  function setProfilePicture(userProfileImg) {
+    const profileImg = document.getElementById("card-picture").firstElementChild;
+    profileImg.src = userProfileImg;
+    profileImg.classList.add("show-profileImg");
+  }
+
   // 이벤트 핸들러 정의
   function showModal() {
     document.getElementById("profile-modal").classList.add("show-modal");
@@ -52,7 +59,7 @@ function Home(){
   function addComponents(){
     Nav();
     Card(); 
-    Modal();
+    Modal({setProfilePicture});
   }
 
   function init(){
