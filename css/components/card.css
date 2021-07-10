@@ -1,6 +1,6 @@
 /* card component style */
 #card-component {
-  box-shadow: 1px 1px 3px 1px grey;
+  box-shadow: 1px 1px 20px 1px grey;
   overflow: hidden;
   flex-grow: 1;
   display: flex;
