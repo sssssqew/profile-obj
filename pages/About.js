@@ -42,7 +42,10 @@ function About(){
   }
 
   function doSomethingRendering(){
-    document.getElementById('userInfo-profile').firstElementChild.classList.add('show-profileImg'); // 프로필 사진 보여주기
+    const userInfoData = JSON.parse(sessionStorage.getItem('userInfoData'));
+    if(userInfoData && userInfoData.userProfileImg){
+      document.getElementById('userInfo-profile').firstElementChild.classList.add('show-profileImg'); // 프로필 사진 보여주기
+    } 
   }
 
   function init(){
