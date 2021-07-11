@@ -1,4 +1,4 @@
-import buildElement from '../lib/helpers.js';
+import {buildElement, updateElement} from '../lib/helpers.js';
 import router from '../lib/router.js';
 
 function Nav(){
@@ -11,11 +11,11 @@ function Nav(){
   // 컴포넌트 생성
   function buildComponent(){
    const navComponent = buildElement('div', {'id':'nav-component'}, [
-    buildElement('button', {'class': 'nav-btns', 'data-url':'/'}, ['Home']),
-    buildElement('button', {'class': 'nav-btns', 'data-url':'/about'}, ['About'])
+    buildElement('button', {'className': 'nav-btns', 'data-url':'/'}, ['Home']),
+    buildElement('button', {'className': 'nav-btns', 'data-url':'/about'}, ['About'])
    ]);
 
-   document.getElementById('profile-nav').appendChild(navComponent);
+   updateElement('profile-nav', {}, [navComponent]);
   }
 
   // 이벤트 핸들러 연결

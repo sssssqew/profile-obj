@@ -1,4 +1,4 @@
-import buildElement from '../lib/helpers.js';
+import {buildElement, updateElement} from '../lib/helpers.js';
 
 import Nav from '../components/Nav.js';
 import Card from '../components/Card.js';
@@ -18,12 +18,10 @@ function Home(){
 
   // 지역함수
   function setProfilePicture(userProfileImg) {
-    const profileImg = document.getElementById("card-picture").firstElementChild;
-    profileImg.src = userProfileImg;
-    profileImg.classList.add("show-profileImg");
+    updateElement('card-picture-img', {'src': userProfileImg, 'className': 'card-picture-img show-profileImg'});
   }
   function setProfileName(userName) {
-    document.getElementById("card-name").innerText = userName;
+    updateElement('card-name', {}, [userName]);
   }
   
   // 새로고침 후에도 사진 데이터가 사라지지 않음
@@ -39,7 +37,7 @@ function Home(){
   
   // 이벤트 핸들러 정의
   function showModal() {
-    document.getElementById("profile-modal").classList.add("show-modal");
+    updateElement('profile-modal', {'className': 'profile-modal show-modal'});
   }
   function handleProfileSubmit() {
     showModal();
@@ -56,12 +54,11 @@ function Home(){
           ])
         ])
       ]),
-      buildElement('div', {'id': 'profile-modal', 'class': 'profile-modal'})
+      buildElement('div', {'id': 'profile-modal', 'className': 'profile-modal'})
     ]);
 
-    const rootEl = document.getElementById('root');
-    rootEl.innerHTML = '';
-    rootEl.appendChild(homePage);
+    updateElement('root', {}, ['']);
+    updateElement('root', {}, [homePage]);
   }
   // 이벤트 핸들러 연결
   function attachHandlers(){

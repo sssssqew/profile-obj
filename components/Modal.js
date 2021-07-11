@@ -1,4 +1,4 @@
-import buildElement from "../lib/helpers.js";
+import {buildElement, updateElement} from '../lib/helpers.js';
 
 function Modal({setProfilePicture, setProfileName}) {
   const state = {
@@ -7,13 +7,13 @@ function Modal({setProfilePicture, setProfileName}) {
   // 지역함수
   function clearModal() {
     state.loadedPictureData = "";
-    document.getElementById("modal-info-name").value = "";
-    document.getElementById("modal-info-age").value = "";
-    document.getElementById("modal-info-gender").value = "";
-    document.getElementById("modal-filename").innerText = "No file selected";
+    updateElement('modal-info-name', {'value': ''});
+    updateElement('modal-info-age', {'value': ''});
+    updateElement('modal-info-gender', {'value': ''});
+    updateElement('modal-filename', {}, ["No file selected"]);
   }
   function hideModal() {
-    document.getElementById("profile-modal").classList.remove("show-modal");
+    updateElement('profile-modal', {'className': 'profile-modal'});
   }
   function validateFileExtension(fileData) {
     const fileType = fileData.type;
@@ -22,7 +22,7 @@ function Modal({setProfilePicture, setProfileName}) {
     return true;
   }
   function setUploadedFileName(fileData) {
-    document.getElementById("modal-filename").innerText = fileData.name;
+    updateElement('modal-filename', {}, [fileData.name]);
   }
   function loadPictureData(fileData) {
     var reader = new FileReader();
@@ -141,7 +141,7 @@ function Modal({setProfilePicture, setProfileName}) {
     const modalComponent = buildElement('div', {'id': 'modal-component'}, [
       buildElement('div', {'id': 'modal-header'}, [
         'Select profile picture & save your info.',
-        buildElement('button', {'id': 'modal-cancel', 'class': 'modal-cancel'}, ['X'])
+        buildElement('button', {'id': 'modal-cancel', 'className': 'modal-cancel'}, ['X'])
       ]),
       buildElement('div', {'id': 'modal-contents'}, [
         buildElement('div', {'id': 'modal-filezone'}, [
@@ -150,9 +150,9 @@ function Modal({setProfilePicture, setProfileName}) {
           buildElement('div', {'id': 'modal-filename'}, ['No file selected'])
         ]),
         buildElement('div', {'id': 'modal-info'}, [
-          buildElement('input', {'type': 'text', 'id': 'modal-info-name', 'class': 'modal-info-inputs', 'placeholder': 'YOUR NAME'}),
-          buildElement('input', {'type': 'text', 'id': 'modal-info-age', 'class': 'modal-info-inputs', 'placeholder': 'YOUR AGE'}),
-          buildElement('input', {'type': 'text', 'id': 'modal-info-gender', 'class': 'modal-info-inputs', 'placeholder': 'YOUR GENDER'})
+          buildElement('input', {'type': 'text', 'id': 'modal-info-name', 'className': 'modal-info-inputs', 'placeholder': 'YOUR NAME'}),
+          buildElement('input', {'type': 'text', 'id': 'modal-info-age', 'className': 'modal-info-inputs', 'placeholder': 'YOUR AGE'}),
+          buildElement('input', {'type': 'text', 'id': 'modal-info-gender', 'className': 'modal-info-inputs', 'placeholder': 'YOUR GENDER'})
         ])
       ]),
       buildElement('div', {'id': 'modal-footer'}, [
@@ -162,7 +162,6 @@ function Modal({setProfilePicture, setProfileName}) {
   
     const profileModal = document.getElementById('profile-modal');
     profileModal.appendChild(modalComponent);
-    // console.log(modalComponent);
   }
 
   // 이벤트 핸들러 연결

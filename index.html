@@ -21,16 +21,42 @@
 
   // helper
   function setProperties(el, attrs){
+    // 익스플로러 9 버전 미만은 Object.keys 지원 안한다
+    if (!Object.keys) {
+      Object.keys = function(obj) {
+        var keys = [];
+
+        for (var i in obj) {
+          if (obj.hasOwnProperty(i)) {
+            keys.push(i);
+          }
+        }
+
+        return keys;
+      };
+    }
     if(attrs === undefined || attrs === null || Object.keys(attrs).length === 0) return;
     for(var attr in attrs){
-      el.setAttribute(attr, attrs[attr]);
+      if(attr in el){
+        el[attr] = attrs[attr];
+      }else{
+        el.setAttribute(attr, attrs[attr]); // 비호환 속성인지 체크해서 비호환 속성이면 setAttribute 으로 처리하기 (예 : data-url)
+      }
     }
   }
   function setContents(el, contents){
+    // forEach 가 존재하지 않는 경우
+    if (!Array.prototype.forEach) {
+        Array.prototype.forEach = function(fn, scope) {
+            for(var i = 0, len = this.length; i < len; ++i) {
+                fn.call(scope, this[i], i, this);
+            }
+        }
+    }
     if(contents === undefined || contents === null || contents.length === 0) return;
     contents.forEach(function(content){
       // console.log(content, content instanceof Node)
-      if(content instanceof Node){
+      if(content instanceof Element){
         el.appendChild(content);
       }else{
         el.innerText = content;
@@ -40,6 +66,15 @@
 
   function buildElement(type, attrs, contents){
     var el = document.createElement(type);
+    setProperties(el, attrs);
+    setContents(el, contents);
+    return el;
+  }
+  function updateElement(id, attrs, contents){
+    var el = document.getElementById(id);
+    if(el === null){ // 검색한 DOM이 존재하지 않는 경우
+      throw "Can't search dom element !";
+    } 
     setProperties(el, attrs);
     setContents(el, contents);
     return el;
@@ -110,10 +145,10 @@
     reader.readAsDataURL(fileData);
   }
   function showModal(){
-    document.getElementById('profile-modal').classList.add('show-modal');
+    updateElement('profile-modal', {'className': 'profile-modal show-modal'});
   }
   function hideModal(){
-    document.getElementById('profile-modal').classList.remove('show-modal');
+    updateElement('profile-modal', {'className': 'profile-modal'});
   }
   function clearModal(){
     loadedPictureData = "";
@@ -140,7 +175,7 @@
   }
 // Define Event handlers
   function hideProfileImg(event){
-    event.target.classList.remove("show-profileImg");
+    updateElement(event.target.id, {'className': 'card-picture-img'});
   }
   function clearFileCash(event){ // 익스플로러 10에서는 동작하지 않음
     console.log(event.target);
@@ -221,7 +256,7 @@
   // Card 생성
   var cardComponent = buildElement('div', {'id': 'card-component'}, [
     buildElement('div', {'id': 'card-picture'}, [
-      buildElement('img', {'class': 'card-picture-img', 'src': '', 'alt': ''})
+      buildElement('img', {'id': 'card-picture-img', 'class': 'card-picture-img', 'src': '', 'alt': ''})
     ]),
     buildElement('div', {'id': 'card-name'})
   ]);

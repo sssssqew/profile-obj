@@ -1,11 +1,10 @@
-import buildElement from '../lib/helpers.js';
-
+import {buildElement, updateElement} from '../lib/helpers.js';
 import Nav from '../components/Nav.js';
 
 function About(){
   // 이벤트 핸들러 정의
   function hideProfileImg(event) {
-    event.target.classList.remove("show-profileImg");
+    updateElement(event.target.id, {'className': 'userInfo-profile-img'});
   }
   
   // 컴포넌트 생성
@@ -16,7 +15,7 @@ function About(){
       buildElement('div', {'id': 'profile-contents'}, [
         buildElement('div', {'id': 'userInfo-component'}, [
           buildElement('div',{'id': 'userInfo-profile'}, [
-            buildElement('img', {'class': 'userInfo-profile-img', 'src': `${(userInfoData && userInfoData.userProfileImg)? userInfoData.userProfileImg: ''}`, 'alt': ''})
+            buildElement('img', {'id': 'userInfo-profile-img', 'className': 'userInfo-profile-img', 'src': `${(userInfoData && userInfoData.userProfileImg)? userInfoData.userProfileImg: ''}`, 'alt': ''})
           ]),
           buildElement('div', {'id': 'userInfo-container'}, [
             buildElement('div', {'id': 'userInfo-info'}, [
@@ -28,13 +27,13 @@ function About(){
         ])
       ]),
     ]);
-    const rootEl = document.getElementById('root');
-    rootEl.innerHTML = '';
-    rootEl.appendChild(aboutPage);
+
+    updateElement('root', {}, ['']);
+    updateElement('root', {}, [aboutPage]);
   }
   // 이벤트 핸들러 연결
   function attachHandlers(){
-    document.getElementById('userInfo-profile').firstElementChild.addEventListener("error", hideProfileImg);
+    document.getElementById('userInfo-profile-img').addEventListener("error", hideProfileImg);
   }
   // 하위 컴포넌트 생성
   function addComponents(){
@@ -44,7 +43,7 @@ function About(){
   function doSomethingAfterRendering(){
     const userInfoData = JSON.parse(sessionStorage.getItem('userInfoData'));
     if(userInfoData && userInfoData.userProfileImg){
-      document.getElementById('userInfo-profile').firstElementChild.classList.add('show-profileImg'); // 프로필 사진 보여주기
+      updateElement('userInfo-profile-img', {'className': 'userInfo-profile-img show-profileImg'}); // 프로필 사진 보여주기
     } 
   }
 
