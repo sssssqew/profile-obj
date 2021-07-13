@@ -159,9 +159,8 @@ function Modal({setProfilePicture, setProfileName}) {
         buildElement('button', {'id': 'modal-save'}, ['Save profile'])
       ])
     ]);
-  
-    const profileModal = document.getElementById('profile-modal');
-    profileModal.appendChild(modalComponent);
+
+    updateElement('profile-modal', {}, [modalComponent]);
   }
 
   // 이벤트 핸들러 연결
