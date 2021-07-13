@@ -1,4 +1,4 @@
-import {buildElement, updateElement} from '../lib/helpers.js';
+import {buildElement, updateElement, $} from '../lib/helpers.js';
 
 import Nav from '../components/Nav.js';
 import Card from '../components/Card.js';
@@ -24,7 +24,7 @@ function Home(){
   // 새로고침 후에도 사진 데이터가 사라지지 않음
   function fetchServer(){
     const userInfoData = JSON.parse(sessionStorage.getItem('userInfoData'));
-    if(userInfoData && userInfoData.userProfileImg && userInfoData.userName){
+    if($(userInfoData).userProfileImg && $(userInfoData).userName){
       setProfilePicture(userInfoData.userProfileImg);
       setProfileName(userInfoData.userName);
     }else{
