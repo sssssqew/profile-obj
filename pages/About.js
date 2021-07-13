@@ -1,4 +1,4 @@
-import {buildElement, updateElement} from '../lib/helpers.js';
+import {buildElement, updateElement, $} from '../lib/helpers.js';
 import Nav from '../components/Nav.js';
 
 function About(){
@@ -15,13 +15,13 @@ function About(){
       buildElement('div', {'id': 'profile-contents'}, [
         buildElement('div', {'id': 'userInfo-component'}, [
           buildElement('div',{'id': 'userInfo-profile'}, [
-            buildElement('img', {'id': 'userInfo-profile-img', 'className': 'userInfo-profile-img', 'src': `${(userInfoData && userInfoData.userProfileImg)? userInfoData.userProfileImg: ''}`, 'alt': ''})
+            buildElement('img', {'id': 'userInfo-profile-img', 'className': 'userInfo-profile-img', 'src': `${$(userInfoData).userProfileImg? userInfoData.userProfileImg: ''}`, 'alt': ''})
           ]),
           buildElement('div', {'id': 'userInfo-container'}, [
             buildElement('div', {'id': 'userInfo-info'}, [
-              buildElement('p', {'id': 'profile-name'}, [(userInfoData && userInfoData.userName)? `Name: ${userInfoData.userName}`: '']),
-              buildElement('p', {'id': 'profile-age'}, [(userInfoData && userInfoData.userAge)? `Age: ${userInfoData.userAge}`: '']),
-              buildElement('p', {'id': 'profile-gender'}, [(userInfoData && userInfoData.userGender)? `Gender: ${userInfoData.userGender}`: ''])
+              buildElement('p', {'id': 'profile-name'}, [$(userInfoData).userName? `Name: ${userInfoData.userName}`: '']),
+              buildElement('p', {'id': 'profile-age'}, [$(userInfoData).userAge? `Age: ${userInfoData.userAge}`: '']),
+              buildElement('p', {'id': 'profile-gender'}, [$(userInfoData).userGender? `Gender: ${userInfoData.userGender}`: ''])
             ])
           ])
         ])
