@@ -1,4 +1,5 @@
 import router from './lib/router.js';
+import calcularTest from './test/calcular-test.js';
 
 window.popped = false;
 
@@ -8,6 +9,8 @@ window.addEventListener('popstate', function(event){
   window.popped = true;
   router(event.state);
 })
+
+calcularTest()
 
 
 
