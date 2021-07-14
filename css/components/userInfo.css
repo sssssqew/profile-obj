@@ -35,12 +35,16 @@
 }
 
 #userInfo-info{
-  font-size: 17px;
+  font-size: 15px;
   font-weight: 700;
   color: #f8ad7b;
   height: 100%;
   /* border: 3px solid black; */
   text-align: left;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: start;
 }
 
 /* #userInfo-info p{
@@ -49,6 +53,8 @@
 } */
 
 #profile-name, #profile-age, #profile-gender{
+  /* border: 1px solid red; */
+  margin: 0;
   animation: fadeIn 1s linear;
 }
 
