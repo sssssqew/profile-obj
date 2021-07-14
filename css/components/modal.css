@@ -28,6 +28,7 @@
   background: white;
   cursor: pointer;
   transition: all 0.3s;
+  margin-left: 10px;
 }
 .modal-cancel:hover{
   transform:rotate(-60deg);

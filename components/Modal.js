@@ -140,7 +140,7 @@ function Modal({setProfilePicture, setProfileName}) {
   function buildComponent() {
     const modalComponent = buildElement('div', {'id': 'modal-component'}, [
       buildElement('div', {'id': 'modal-header'}, [
-        'Select profile picture & save your info.',
+        'Select profile picture & save your info',
         buildElement('button', {'id': 'modal-cancel', 'className': 'modal-cancel'}, ['X'])
       ]),
       buildElement('div', {'id': 'modal-contents'}, [
