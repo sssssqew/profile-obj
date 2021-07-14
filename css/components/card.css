@@ -12,6 +12,7 @@
   overflow: hidden;
   flex-grow: 1;
   height: 100%; /* 익스플로러 10에서 사진크기에 따라 사진이 짤려서 추가함 */
+  background-color: #E8E9EB;
 }
 .card-picture-img {
   display: none;
