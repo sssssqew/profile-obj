@@ -1,10 +1,16 @@
-import {buildElement, updateElement} from '../lib/helpers.js';
+import {buildElement, updateElement, displayMessage} from '../lib/helpers.js';
 
 function Modal({setProfilePicture, setProfileName}) {
   const state = {
     loadedPictureData: ""
   }
   // 지역함수
+  function showAlert(msg, duration){
+    setTimeout(function(){
+      updateElement('alert-component', {'className': 'alert-component show-alert'})
+      updateElement('alert-msg', {}, [msg])
+    }, duration)
+  }
   function clearModal() {
     state.loadedPictureData = "";
     updateElement('modal-info-name', {'value': ''});
@@ -128,6 +134,8 @@ function Modal({setProfilePicture, setProfileName}) {
       setProfileName(userName);
       clearModal();
       hideModal();
+      showAlert('profile updated successfully !', 1000);
+      // displayMessage('profile updated successfully !', 1000);
     }
   }
   function handleEnterKeyPress(event){

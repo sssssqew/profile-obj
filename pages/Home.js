@@ -3,6 +3,7 @@ import {buildElement, updateElement, $} from '../lib/helpers.js';
 import Nav from '../components/Nav.js';
 import Card from '../components/Card.js';
 import Modal from '../components/Modal.js';
+import Alert from '../components/Alert.js';
 
 function Home(){
   // state
@@ -51,7 +52,8 @@ function Home(){
           ])
         ])
       ]),
-      buildElement('div', {'id': 'profile-modal', 'className': 'profile-modal'})
+      buildElement('div', {'id': 'profile-modal', 'className': 'profile-modal'}),
+      buildElement('div', {'id': 'profile-alert'})
     ]);
 
     updateElement('root', {}, ['']);
@@ -68,6 +70,7 @@ function Home(){
     Nav();
     Card(); 
     Modal({setProfilePicture, setProfileName});
+    Alert();
   }
   function doSomethingAfterRendering(){
     fetchServer();

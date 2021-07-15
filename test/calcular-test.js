@@ -7,7 +7,7 @@ function calcularTest(){
   })
   
   test('should subtract two numbers', () => {
-    console.assert(subtract(3, 2) !== 1, 'subtract function failed !');
+    console.assert(subtract(3, 2) === 1, 'subtract function failed !');
   })
   run()
 }
