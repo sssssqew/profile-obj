@@ -1,7 +1,7 @@
-import calcularTest from './calcular-test.js';
+import cardComponentTest from './card-test.js';
 
 function testAllModules(){
-  calcularTest()
+  cardComponentTest()
 }
 
 export default testAllModules
