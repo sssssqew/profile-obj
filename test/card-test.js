@@ -1,6 +1,8 @@
 import {test, run} from '../lib/test.js';
 import {buildElement, updateElement} from '../lib/helpers.js';
 
+// img 태그의 src에 유효하지 않은 값을 주면 error가 발생한다
+// error 발생 이후 클래스 이름이 변경되어야 한다
 function cardComponentTest(){
   test('should hide profile image on error', () => {
     // ui 생성
