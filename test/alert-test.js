@@ -1,5 +1,5 @@
 import {test, doSomethingAfterEvent} from '../lib/test.js';
-import {buildElement, updateElement} from '../lib/helpers.js';
+import {buildElement, updateElement, readElementProp} from '../lib/helpers.js';
 
 // img 태그의 src에 유효하지 않은 값을 주면 error가 발생한다
 // error 발생 이후 클래스 이름이 변경되어야 한다
@@ -38,8 +38,8 @@ function alertComponentTest(){
         console.log('Canceling alert is failed! - alert');
       }
       // 결과값 비교
-      console.assert(document.getElementById('alert-component').className === 'alert-component', 'alert is not hidden !');
-      console.assert(document.getElementById('alert-msg').innerText === '', 'alert msg is not cleared !');
+      console.assert(readElementProp('alert-component', 'className') === 'alert-component', 'alert is not hidden !');
+      console.assert(readElementProp('alert-msg', 'innerText') === '', 'alert msg is not cleared !');
       // dom 해제
       document.body.removeChild(alertComponent)
     })
