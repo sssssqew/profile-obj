@@ -3,7 +3,7 @@ import testAllModules from './test/index.js';
 
 window.popped = false;
 
-router('/');
+// router('/');
 
 window.addEventListener('popstate', function(event){
   window.popped = true;
