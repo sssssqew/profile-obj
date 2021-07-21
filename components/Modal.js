@@ -1,4 +1,4 @@
-import {buildElement, updateElement, displayMessage} from '../lib/helpers.js';
+import {buildElement, updateElement, displayMessage, searchElement} from '../lib/helpers.js';
 
 function Modal({setProfilePicture, setProfileName}) {
   const state = {
@@ -118,12 +118,12 @@ function Modal({setProfilePicture, setProfileName}) {
     loadPictureData(selectedFiles[0]);
   }
   function handlePictureSelect() {
-    document.getElementById("modal-file").click();
+    searchElement("modal-file").click();
   }
   function handleModalSave() {
-    const userName = document.getElementById("modal-info-name").value.trim();
-    const userAge = document.getElementById("modal-info-age").value.trim();
-    const userGender = document.getElementById("modal-info-gender").value.trim();
+    const userName = searchElement("modal-info-name").value.trim();
+    const userAge = searchElement("modal-info-age").value.trim();
+    const userGender = searchElement("modal-info-gender").value.trim();
   
     // 입력 데이터 검증
     if (!validateInputData(userName, userAge, userGender)) {
@@ -173,28 +173,19 @@ function Modal({setProfilePicture, setProfileName}) {
 
   // 이벤트 핸들러 연결
   function attachHandlers() {
-    document
-  .getElementById("modal-cancel")
-  .addEventListener("click", handleModalCancel);
+    searchElement("modal-cancel")
+      .addEventListener("click", handleModalCancel);searchElement("modal-file").addEventListener("click", clearFileCash);
 
-document.getElementById("modal-file").addEventListener("click", clearFileCash);
+    searchElement("modal-file")
+      .addEventListener("change", handlePictureUpload);
 
-document
-  .getElementById("modal-file")
-  .addEventListener("change", handlePictureUpload);
+    searchElement("modal-select")
+      .addEventListener("click", handlePictureSelect);
 
-document
-  .getElementById("modal-select")
-  .addEventListener("click", handlePictureSelect);
-
-document
-  .getElementById("modal-save")
-  .addEventListener("click", handleModalSave);
-
-  document.getElementById("modal-info-gender").addEventListener("keypress", handleEnterKeyPress);
+    searchElement("modal-save")
+      .addEventListener("click", handleModalSave);
+    searchElement("modal-info-gender").addEventListener("keypress", handleEnterKeyPress);
   }
-
-  
 
   function init(){
     buildComponent();

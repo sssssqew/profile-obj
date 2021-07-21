@@ -1,4 +1,4 @@
-import {buildElement, updateElement} from '../lib/helpers.js';
+import {buildElement, updateElement, searchElement} from '../lib/helpers.js';
 
 function Alert(){
   // 이벤트 핸들러 정의
@@ -20,7 +20,7 @@ function Alert(){
   }
   // 이벤트 핸들러 연결
   function attachHandlers(){
-    document.getElementById('alert-msg').addEventListener('click', handleAlertCancel)
+    searchElement('alert-msg').addEventListener('click', handleAlertCancel)
   }
   function init(){
     buildComponent();

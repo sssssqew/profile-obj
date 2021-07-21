@@ -1,4 +1,4 @@
-import {buildElement, updateElement} from '../lib/helpers.js';
+import {buildElement, updateElement, searchElement} from '../lib/helpers.js';
 
 function Card(){
   // 이벤트 핸들러 정의
@@ -15,12 +15,12 @@ function Card(){
     ]);
 
     // 부모 노드에 자식 노드가 있을때는 앞뒤로 삽입해야 하므로 updateElement 함수는 사용하기 힘들다
-    const profileCardContainer = document.getElementById('profile-card-container');
+    const profileCardContainer = searchElement('profile-card-container');
     profileCardContainer.insertBefore(cardComponent, profileCardContainer.firstChild);
   }
   // 이벤트 핸들러 연결
   function attachHandlers(){
-    document.getElementById('card-picture-img').addEventListener("error", hideProfileImg);
+    searchElement('card-picture-img').addEventListener("error", hideProfileImg);
   }
   function init(){
     buildComponent();

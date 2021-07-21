@@ -1,4 +1,4 @@
-import {buildElement, updateElement, $} from '../lib/helpers.js';
+import {buildElement, updateElement, $, searchElement} from '../lib/helpers.js';
 import router from '../lib/router.js';
 
 function UserInfo(){
@@ -28,7 +28,7 @@ function UserInfo(){
 
   // 이벤트 핸들러 연결
   function attachHandlers(){
-    document.getElementById('userInfo-profile-img').addEventListener("error", hideProfileImg);
+    searchElement('userInfo-profile-img').addEventListener("error", hideProfileImg);
   }
   
   function init(){

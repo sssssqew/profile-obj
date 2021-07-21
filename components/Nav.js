@@ -1,4 +1,4 @@
-import {buildElement, updateElement} from '../lib/helpers.js';
+import {buildElement, updateElement, searchElement} from '../lib/helpers.js';
 import router from '../lib/router.js';
 
 function Nav(){
@@ -20,7 +20,7 @@ function Nav(){
 
   // 이벤트 핸들러 연결
   function attachHandlers(){
-    document.getElementById('nav-component').addEventListener('click', handleNavigation);
+    searchElement('nav-component').addEventListener('click', handleNavigation);
   }
   
   function init(){
