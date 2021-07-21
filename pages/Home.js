@@ -1,4 +1,4 @@
-import {buildElement, updateElement, $} from '../lib/helpers.js';
+import {buildElement, updateElement, $, searchElement} from '../lib/helpers.js';
 
 import Nav from '../components/Nav.js';
 import Card from '../components/Card.js';
@@ -61,9 +61,7 @@ function Home(){
   }
   // 이벤트 핸들러 연결
   function attachHandlers(){
-    document
-  .getElementById("profile-submit")
-  .addEventListener("click", handleProfileSubmit);
+    searchElement("profile-submit").addEventListener("click", handleProfileSubmit);
   }
   // 하위 컴포넌트 생성
   function addComponents(){
