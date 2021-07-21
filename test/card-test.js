@@ -15,7 +15,7 @@ function cardComponentTest(){
     // 이벤트핸들러 정의
     function registHandler(resolve){
       function hideProfileImg(event) {
-        console.log('image is broken on testing ...')
+        console.log('profile image is broken on testing ...')
         updateElement(event.target.id, {'className': 'card-picture-img'});
         resolve(true)
       }
@@ -25,12 +25,14 @@ function cardComponentTest(){
     // 이벤트핸들러 연결 및 사후처리 (이벤트처리 완료후 결과값을 비교해야 하므로 Promise 사용함)
     doSomethingAfterEvent(registHandler).then(function(done){
       if(done){
-        console.log('event handling is done! - card')
-        // 결과값 비교
-        console.assert(document.getElementById('card-picture-img').className === 'card-picture-img', 'hideProfileImg function failed !');
-        // dom 해제
-        document.body.removeChild(profileImg)
+        console.log('event handling is done successfully! - card')
+      }else{
+        console.log('event handling is failed! - card')
       }
+      // 결과값 비교
+      console.assert(document.getElementById('card-picture-img').className === 'card-picture-img', 'hideProfileImg function failed !');
+      // dom 해제
+      document.body.removeChild(profileImg)
     })
     
     // 이벤트 발생 (이미지를 읽어들이는 시간 때문에 비동기 Promise 사용함)

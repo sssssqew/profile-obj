@@ -19,7 +19,7 @@ function alertComponentTest(){
        
         // css pseudo element 는 자바스크립트로 클릭할 수 없어서 X 버튼 주변 영역을 클릭했을때 이벤트 처리함
         if(mousePoint.x > this.offsetWidth - 50 && mousePoint.y > this.offsetHeight - 50){
-          console.log('clicked X button on testing ...')
+          console.log('clicked Alert X button on testing ...')
           updateElement('alert-component', {'className': 'alert-component'})
           updateElement('alert-msg', {}, [''])
           resolve(true)
