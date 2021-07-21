@@ -1,5 +1,5 @@
 import {test, doSomethingAfterEvent} from '../lib/test.js';
-import {buildElement, updateElement, readElementProp} from '../lib/helpers.js';
+import {buildElement, updateElement, readElementProp, searchElement} from '../lib/helpers.js';
 
 // img 태그의 src에 유효하지 않은 값을 주면 error가 발생한다
 // error 발생 이후 클래스 이름이 변경되어야 한다
@@ -22,8 +22,8 @@ function cardComponentTest(){
       function handleImgLoad(){
         resolve(false)
       }
-      document.getElementById('card-picture-img').addEventListener("load", handleImgLoad);
-      document.getElementById('card-picture-img').addEventListener("error", hideProfileImg);
+      searchElement('card-picture-img').addEventListener("load", handleImgLoad);
+      searchElement('card-picture-img').addEventListener("error", hideProfileImg);
     }
 
     // 이벤트핸들러 연결 및 사후처리 (이벤트처리 완료후 결과값을 비교해야 하므로 Promise 사용함)
