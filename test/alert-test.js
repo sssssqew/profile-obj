@@ -33,9 +33,9 @@ function alertComponentTest(){
     // 이벤트핸들러 연결 및 사후처리
     doSomethingAfterEvent(registHandler).then(function(done){
       if(done){
-        console.log('event handling is done successfully! - alert');
+        console.log('Canceling alert is done successfully! - alert');
       }else{
-        console.log('event handling is failed! - alert');
+        console.log('Canceling alert is failed! - alert');
       }
       // 결과값 비교
       console.assert(document.getElementById('alert-component').className === 'alert-component', 'alert is not hidden !');

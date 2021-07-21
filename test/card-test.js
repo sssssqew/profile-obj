@@ -19,18 +19,22 @@ function cardComponentTest(){
         updateElement(event.target.id, {'className': 'card-picture-img'});
         resolve(true)
       }
+      function handleImgLoad(){
+        resolve(false)
+      }
+      document.getElementById('card-picture-img').addEventListener("load", handleImgLoad);
       document.getElementById('card-picture-img').addEventListener("error", hideProfileImg);
     }
 
     // 이벤트핸들러 연결 및 사후처리 (이벤트처리 완료후 결과값을 비교해야 하므로 Promise 사용함)
     doSomethingAfterEvent(registHandler).then(function(done){
       if(done){
-        console.log('event handling is done successfully! - card')
+        console.log('Hiding profile image is done successfully! - card')
       }else{
-        console.log('event handling is failed! - card')
+        console.log('Hiding profile image is failed! - card')
       }
       // 결과값 비교
-      console.assert(document.getElementById('card-picture-img').className === 'card-picture-img', 'hideProfileImg function failed !');
+      console.assert(document.getElementById('card-picture-img').className === 'card-picture-img', 'profile image is not hidden !');
       // dom 해제
       document.body.removeChild(profileImg)
     })
