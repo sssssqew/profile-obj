@@ -1,10 +1,12 @@
-import {test, doSomethingAfterEvent} from '../lib/test.js';
+import {test, isFunction, doSomethingAfterEvent} from '../lib/test.js';
 import {buildElement, updateElement, readElementProp, searchElement} from '../lib/helpers.js';
 
 // img 태그의 src에 유효하지 않은 값을 주면 error가 발생한다
 // error 발생 이후 클래스 이름이 변경되어야 한다
 function alertComponentTest(){
-  test('should cancel alert when click X button', () => {
+  test('should cancel alert when click X button', null, (beforeTest) => {
+    if(isFunction(beforeTest)) beforeTest() // 테스트 직전 실행할 코드
+
     // ui 생성
     const alertComponent = buildElement('div', {'id': 'alert-component', 'className': 'alert-component show-alert'}, [
       buildElement('div', {'id': 'alert-msg'}, ['this is alert component']),
