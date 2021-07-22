@@ -44,6 +44,7 @@ function alertComponentTest(){
       console.assert(readElementProp('alert-msg', 'innerText') === '', 'alert msg is not cleared !');
       // dom 해제
       document.body.removeChild(alertComponent)
+      console.log('\n')
     })
      
     // 이벤트 발생

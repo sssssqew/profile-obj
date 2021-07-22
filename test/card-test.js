@@ -39,6 +39,7 @@ function cardComponentTest(){
       console.assert(readElementProp('card-picture-img', 'className') === 'card-picture-img', 'profile image is not hidden !');
       // dom 해제
       document.body.removeChild(profileImg)
+      console.log('\n')
     })
     
     // 이벤트 발생 (이미지를 읽어들이는 시간 때문에 비동기 Promise 사용함)
