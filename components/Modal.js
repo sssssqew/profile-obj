@@ -174,7 +174,9 @@ function Modal({setProfilePicture, setProfileName}) {
   // 이벤트 핸들러 연결
   function attachHandlers() {
     searchElement("modal-cancel")
-      .addEventListener("click", handleModalCancel);searchElement("modal-file").addEventListener("click", clearFileCash);
+      .addEventListener("click", handleModalCancel);
+    
+    searchElement("modal-file").addEventListener("click", clearFileCash);
 
     searchElement("modal-file")
       .addEventListener("change", handlePictureUpload);
