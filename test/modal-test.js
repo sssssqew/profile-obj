@@ -1,4 +1,4 @@
-import {test, isFunction, doSomethingAfterEvent} from '../lib/test.js';
+import {test} from '../lib/test.js';
 import {buildElement, updateElement, readElementProp, searchElement} from '../lib/helpers.js';
 
 function createModalComponent(){
@@ -27,10 +27,11 @@ function createModalComponent(){
   ])
   document.body.appendChild(modalComponent)
 }
-function modalComponentTest(){
-  test('should clear and hide modal when clicked X button', createModalComponent, (beforeTest) => {
-    if(isFunction(beforeTest)) beforeTest() // 모달창 생성 및 렌더링
 
+
+function modalComponentTest(){
+  test('should clear and hide modal when clicked X button', () => {
+    createModalComponent()
     const state = {loadedPictureData: 'test data'};
     
     function setModalComponent(){
@@ -43,35 +44,28 @@ function modalComponentTest(){
     setModalComponent()
 
     // 이벤트핸들러 정의
-    function registHandler(resolve){
-      function clearModal() {
-        console.log('clearing modal on testing ...')
-        state.loadedPictureData = "";
-        updateElement('modal-info-name', {'value': ''});
-        updateElement('modal-info-age', {'value': ''});
-        updateElement('modal-info-gender', {'value': ''});
-        updateElement('modal-filename', {}, ["No file selected"]);
-      }
-      function hideModal() {
-        console.log('Hiding modal on testing ...')
-        updateElement('profile-modal', {'className': 'profile-modal'});
-      }
-      function handleModalCancel() {
-        clearModal();
-        hideModal();
-        resolve(true);
-      }
-      searchElement("modal-cancel").addEventListener("click", handleModalCancel);
+    function clearModal() {
+      console.log('clearing modal on testing ...')
+      state.loadedPictureData = "";
+      updateElement('modal-info-name', {'value': ''});
+      updateElement('modal-info-age', {'value': ''});
+      updateElement('modal-info-gender', {'value': ''});
+      updateElement('modal-filename', {}, ["No file selected"]);
     }
+    function hideModal() {
+      console.log('Hiding modal on testing ...')
+      updateElement('profile-modal', {'className': 'profile-modal'});
+    }
+    function handleModalCancel() {
+      clearModal();
+      hideModal();
+    }
+    searchElement("modal-cancel").addEventListener("click", handleModalCancel);
+    
+    setTimeout(function(){
+      // 이벤트 발생
+      searchElement("modal-cancel").click()
 
-    // 이벤트핸들러 연결 및 사후처리
-    doSomethingAfterEvent(registHandler).then(function(done){
-      if(done){
-        console.log('Clearing and Hiding modal is done successfully! - modal');
-      }else{
-        console.log('Clearing and Hiding modal is failed! - modal');
-      }
-      
       // 결과값 비교
       console.assert(state.loadedPictureData === '', 'loaded image data is not cleared !');
       console.assert(readElementProp('modal-info-name', 'value') === '', 'modal info name is not cleared !');
@@ -82,10 +76,45 @@ function modalComponentTest(){
       // dom 해제
       document.body.removeChild(searchElement('profile-modal'))
       console.log('\n')
-    })
+    }, 0)
+   
+  })
 
-    // 이벤트 발생
-    searchElement("modal-cancel").click()
+  test('should clear file cash when clicked input button', () => {
+    createModalComponent()
+
+    function setModalComponent(){
+      updateElement("modal-file", {'value': ''}) // 보안문제로 value 값은 빈 문자열로만 셋팅가능
+    }
+    setModalComponent()
+
+    // 이벤트핸들러 정의
+    function handlePictureSelect() {
+      searchElement("modal-file").click();
+    }
+    function clearFileCash(event) {
+      console.log('clear file ~~~')
+      event.target.value = null;
+    }
+    searchElement("modal-file").addEventListener("click", clearFileCash);
+    searchElement("modal-select").addEventListener("click", handlePictureSelect);
+ 
+    setTimeout(function(){
+      // 이벤트 발생               
+      // searchElement("modal-file").click()
+
+      const event = new Event('click');
+      searchElement('modal-file').dispatchEvent(event)
+
+
+      // 결과값 비교
+      console.assert(readElementProp('modal-file', 'value') === null, 'file cash is not cleared !')
+
+      // dom 해제
+      document.body.removeChild(searchElement('profile-modal'))
+      console.log('\n')
+    }, 0)
+      
   })
 }
 
