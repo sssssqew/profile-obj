@@ -111,7 +111,7 @@ function Modal({setProfilePicture, setProfileName}) {
   
     // 파일 확장자 유효성 검사
     if (!validateFileExtension(selectedFiles[0])) {
-      alert("uploaded files is not valid");
+      alert("uploaded file is not valid");
       return;
     }
     setUploadedFileName(selectedFiles[0]);

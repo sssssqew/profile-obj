@@ -3,6 +3,10 @@ import {buildElement, updateElement, readElementProp, searchElement} from '../li
 
 const test1 = 'should clear and hide modal when clicked X button';
 const test2 = 'should clear file cash when clicked input button';
+// change 이벤트가 발생했을때 사용자가 선택한 파일이 없는 경우 빈값을 제대로 리턴하는지 테스트
+// change 이벤트가 발생했을때 사용자가 선택한 파일 타입에 따라 boolean 값을 제대로 리턴하는지 테스트
+// change 이벤트가 발생했을때 사용자가 선택한 파일 이름이 UI에 제대로 반영되는지 테스트
+// change 이벤트가 발생했을때 사용자가 선택한 파일 데이터를 제대로 로드하는지 테스트
 
 function createModalComponent(){
   const modalComponent = buildElement('div', {'id': 'profile-modal', 'className': 'profile-modal'}, [
