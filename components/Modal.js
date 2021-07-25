@@ -108,6 +108,8 @@ function Modal({setProfilePicture, setProfileName}) {
     // 파일 존재여부 검사
     const selectedFiles = event.target.files;
     if (selectedFiles.length < 1) return;
+
+    console.log(event.target.files[0])
   
     // 파일 확장자 유효성 검사
     if (!validateFileExtension(selectedFiles[0])) {
