@@ -28,8 +28,6 @@ function alertComponentTest(){
     }
     searchElement('alert-msg').addEventListener('click', handleAlertCancel);
     
-    // 이벤트 발생 및 결과값 확인
-    // setTimeout을 하지 않으면 아래 코드가 이벤트핸들러보다 먼저 실행된다
     // setTimeout을 감싸면 이벤트핸들러보다 나중에 이벤트루프에 등록되어 
     // 결과적으로 이벤트핸들러가 실행된 다음에 아래 코드가 순차적으로 실행된다
     

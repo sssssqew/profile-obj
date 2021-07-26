@@ -8,10 +8,6 @@ const test1 = 'should hide card on error';
 // dispatchEvent 함수로 error 이벤트를 동기적으로 발생시켜야 한다
 // 그렇지 않고 자연적으로 발생시키면 비동기가 되기 때문에 이벤트가 나중에 처리되므로 테스트 코드가 꼬인다
 
-// function createImgData(){
-//   const img = window.btoa("I don't care about a broken image");
-//   return 'data:image/png;base64,'+img;
-// }
 function cardComponentTest(){
   test(test1, () => {
     

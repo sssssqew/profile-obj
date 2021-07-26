@@ -16,6 +16,7 @@ function Home(){
 
   // 지역함수
   function setProfilePicture(userProfileImg) {
+    // TODO: createObjectURL 사용하면 해당위치에서 img.onload = URL.revokeObjectURL(img.src); 핸들러 연결해줘야 할듯
     updateElement('card-picture-img', {'src': userProfileImg, 'className': 'card-picture-img show-profileImg'});
   }
   function setProfileName(userName) {
