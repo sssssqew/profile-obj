@@ -188,6 +188,7 @@ function Modal({setProfilePicture, setProfileName}) {
 
     searchElement("modal-save")
       .addEventListener("click", handleModalSave);
+      
     searchElement("modal-info-gender").addEventListener("keypress", handleEnterKeyPress);
   }
 

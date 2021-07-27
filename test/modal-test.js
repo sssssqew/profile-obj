@@ -16,6 +16,40 @@ const test6 = 'should update file name on UI when user select valid file';
 // change 이벤트가 발생했을때 사용자가 선택한 파일 데이터를 제대로 로드하는지 테스트
 const test7 = 'should load file data when user select valid file';
 
+// save 버튼을 클릭했을때 사용자가 이름을 입력하지 않은 경우 validation이 실패하는지 테스트
+const test8 = 'should return false of validation check when user dose not input user name';
+// save 버튼을 클릭했을때 사용자가 입력한 이름에 특수문자가 포함된 경우 validation이 실패하는지 테스트
+const test9 = 'should return false of validation check when user input user name which includes special characters';
+// save 버튼을 클릭했을때 사용자가 입력한 이름 안에 공백이 포함된 경우 validation이 실패하는지 테스트
+const test10 = 'should return false of validation check when user input user name which includes space inside';
+// save 버튼을 클릭했을때 사용자가 입력한 이름 안에 숫자가 포함된 경우 validation이 실패하는지 테스트
+const test11 = 'should return false of validation check when user input user name which includes numbers';
+
+
+// save 버튼을 클릭했을때 사용자가 나이를 입력하지 않은 경우 validation이 실패하는지 테스트
+const test12 = 'should return false of validation check when user dose not input user age';
+// save 버튼을 클릭했을때 사용자가 입력한 나이에 숫자가 아닌 문자가 포함된 경우 validation이 실패하는지 테스트
+const test13 = 'should return false of validation check when user input user age which includes no number';
+// save 버튼을 클릭했을때 사용자가 입력한 나이 범위가 상식을 벗어난 경우 validation이 실패하는지 테스트
+const test14 = 'should return false of validation check when user input user age which is beyound common sense';
+
+// save 버튼을 클릭했을때 사용자가 성별을 입력하지 않은 경우 validation이 실패하는지 테스트
+const test15 = 'should return false of validation check when user does not input user gender';
+// save 버튼을 클릭했을때 사용자가 입력한 성별이 male이나 female이 아닌 경우 validation이 실패하는지 테스트
+const test16 = 'should return false of validation check when user input gender which is not male or female';
+
+// save 버튼을 클릭했을때 사용자 정보를 세션 스토리지에 잘 저장하는지 테스트
+const test17 = 'should save user information on session storage when user click save button';
+
+// save 버튼을 클릭했을때 프로필 사진이 화면에 잘 표시되는지 테스트
+const test18 = 'should display profile image on UI when user click save button';
+
+// save 버튼을 클릭했을때 프로필 이름이 화면에 잘 표시되는지 테스트
+const test19 = 'should display profile name on UI when user click save button';
+
+// save 버튼을 클릭했을때 알람 메세지가 화면에 잘 표시되는지 테스트
+const test20 = 'should display alert message on UI when user click save button';
+
 function createModalComponent(){
   const modalComponent = buildElement('div', {'id': 'profile-modal', 'className': 'profile-modal'}, [
     buildElement('div', {'id': 'modal-component'}, [
@@ -42,6 +76,56 @@ function createModalComponent(){
   ])
   return modalComponent
 }
+
+
+function checkIfNumberIsInteger(num) {
+  return num % 1 === 0;
+} // 현재는 사용하지 않음
+function checkIfStringHasSpecialCharacter(str) {
+  const re = /[ `!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/;
+  return re.test(str);
+}
+function checkIfStringHasNumbers(str) {
+  return /\d/.test(str);
+}
+function checkIfStringIsOnlyNumbers(str) {
+  return /^\d+$/.test(str);
+}
+function checkIfAgeIsValid(str) {
+  const age = Number(str);
+  if (!checkIfNumberIsInteger(age)) return; // check already on checkIfStringIsOnlyNumbers function (useless code)
+  if (age < 1 || age > 150) return;
+  return true;
+}
+function checkIfGenderIsValid(str) {
+  if (str !== "male" && str !== "female") return;
+  return true;
+}
+function validateUserInfo(userName, userAge, userGender) {
+  if (
+    userName === "" ||
+    checkIfStringHasSpecialCharacter(userName) ||
+    checkIfStringHasNumbers(userName)
+  ) {
+    return;
+  }
+  if (
+    userAge === "" ||
+    !checkIfStringIsOnlyNumbers(userAge) ||
+    !checkIfAgeIsValid(userAge)
+  ) {
+    return;
+  }
+  if (userGender === "" || !checkIfGenderIsValid(userGender)) {
+    return;
+  }
+  return true;
+}
+function validateInputData(userName, userAge, userGender) {
+  if (!validateUserInfo(userName, userAge, userGender)) return;
+  return true;
+}
+
 
 // 문자열을 이용하여 가짜 이미지 데이터(base64 string)를 생성하는 함수
 function createImgData(str){
@@ -172,7 +256,7 @@ function modalComponentTest(){
 
   test(test5, ()=>{
     document.body.appendChild(createModalComponent())
-    let isValidedFile = true;
+    let isValidedFile = null;
 
     function validateFileExtension(fileData) {
       const fileType = fileData.type;
@@ -270,9 +354,467 @@ function modalComponentTest(){
   
   })
 
-  test('test8', ()=>{
-    console.log('test8')
+  test(test8, ()=>{
+    document.body.appendChild(createModalComponent())
+    
+    let isValidUserInfo = null;
+
+    function setModalComponent(){
+      updateElement('modal-info-name', {'value': ''});
+      updateElement('modal-info-age', {'value': '3'});
+      updateElement('modal-info-gender', {'value': 'female'});
+      updateElement('modal-filename', {}, ["Test file name"]);
+      updateElement('profile-modal', {'className': 'profile-modal show-modal'});
+    }
+    setModalComponent()
+
+    function handleModalSave() {
+      const userName = searchElement("modal-info-name").value.trim();
+      const userAge = searchElement("modal-info-age").value.trim();
+      const userGender = searchElement("modal-info-gender").value.trim();
+    
+      // 입력 데이터 검증
+      if (!validateInputData(userName, userAge, userGender)) {
+        isValidUserInfo = false;
+      } else {
+        isValidUserInfo = true;
+      }
+    }
+    searchElement("modal-save").addEventListener("click", handleModalSave);
+
+    const event = new Event('click');
+    searchElement('modal-save').dispatchEvent(event)
+
+    console.log(`\n[ ${test8} ]`)
+    assert(isValidUserInfo === false, 'returned false of validation check successfully !', 'failed to return false of validation check !')
+    document.body.removeChild(searchElement('profile-modal'))
+    console.log('\n')
   })
+
+  test(test9, ()=>{
+    document.body.appendChild(createModalComponent())
+    
+    let isValidUserInfo = null;
+
+    function setModalComponent(){
+      updateElement('modal-info-name', {'value': 'dummyname$'});
+      updateElement('modal-info-age', {'value': '3'});
+      updateElement('modal-info-gender', {'value': 'female'});
+      updateElement('modal-filename', {}, ["Test file name"]);
+      updateElement('profile-modal', {'className': 'profile-modal show-modal'});
+    }
+    setModalComponent()
+
+    function handleModalSave() {
+      const userName = searchElement("modal-info-name").value.trim();
+      const userAge = searchElement("modal-info-age").value.trim();
+      const userGender = searchElement("modal-info-gender").value.trim();
+    
+      // 입력 데이터 검증
+      if (!validateInputData(userName, userAge, userGender)) {
+        isValidUserInfo = false;
+      } else {
+        isValidUserInfo = true;
+      }
+    }
+    searchElement("modal-save").addEventListener("click", handleModalSave);
+
+    const event = new Event('click');
+    searchElement('modal-save').dispatchEvent(event)
+
+    console.log(`\n[ ${test9} ]`)
+    assert(isValidUserInfo === false, 'returned false of validation check successfully !', 'failed to return false of validation check !')
+    document.body.removeChild(searchElement('profile-modal'))
+    console.log('\n')
+  })
+
+  test(test10, ()=>{
+    document.body.appendChild(createModalComponent())
+    
+    let isValidUserInfo = null;
+
+    function setModalComponent(){
+      updateElement('modal-info-name', {'value': 'dummy name'});
+      updateElement('modal-info-age', {'value': '3'});
+      updateElement('modal-info-gender', {'value': 'female'});
+      updateElement('modal-filename', {}, ["Test file name"]);
+      updateElement('profile-modal', {'className': 'profile-modal show-modal'});
+    }
+    setModalComponent()
+
+    function handleModalSave() {
+      const userName = searchElement("modal-info-name").value.trim();
+      const userAge = searchElement("modal-info-age").value.trim();
+      const userGender = searchElement("modal-info-gender").value.trim();
+    
+      // 입력 데이터 검증
+      if (!validateInputData(userName, userAge, userGender)) {
+        isValidUserInfo = false;
+      } else {
+        isValidUserInfo = true;
+      }
+    }
+    searchElement("modal-save").addEventListener("click", handleModalSave);
+
+    const event = new Event('click');
+    searchElement('modal-save').dispatchEvent(event)
+
+    console.log(`\n[ ${test10} ]`)
+    assert(isValidUserInfo === false, 'returned false of validation check successfully !', 'failed to return false of validation check !')
+    document.body.removeChild(searchElement('profile-modal'))
+    console.log('\n')
+  })
+
+  test(test11, ()=>{
+    document.body.appendChild(createModalComponent())
+    
+    let isValidUserInfo = null;
+
+    function setModalComponent(){
+      updateElement('modal-info-name', {'value': 'dummy3name78'});
+      updateElement('modal-info-age', {'value': '3'});
+      updateElement('modal-info-gender', {'value': 'female'});
+      updateElement('modal-filename', {}, ["Test file name"]);
+      updateElement('profile-modal', {'className': 'profile-modal show-modal'});
+    }
+    setModalComponent()
+
+    function handleModalSave() {
+      const userName = searchElement("modal-info-name").value.trim();
+      const userAge = searchElement("modal-info-age").value.trim();
+      const userGender = searchElement("modal-info-gender").value.trim();
+    
+      // 입력 데이터 검증
+      if (!validateInputData(userName, userAge, userGender)) {
+        isValidUserInfo = false;
+      } else {
+        isValidUserInfo = true;
+      }
+    }
+    searchElement("modal-save").addEventListener("click", handleModalSave);
+
+    const event = new Event('click');
+    searchElement('modal-save').dispatchEvent(event)
+
+    console.log(`\n[ ${test11} ]`)
+    assert(isValidUserInfo === false, 'returned false of validation check successfully !', 'failed to return false of validation check !')
+    document.body.removeChild(searchElement('profile-modal'))
+    console.log('\n')
+  })
+
+  test(test12, ()=>{
+    document.body.appendChild(createModalComponent())
+    
+    let isValidUserInfo = null;
+
+    function setModalComponent(){
+      updateElement('modal-info-name', {'value': 'dummyName'});
+      updateElement('modal-info-age', {'value': ''});
+      updateElement('modal-info-gender', {'value': 'female'});
+      updateElement('modal-filename', {}, ["Test file name"]);
+      updateElement('profile-modal', {'className': 'profile-modal show-modal'});
+    }
+    setModalComponent()
+
+    function handleModalSave() {
+      const userName = searchElement("modal-info-name").value.trim();
+      const userAge = searchElement("modal-info-age").value.trim();
+      const userGender = searchElement("modal-info-gender").value.trim();
+    
+      // 입력 데이터 검증
+      if (!validateInputData(userName, userAge, userGender)) {
+        isValidUserInfo = false;
+      } else {
+        isValidUserInfo = true;
+      }
+    }
+    searchElement("modal-save").addEventListener("click", handleModalSave);
+
+    const event = new Event('click');
+    searchElement('modal-save').dispatchEvent(event)
+
+    console.log(`\n[ ${test12} ]`)
+    assert(isValidUserInfo === false, 'returned false of validation check successfully !', 'failed to return false of validation check !')
+    document.body.removeChild(searchElement('profile-modal'))
+    console.log('\n')
+  })
+
+  test(test13, ()=>{
+    document.body.appendChild(createModalComponent())
+    
+    let isValidUserInfo = null;
+
+    function setModalComponent(){
+      updateElement('modal-info-name', {'value': 'dummyName'});
+      updateElement('modal-info-age', {'value': 'age3'});
+      updateElement('modal-info-gender', {'value': 'female'});
+      updateElement('modal-filename', {}, ["Test file name"]);
+      updateElement('profile-modal', {'className': 'profile-modal show-modal'});
+    }
+    setModalComponent()
+
+    function handleModalSave() {
+      const userName = searchElement("modal-info-name").value.trim();
+      const userAge = searchElement("modal-info-age").value.trim();
+      const userGender = searchElement("modal-info-gender").value.trim();
+    
+      // 입력 데이터 검증
+      if (!validateInputData(userName, userAge, userGender)) {
+        isValidUserInfo = false;
+      } else {
+        isValidUserInfo = true;
+      }
+    }
+    searchElement("modal-save").addEventListener("click", handleModalSave);
+
+    const event = new Event('click');
+    searchElement('modal-save').dispatchEvent(event)
+
+    console.log(`\n[ ${test13} ]`)
+    assert(isValidUserInfo === false, 'returned false of validation check successfully !', 'failed to return false of validation check !')
+    document.body.removeChild(searchElement('profile-modal'))
+    console.log('\n')
+  })
+
+  test(test14, ()=>{
+    document.body.appendChild(createModalComponent())
+    
+    let isValidUserInfo = null;
+
+    function setModalComponent(){
+      updateElement('modal-info-name', {'value': 'dummyName'});
+      updateElement('modal-info-age', {'value': '1000'});
+      updateElement('modal-info-gender', {'value': 'female'});
+      updateElement('modal-filename', {}, ["Test file name"]);
+      updateElement('profile-modal', {'className': 'profile-modal show-modal'});
+    }
+    setModalComponent()
+
+    function handleModalSave() {
+      const userName = searchElement("modal-info-name").value.trim();
+      const userAge = searchElement("modal-info-age").value.trim();
+      const userGender = searchElement("modal-info-gender").value.trim();
+    
+      // 입력 데이터 검증
+      if (!validateInputData(userName, userAge, userGender)) {
+        isValidUserInfo = false;
+      } else {
+        isValidUserInfo = true;
+      }
+    }
+    searchElement("modal-save").addEventListener("click", handleModalSave);
+
+    const event = new Event('click');
+    searchElement('modal-save').dispatchEvent(event)
+
+    console.log(`\n[ ${test14} ]`)
+    assert(isValidUserInfo === false, 'returned false of validation check successfully !', 'failed to return false of validation check !')
+    document.body.removeChild(searchElement('profile-modal'))
+    console.log('\n')
+  })
+
+  test(test15, ()=>{
+    document.body.appendChild(createModalComponent())
+    
+    let isValidUserInfo = null;
+
+    function setModalComponent(){
+      updateElement('modal-info-name', {'value': 'dummyName'});
+      updateElement('modal-info-age', {'value': '3'});
+      updateElement('modal-info-gender', {'value': ''});
+      updateElement('modal-filename', {}, ["Test file name"]);
+      updateElement('profile-modal', {'className': 'profile-modal show-modal'});
+    }
+    setModalComponent()
+
+    function handleModalSave() {
+      const userName = searchElement("modal-info-name").value.trim();
+      const userAge = searchElement("modal-info-age").value.trim();
+      const userGender = searchElement("modal-info-gender").value.trim();
+    
+      // 입력 데이터 검증
+      if (!validateInputData(userName, userAge, userGender)) {
+        isValidUserInfo = false;
+      } else {
+        isValidUserInfo = true;
+      }
+    }
+    searchElement("modal-save").addEventListener("click", handleModalSave);
+
+    const event = new Event('click');
+    searchElement('modal-save').dispatchEvent(event)
+
+    console.log(`\n[ ${test15} ]`)
+    assert(isValidUserInfo === false, 'returned false of validation check successfully !', 'failed to return false of validation check !')
+    document.body.removeChild(searchElement('profile-modal'))
+    console.log('\n')
+  })
+
+  test(test16, ()=>{
+    document.body.appendChild(createModalComponent())
+    
+    let isValidUserInfo = null;
+
+    function setModalComponent(){
+      updateElement('modal-info-name', {'value': 'dummyName'});
+      updateElement('modal-info-age', {'value': '3'});
+      updateElement('modal-info-gender', {'value': 'neutral'});
+      updateElement('modal-filename', {}, ["Test file name"]);
+      updateElement('profile-modal', {'className': 'profile-modal show-modal'});
+    }
+    setModalComponent()
+
+    function handleModalSave() {
+      const userName = searchElement("modal-info-name").value.trim();
+      const userAge = searchElement("modal-info-age").value.trim();
+      const userGender = searchElement("modal-info-gender").value.trim();
+    
+      // 입력 데이터 검증
+      if (!validateInputData(userName, userAge, userGender)) {
+        isValidUserInfo = false;
+      } else {
+        isValidUserInfo = true;
+      }
+    }
+    searchElement("modal-save").addEventListener("click", handleModalSave);
+
+    const event = new Event('click');
+    searchElement('modal-save').dispatchEvent(event)
+
+    console.log(`\n[ ${test16} ]`)
+    assert(isValidUserInfo === false, 'returned false of validation check successfully !', 'failed to return false of validation check !')
+    document.body.removeChild(searchElement('profile-modal'))
+    console.log('\n')
+  })
+
+  test(test17, ()=>{
+    document.body.appendChild(createModalComponent())
+    const str = "I don't care about a broken image";
+    const state = {loadedPictureData: createImgData(str)}
+
+    function setModalComponent(){
+      updateElement('modal-info-name', {'value': 'dummyName'});
+      updateElement('modal-info-age', {'value': '3'});
+      updateElement('modal-info-gender', {'value': 'male'});
+      updateElement('modal-filename', {}, ["Test file name"]);
+      updateElement('profile-modal', {'className': 'profile-modal show-modal'});
+    }
+    setModalComponent()
+
+    function saveUserInfo(userName, userAge, userGender) {
+      const userInfoData = {userName, userAge, userGender, userProfileImg: state.loadedPictureData};
+      sessionStorage.setItem('userInfoData', JSON.stringify(userInfoData));
+    }
+    function handleModalSave() {
+      const userName = searchElement("modal-info-name").value.trim();
+      const userAge = searchElement("modal-info-age").value.trim();
+      const userGender = searchElement("modal-info-gender").value.trim();
+    
+      saveUserInfo(userName, userAge, userGender);
+    }
+    searchElement("modal-save").addEventListener("click", handleModalSave);
+
+    const event = new Event('click');
+    searchElement('modal-save').dispatchEvent(event)
+
+    console.log(`\n[ ${test17} ]`)
+    assert(sessionStorage.getItem('userInfoData'), 'saved user information successfully on session storage !', 'failed to save user information on session storage !')
+    document.body.removeChild(searchElement('profile-modal'))
+    console.log('\n')
+  })
+
+  test(test18, ()=>{
+    document.body.appendChild(createModalComponent())
+    const profileImg = buildElement('img', {'id': 'card-picture-img', 'src': '', 'className': 'card-picture-img'})
+    document.body.appendChild(profileImg)
+
+    const str = "I don't care about a broken image";
+    const state = {loadedPictureData: createImgData(str)}
+
+    function setProfilePicture(userProfileImg) {
+      updateElement('card-picture-img', {'src': userProfileImg, 'className': 'card-picture-img show-profileImg'});
+    }
+    function handleModalSave() {
+      setProfilePicture(state.loadedPictureData);
+    }
+    searchElement("modal-save").addEventListener("click", handleModalSave);
+
+    const event = new Event('click');
+    searchElement('modal-save').dispatchEvent(event)
+
+    console.log(`\n[ ${test18} ]`)
+    assert( (readElementProp('card-picture-img', 'src') === state.loadedPictureData) && (readElementProp('card-picture-img', 'className') === 'card-picture-img show-profileImg'), 'displayed profile image on UI successfully !', 'failed to display profile image on UI !')
+    document.body.removeChild(searchElement('profile-modal'))
+    document.body.removeChild(profileImg)
+    console.log('\n')
+  })
+
+  test(test19, ()=>{
+    document.body.appendChild(createModalComponent())
+    const cardName = buildElement('div', {'id': 'card-name'});
+    document.body.appendChild(cardName)
+
+    function setModalComponent(){
+      updateElement('modal-info-name', {'value': '   dummyName   '});
+      updateElement('modal-info-age', {'value': '3'});
+      updateElement('modal-info-gender', {'value': 'male'});
+      updateElement('modal-filename', {}, ["Test file name"]);
+      updateElement('profile-modal', {'className': 'profile-modal show-modal'});
+    }
+    setModalComponent()
+
+    function setProfileName(userName) {
+      updateElement('card-name', {}, [userName]);
+    }
+    function handleModalSave() {
+      const userName = searchElement("modal-info-name").value.trim();
+      const userAge = searchElement("modal-info-age").value.trim();
+      const userGender = searchElement("modal-info-gender").value.trim();
+    
+      setProfileName(userName);
+    }
+    searchElement("modal-save").addEventListener("click", handleModalSave);
+
+    const event = new Event('click');
+    searchElement('modal-save').dispatchEvent(event)
+
+    console.log(`\n[ ${test19} ]`)
+    assert(readElementProp('card-name', 'innerText') === readElementProp("modal-info-name", 'value').trim(), 'displayed profile name on UI successfully !', 'failed to display profile name on UI !')
+    document.body.removeChild(searchElement('profile-modal'))
+    document.body.removeChild(cardName)
+    console.log('\n')
+  })
+
+  test(test20, ()=>{
+    document.body.appendChild(createModalComponent())
+    const alertComponent = buildElement('div', {'id': 'alert-component', 'className': 'alert-component'}, [
+      buildElement('div', {'id': 'alert-msg'}, ['']),
+    ]);
+    document.body.appendChild(alertComponent)
+   
+    // 동기적으로 실행되어야 하므로 setTimeout은 제거한다
+    // setTimeout은 브라우저 API이므로 당연히 정상 작동한다고 가정한다
+    function showAlert(msg, duration){
+      // setTimeout(function(){
+        updateElement('alert-component', {'className': 'alert-component show-alert'})
+        updateElement('alert-msg', {}, [msg])
+      // }, duration)
+    }
+    function handleModalSave() {
+      showAlert('dummy message', 1000);
+    }
+    searchElement("modal-save").addEventListener("click", handleModalSave);
+
+    const event = new Event('click');
+    searchElement('modal-save').dispatchEvent(event)
+
+    console.log(`\n[ ${test20} ]`)
+    assert( (readElementProp('alert-component', 'className') === 'alert-component show-alert') && (readElementProp('alert-msg', 'innerText') === 'dummy message'), 'displayed alert message on UI successfully !', 'failed to display alert message on UI !')
+    document.body.removeChild(searchElement('profile-modal'))
+    document.body.removeChild(alertComponent)
+    console.log('\n')
+  })
+
 
 }
 

@@ -17,6 +17,7 @@ function alertComponentTest(){
 
     // 이벤트핸들러 정의
     function handleAlertCancel(event){
+      // TODO: 콘솔창을 열고 닫고에 따라 아래 mouse 좌표가 if문을 통과할때도 있고 아닐때도 있다 (추후 항상 만족하도록 수정하자)
       const mousePoint = {x: 330, y: 10}; // X 버튼 근처 마우스 좌표를 상수로 선언
       
       // css pseudo element 는 자바스크립트로 클릭할 수 없어서 X 버튼 주변 영역을 클릭했을때 이벤트 처리함
