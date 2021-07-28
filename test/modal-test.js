@@ -169,7 +169,6 @@ function modalComponentTest(){
     searchElement('modal-cancel').dispatchEvent(event)
 
     // 결과값 비교
-    console.log(`\n[ ${test1} ]`)
     const isSatisfied = state.loadedPictureData === '' && readElementProp('modal-info-name', 'value') === '' &&
     readElementProp('modal-info-age', 'value') === '' && readElementProp('modal-info-gender', 'value') === '' &&
     readElementProp('modal-filename', 'innerText') === 'No file selected' && readElementProp('profile-modal', 'className') === 'profile-modal';
@@ -185,7 +184,6 @@ function modalComponentTest(){
    
     // type이 file인 input 요소의 value값은 null이나 빈문자열로만 변경가능하다
     // 테스트를 진행하기에 앞서 value값을 null이나 빈문자열이 아닌 값으로 셋팅해야 하는데 보안상 불가능하다
-    console.log(`\n[ ${test2} ]`)
     assert(false, '', 'test is not possible because of security reason')
     console.log('\n')
     
@@ -208,7 +206,6 @@ function modalComponentTest(){
     const event = new Event('change');
     searchElement('modal-file').dispatchEvent(event)
 
-    console.log(`\n[ ${test3} ]`)
     assert(uploadedFileLength === 0, 'file length is 0 successfully !', 'file length is failed to 0 !')
     document.body.removeChild(searchElement('profile-modal'))
     console.log('\n')
@@ -245,11 +242,8 @@ function modalComponentTest(){
       return isValidedFile === c.exp;
     })
 
-    console.log(`\n[ ${test4} ]`)
     assert(result, 'passed validation check of file extension successfully !', 'failed to valid file extension !')
     console.log('\n')
-
-    
   })
 
   test(test5, ()=>{
@@ -269,7 +263,6 @@ function modalComponentTest(){
     const event = new Event('change');
     searchElement('modal-file').dispatchEvent(event)
 
-    console.log(`\n[ ${test5} ]`)
     assert(readElementProp('modal-filename', 'innerText') === 'dummy.png', 'uploaded file name is updated on UI successfully !', 'uploaded file name is failed to be updated on UI !')
     document.body.removeChild(searchElement('profile-modal'))
     console.log('\n')
@@ -312,8 +305,6 @@ function modalComponentTest(){
 
     // 파일을 읽을때 어느정도 시간이 걸리고 onload 핸들러는 이벤트루프에 등록되어 맨 나중에 실행되기 때문에
     // 결과값 비교를 onload 핸들러 실행뒤에 하려면 결과값 비교 코드블럭을 setTimeout으로 묶어 onload 핸들러 이후에 이벤트루프에 등록해야 한다 (이렇게 하면 다음 테스트 이후에 실행되기 때문에 이렇게 하면 안된다)
-   
-    console.log(`\n[ ${test6} ]`)
     assert(state.loadedPictureData === imgData, 'loaded file data successfully !', 'failed to load file data !')
     document.body.removeChild(searchElement('profile-modal'))
     console.log('\n')
@@ -359,7 +350,6 @@ function modalComponentTest(){
       return isValidUserInfo === false;
     })
 
-    console.log(`\n[ ${test7} ]`)
     assert(result, 'returned false of validation check successfully !', 'failed to return false of validation check !')
     console.log('\n')
   })
@@ -388,7 +378,6 @@ function modalComponentTest(){
     const event = new Event('click');
     searchElement('modal-save').dispatchEvent(event)
 
-    console.log(`\n[ ${test8} ]`)
     assert(sessionStorage.getItem('userInfoData'), 'saved user information successfully on session storage !', 'failed to save user information on session storage !')
     document.body.removeChild(searchElement('profile-modal'))
     console.log('\n')
@@ -413,7 +402,6 @@ function modalComponentTest(){
     const event = new Event('click');
     searchElement('modal-save').dispatchEvent(event)
 
-    console.log(`\n[ ${test9} ]`)
     assert( (readElementProp('card-picture-img', 'src') === state.loadedPictureData) && (readElementProp('card-picture-img', 'className') === 'card-picture-img show-profileImg'), 'displayed profile image on UI successfully !', 'failed to display profile image on UI !')
     document.body.removeChild(searchElement('profile-modal'))
     document.body.removeChild(profileImg)
@@ -443,7 +431,6 @@ function modalComponentTest(){
     const event = new Event('click');
     searchElement('modal-save').dispatchEvent(event)
 
-    console.log(`\n[ ${test10} ]`)
     assert(readElementProp('card-name', 'innerText') === readElementProp("modal-info-name", 'value').trim(), 'displayed profile name on UI successfully !', 'failed to display profile name on UI !')
     document.body.removeChild(searchElement('profile-modal'))
     document.body.removeChild(cardName)
@@ -473,7 +460,6 @@ function modalComponentTest(){
     const event = new Event('click');
     searchElement('modal-save').dispatchEvent(event)
 
-    console.log(`\n[ ${test11} ]`)
     assert( (readElementProp('alert-component', 'className') === 'alert-component show-alert') && (readElementProp('alert-msg', 'innerText') === 'dummy message'), 'displayed alert message on UI successfully !', 'failed to display alert message on UI !')
     document.body.removeChild(searchElement('profile-modal'))
     document.body.removeChild(alertComponent)
@@ -497,7 +483,6 @@ function modalComponentTest(){
       return validateFileExtension(c.file) === c.exp;
     })
 
-    console.log(`\n[ ${test12} ]`)
     assert(result, 'passed validation check of file extension successfully !', 'failed to pass validation check of file extension !')
     console.log('\n')
   })
@@ -541,7 +526,6 @@ function modalComponentTest(){
       return checkIfStringHasSpecialCharacter(c.str) === c.exp;
     })
 
-    console.log(`\n[ ${test13} ]`)
     assert(result, 'passed validation check whether if string has special characters successfully !', 'failed to pass validation check whether if string has special characters !')
     console.log('\n')
   })
@@ -560,7 +544,6 @@ function modalComponentTest(){
       return checkIfStringHasNumbers(c.str) === c.exp;
     })
 
-    console.log(`\n[ ${test14} ]`)
     assert(result, 'passed validation check whether if string has numbers successfully !', 'failed to pass validation check whether if string has numbers !')
     console.log('\n')
   })
@@ -579,7 +562,6 @@ function modalComponentTest(){
       return checkIfStringIsOnlyNumbers(c.str) === c.exp;
     })
 
-    console.log(`\n[ ${test15} ]`)
     assert(result, 'passed validation check whether if string is only numbers successfully !', 'failed to pass validation check whether if string is only numbers !')
     console.log('\n')
   })
@@ -600,7 +582,6 @@ function modalComponentTest(){
       return checkIfAgeIsValid(c.str) === c.exp;
     })
 
-    console.log(`\n[ ${test16} ]`)
     assert(result, 'passed validation check whether if string is valid age successfully !', 'failed to pass validation check whether if string is valid age !')
     console.log('\n')
   })
@@ -630,7 +611,6 @@ function modalComponentTest(){
       return checkIfGenderIsValid(c.str) === c.exp;
     })
 
-    console.log(`\n[ ${test17} ]`)
     assert(result, 'passed validation check whether if string is valid gender successfully !', 'failed to pass validation check whether if string is valid gender !')
     console.log('\n')
   })

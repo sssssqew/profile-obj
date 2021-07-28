@@ -29,7 +29,6 @@ function cardComponentTest(){
     const event = new Event('error');
     searchElement('card-picture-img').dispatchEvent(event)
     // 결과값 비교
-    console.log(`\n[ ${test1} ]`)
     assert(readElementProp('card-picture-img', 'className') === 'card-picture-img', 'card is hidden successfully !', 'card is not hidden !')
     
     // dom 해제
