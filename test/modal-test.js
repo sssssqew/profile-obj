@@ -380,6 +380,7 @@ function modalComponentTest(){
 
     assert(sessionStorage.getItem('userInfoData'), 'saved user information successfully on session storage !', 'failed to save user information on session storage !')
     document.body.removeChild(searchElement('profile-modal'))
+    sessionStorage.clear();
     console.log('\n')
   })
 
