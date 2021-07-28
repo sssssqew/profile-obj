@@ -77,6 +77,12 @@ function createModalComponent(){
   return modalComponent
 }
 
+function validateFileExtension(fileData) {
+  const fileType = fileData.type;
+  const ext = fileType.split("/")[0];
+  if (ext !== "image") return;
+  return true;
+}
 
 function checkIfNumberIsInteger(num) {
   return num % 1 === 0;
@@ -133,6 +139,14 @@ function createImgData(str){
   return 'data:image/png;base64,'+img;
 }
 
+function setModalComponent(fakeData){
+  updateElement('modal-info-name', {'value': fakeData.name});
+  updateElement('modal-info-age', {'value': fakeData.age});
+  updateElement('modal-info-gender', {'value': fakeData.gender});
+  updateElement('modal-filename', {}, [fakeData.fileName]);
+  updateElement('profile-modal', {'className': 'profile-modal show-modal'});
+}
+
 
 function modalComponentTest(){
   test(test1, () => {
@@ -140,14 +154,8 @@ function modalComponentTest(){
     document.body.appendChild(createModalComponent())
     const state = {loadedPictureData: 'test data'};
     
-    function setModalComponent(){
-      updateElement('modal-info-name', {'value': 'test name'});
-      updateElement('modal-info-age', {'value': 'test age'});
-      updateElement('modal-info-gender', {'value': 'test gender'});
-      updateElement('modal-filename', {}, ["Test file name"]);
-      updateElement('profile-modal', {'className': 'profile-modal show-modal'});
-    }
-    setModalComponent()
+    const fakeData = {name: 'test name', age: 'test age', gender: 'test gender', fileName: "Test file name"}
+    setModalComponent(fakeData)
 
     // 이벤트핸들러 정의
     function clearModal() {
@@ -226,12 +234,6 @@ function modalComponentTest(){
     document.body.appendChild(createModalComponent())
     let isValidedFile = false;
 
-    function validateFileExtension(fileData) {
-      const fileType = fileData.type;
-      const ext = fileType.split("/")[0];
-      if (ext !== "image") return;
-      return true;
-    }
     function handlePictureUpload(event) {
       // console.log('file is uploading on testing ...')
 
@@ -258,12 +260,6 @@ function modalComponentTest(){
     document.body.appendChild(createModalComponent())
     let isValidedFile = null;
 
-    function validateFileExtension(fileData) {
-      const fileType = fileData.type;
-      const ext = fileType.split("/")[0];
-      if (ext !== "image") return;
-      return true;
-    }
     function handlePictureUpload(event) {
       // console.log('file is uploading on testing ...')
 
@@ -359,14 +355,8 @@ function modalComponentTest(){
     
     let isValidUserInfo = null;
 
-    function setModalComponent(){
-      updateElement('modal-info-name', {'value': ''});
-      updateElement('modal-info-age', {'value': '3'});
-      updateElement('modal-info-gender', {'value': 'female'});
-      updateElement('modal-filename', {}, ["Test file name"]);
-      updateElement('profile-modal', {'className': 'profile-modal show-modal'});
-    }
-    setModalComponent()
+    const fakeData = {name: '', age: '3', gender: 'female', fileName: "Test file name"}
+    setModalComponent(fakeData)
 
     function handleModalSave() {
       const userName = searchElement("modal-info-name").value.trim();
@@ -396,14 +386,8 @@ function modalComponentTest(){
     
     let isValidUserInfo = null;
 
-    function setModalComponent(){
-      updateElement('modal-info-name', {'value': 'dummyname$'});
-      updateElement('modal-info-age', {'value': '3'});
-      updateElement('modal-info-gender', {'value': 'female'});
-      updateElement('modal-filename', {}, ["Test file name"]);
-      updateElement('profile-modal', {'className': 'profile-modal show-modal'});
-    }
-    setModalComponent()
+    const fakeData = {name: 'dummyname$', age: '3', gender: 'female', fileName: "Test file name"}
+    setModalComponent(fakeData)
 
     function handleModalSave() {
       const userName = searchElement("modal-info-name").value.trim();
@@ -433,14 +417,8 @@ function modalComponentTest(){
     
     let isValidUserInfo = null;
 
-    function setModalComponent(){
-      updateElement('modal-info-name', {'value': 'dummy name'});
-      updateElement('modal-info-age', {'value': '3'});
-      updateElement('modal-info-gender', {'value': 'female'});
-      updateElement('modal-filename', {}, ["Test file name"]);
-      updateElement('profile-modal', {'className': 'profile-modal show-modal'});
-    }
-    setModalComponent()
+    const fakeData = {name: 'dummy name', age: '3', gender: 'female', fileName: "Test file name"}
+    setModalComponent(fakeData)
 
     function handleModalSave() {
       const userName = searchElement("modal-info-name").value.trim();
@@ -470,14 +448,8 @@ function modalComponentTest(){
     
     let isValidUserInfo = null;
 
-    function setModalComponent(){
-      updateElement('modal-info-name', {'value': 'dummy3name78'});
-      updateElement('modal-info-age', {'value': '3'});
-      updateElement('modal-info-gender', {'value': 'female'});
-      updateElement('modal-filename', {}, ["Test file name"]);
-      updateElement('profile-modal', {'className': 'profile-modal show-modal'});
-    }
-    setModalComponent()
+    const fakeData = {name: 'dummy3name78', age: '3', gender: 'female', fileName: "Test file name"}
+    setModalComponent(fakeData)
 
     function handleModalSave() {
       const userName = searchElement("modal-info-name").value.trim();
@@ -507,14 +479,8 @@ function modalComponentTest(){
     
     let isValidUserInfo = null;
 
-    function setModalComponent(){
-      updateElement('modal-info-name', {'value': 'dummyName'});
-      updateElement('modal-info-age', {'value': ''});
-      updateElement('modal-info-gender', {'value': 'female'});
-      updateElement('modal-filename', {}, ["Test file name"]);
-      updateElement('profile-modal', {'className': 'profile-modal show-modal'});
-    }
-    setModalComponent()
+    const fakeData = {name: 'dummyName', age: '', gender: 'female', fileName: "Test file name"}
+    setModalComponent(fakeData)
 
     function handleModalSave() {
       const userName = searchElement("modal-info-name").value.trim();
@@ -544,14 +510,8 @@ function modalComponentTest(){
     
     let isValidUserInfo = null;
 
-    function setModalComponent(){
-      updateElement('modal-info-name', {'value': 'dummyName'});
-      updateElement('modal-info-age', {'value': 'age3'});
-      updateElement('modal-info-gender', {'value': 'female'});
-      updateElement('modal-filename', {}, ["Test file name"]);
-      updateElement('profile-modal', {'className': 'profile-modal show-modal'});
-    }
-    setModalComponent()
+    const fakeData = {name: 'dummyName', age: 'age3', gender: 'female', fileName: "Test file name"}
+    setModalComponent(fakeData)
 
     function handleModalSave() {
       const userName = searchElement("modal-info-name").value.trim();
@@ -581,14 +541,8 @@ function modalComponentTest(){
     
     let isValidUserInfo = null;
 
-    function setModalComponent(){
-      updateElement('modal-info-name', {'value': 'dummyName'});
-      updateElement('modal-info-age', {'value': '1000'});
-      updateElement('modal-info-gender', {'value': 'female'});
-      updateElement('modal-filename', {}, ["Test file name"]);
-      updateElement('profile-modal', {'className': 'profile-modal show-modal'});
-    }
-    setModalComponent()
+    const fakeData = {name: 'dummyName', age: '1000', gender: 'female', fileName: "Test file name"}
+    setModalComponent(fakeData)
 
     function handleModalSave() {
       const userName = searchElement("modal-info-name").value.trim();
@@ -618,14 +572,8 @@ function modalComponentTest(){
     
     let isValidUserInfo = null;
 
-    function setModalComponent(){
-      updateElement('modal-info-name', {'value': 'dummyName'});
-      updateElement('modal-info-age', {'value': '3'});
-      updateElement('modal-info-gender', {'value': ''});
-      updateElement('modal-filename', {}, ["Test file name"]);
-      updateElement('profile-modal', {'className': 'profile-modal show-modal'});
-    }
-    setModalComponent()
+    const fakeData = {name: 'dummyName', age: '3', gender: '', fileName: "Test file name"}
+    setModalComponent(fakeData)
 
     function handleModalSave() {
       const userName = searchElement("modal-info-name").value.trim();
@@ -655,14 +603,8 @@ function modalComponentTest(){
     
     let isValidUserInfo = null;
 
-    function setModalComponent(){
-      updateElement('modal-info-name', {'value': 'dummyName'});
-      updateElement('modal-info-age', {'value': '3'});
-      updateElement('modal-info-gender', {'value': 'neutral'});
-      updateElement('modal-filename', {}, ["Test file name"]);
-      updateElement('profile-modal', {'className': 'profile-modal show-modal'});
-    }
-    setModalComponent()
+    const fakeData = {name: 'dummyName', age: '3', gender: 'neutral', fileName: "Test file name"}
+    setModalComponent(fakeData)
 
     function handleModalSave() {
       const userName = searchElement("modal-info-name").value.trim();
@@ -692,14 +634,8 @@ function modalComponentTest(){
     const str = "I don't care about a broken image";
     const state = {loadedPictureData: createImgData(str)}
 
-    function setModalComponent(){
-      updateElement('modal-info-name', {'value': 'dummyName'});
-      updateElement('modal-info-age', {'value': '3'});
-      updateElement('modal-info-gender', {'value': 'male'});
-      updateElement('modal-filename', {}, ["Test file name"]);
-      updateElement('profile-modal', {'className': 'profile-modal show-modal'});
-    }
-    setModalComponent()
+    const fakeData = {name: 'dummyName', age: '3', gender: 'male', fileName: "Test file name"}
+    setModalComponent(fakeData)
 
     function saveUserInfo(userName, userAge, userGender) {
       const userInfoData = {userName, userAge, userGender, userProfileImg: state.loadedPictureData};
@@ -754,14 +690,8 @@ function modalComponentTest(){
     const cardName = buildElement('div', {'id': 'card-name'});
     document.body.appendChild(cardName)
 
-    function setModalComponent(){
-      updateElement('modal-info-name', {'value': '   dummyName   '});
-      updateElement('modal-info-age', {'value': '3'});
-      updateElement('modal-info-gender', {'value': 'male'});
-      updateElement('modal-filename', {}, ["Test file name"]);
-      updateElement('profile-modal', {'className': 'profile-modal show-modal'});
-    }
-    setModalComponent()
+    const fakeData = {name: '   dummyName   ', age: '3', gender: 'male', fileName: "Test file name"}
+    setModalComponent(fakeData)
 
     function setProfileName(userName) {
       updateElement('card-name', {}, [userName]);
