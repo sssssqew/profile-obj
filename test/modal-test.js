@@ -166,12 +166,11 @@ function modalComponentTest(){
 
     // 결과값 비교
     console.log(`\n[ ${test1} ]`)
-    assert(state.loadedPictureData === '', 'loaded image data is cleared successfully !','loaded image data is not cleared !');
-    assert(readElementProp('modal-info-name', 'value') === '', 'modal info name is cleared successfully !','modal info name is not cleared !');
-    assert(readElementProp('modal-info-age', 'value') === '', 'modal info age is cleared successfully !','modal info age is not cleared !');
-    assert(readElementProp('modal-info-gender', 'value') === '', 'modal info gender is cleared successfully !','modal info gender is not cleared !');
-    assert(readElementProp('modal-filename', 'innerText') === 'No file selected', 'modal file name is cleared successfully !','modal file name is not cleared !')
-    assert(readElementProp('profile-modal', 'className') === 'profile-modal', 'modal is hidden successfully!','modal is not hidden !')
+    const isSatisfied = state.loadedPictureData === '' && readElementProp('modal-info-name', 'value') === '' &&
+    readElementProp('modal-info-age', 'value') === '' && readElementProp('modal-info-gender', 'value') === '' &&
+    readElementProp('modal-filename', 'innerText') === 'No file selected' && readElementProp('profile-modal', 'className') === 'profile-modal';
+                       
+    assert(isSatisfied, 'cleared and hid modal successfully !', 'failed to clear and hide modal !')
     // dom 해제
     document.body.removeChild(searchElement('profile-modal'))
     console.log('\n')
@@ -375,8 +374,6 @@ function modalComponentTest(){
     assert(result, 'returned false of validation check successfully !', 'failed to return false of validation check !')
     console.log('\n')
   })
-
-  
 
   test(test9, ()=>{
     document.body.appendChild(createModalComponent())
