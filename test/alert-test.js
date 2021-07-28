@@ -39,8 +39,9 @@ function alertComponentTest(){
 
     // 결과값 비교
     console.log(`\n[ ${test1} ]`)
-    assert(readElementProp('alert-component', 'className') === 'alert-component', 'alert is hidden successfully !' ,'alert is not hidden !');
-    assert(readElementProp('alert-msg', 'innerText') === '', 'alert msg is cleared successfully !','alert msg is not cleared !');
+    const isSatisfied = readElementProp('alert-component', 'className') === 'alert-component'
+                    && readElementProp('alert-msg', 'innerText') === '';
+    assert(isSatisfied, 'canceled alert successfully !' ,'failed to cancel alert !');
     // dom 해제
     document.body.removeChild(alertComponent)
     console.log('\n')

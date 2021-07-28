@@ -4,13 +4,13 @@ import alertComponentTest from './alert-test.js';
 import modalComponentTest from './modal-test.js';
 
 function testAllModules(){
-  console.log('\n\n============ Test Check list ===============')
+  console.log('\n\n======================= Test Check list =========================')
   cardComponentTest()
   alertComponentTest()
   modalComponentTest()
 
   run()
-  console.log('=============================================\n\n')
+  console.log('==================================================================\n\n')
 }
 
 export default testAllModules
