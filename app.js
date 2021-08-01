@@ -1,7 +1,7 @@
 import router from './lib/router.js';
 import testAllModules from './test/index.js';
 
-var testMode = false; // 테스트모드 설정
+var testMode = true; // 테스트모드 설정
 
 if(!testMode){
   window.popped = false;
