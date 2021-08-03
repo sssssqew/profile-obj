@@ -31,13 +31,15 @@ function Modal({setProfilePicture, setProfileName}) {
     updateElement('modal-filename', {}, [fileData.name]);
   }
   function loadPictureData(fileData) {
-    var reader = new FileReader();
-    reader.onload = function (e) {
-      console.log("loaded profile picture!");
-      state.loadedPictureData = e.target.result;
-      // console.log(state.loadedPictureData)
-    };
-    reader.readAsDataURL(fileData);
+    state.loadedPictureData = fileData;
+
+    // var reader = new FileReader();
+    // reader.onload = function (e) {
+    //   console.log("loaded profile picture!");
+    //   state.loadedPictureData = e.target.result;
+    //   // console.log(state.loadedPictureData)
+    // };
+    // reader.readAsDataURL(fileData);
   }
 
 
@@ -92,6 +94,20 @@ function Modal({setProfilePicture, setProfileName}) {
   function saveUserInfo(userName, userAge, userGender) {
     const userInfoData = {userName, userAge, userGender, userProfileImg: state.loadedPictureData};
     sessionStorage.setItem('userInfoData', JSON.stringify(userInfoData));
+
+    // 서버로 이미지 파일 전송
+    const storageRef = firebase.storage().ref();
+    storageRef
+      .child(`images/${state.loadedPictureData.name}`)
+      .put(state.loadedPictureData)
+      .on('state_changed', snapshot => {
+                                  console.log(snapshot)
+                              }, error => {
+                                  console.log(error);
+                              }, () => {
+                                  console.log('성공');
+                              }
+      );
   }
   
 
@@ -117,7 +133,7 @@ function Modal({setProfilePicture, setProfileName}) {
       return;
     }
     setUploadedFileName(selectedFiles[0]);
-    loadPictureData(selectedFiles[0]);
+    loadPictureData(selectedFiles[0]); // 서버로 파일을 보내기 위하여 파일 자체를 state로 저장하는걸로 수정함 
   }
   function handlePictureSelect() {
     searchElement("modal-file").click();
@@ -132,7 +148,7 @@ function Modal({setProfilePicture, setProfileName}) {
       alert("user information is not valid :(");
     } else {
       saveUserInfo(userName, userAge, userGender); // 프로필 정보 페이지에서 사용할 데이터 저장
-      setProfilePicture(state.loadedPictureData);
+      // setProfilePicture(state.loadedPictureData);
       setProfileName(userName);
       clearModal();
       hideModal();
