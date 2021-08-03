@@ -92,21 +92,35 @@ function Modal({setProfilePicture, setProfileName}) {
     return true;
   }
   function saveUserInfo(userName, userAge, userGender) {
-    const userInfoData = {userName, userAge, userGender, userProfileImg: state.loadedPictureData};
-    sessionStorage.setItem('userInfoData', JSON.stringify(userInfoData));
 
     // 서버로 이미지 파일 전송
     const storageRef = firebase.storage().ref();
-    storageRef
-      .child(`images/${state.loadedPictureData.name}`)
-      .put(state.loadedPictureData)
-      .on('state_changed', snapshot => {
-                                  console.log(snapshot)
-                              }, error => {
-                                  console.log(error);
-                              }, () => {
-                                  console.log('성공');
-                              }
+    const uploadTask = storageRef.child(`images/${state.loadedPictureData.name}`).put(state.loadedPictureData);
+    uploadTask.on('state_changed', snapshot => {
+            console.log(snapshot) // 파일 업로드중
+            const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+            console.log('Upload is ' + progress + '% done');
+            switch (snapshot.state) {
+              case firebase.storage.TaskState.PAUSED: // or 'paused'
+                console.log('Upload is paused');
+                break;
+              case firebase.storage.TaskState.RUNNING: // or 'running'
+                console.log('Upload is running');
+                break;
+            }
+        }, error => {
+            console.log(error);
+            // 사진 삭제
+        }, () => {
+            console.log('성공'); // 파일 업로드 완료
+            uploadTask.snapshot.ref.getDownloadURL().then(function(downloadURL) {
+              console.log('File available at', downloadURL);
+              // setProfilePicture(downloadURL);
+
+              const userInfoData = {userName, userAge, userGender, userProfileImg: downloadURL};
+              sessionStorage.setItem('userInfoData', JSON.stringify(userInfoData));
+            });
+        }
       );
   }
   
@@ -142,14 +156,16 @@ function Modal({setProfilePicture, setProfileName}) {
     const userName = searchElement("modal-info-name").value.trim();
     const userAge = searchElement("modal-info-age").value.trim();
     const userGender = searchElement("modal-info-gender").value.trim();
+    const imgURL = window.URL.createObjectURL(state.loadedPictureData)
+    console.log('createobjec URL:'+imgURL)
   
     // 입력 데이터 검증
     if (!validateInputData(userName, userAge, userGender)) {
       alert("user information is not valid :(");
     } else {
-      saveUserInfo(userName, userAge, userGender); // 프로필 정보 페이지에서 사용할 데이터 저장
-      // setProfilePicture(state.loadedPictureData);
       setProfileName(userName);
+      setProfilePicture(imgURL);
+      saveUserInfo(userName, userAge, userGender); // 프로필 정보 페이지에서 사용할 데이터 저장
       clearModal();
       hideModal();
       showAlert('profile updated successfully !', 1000);
