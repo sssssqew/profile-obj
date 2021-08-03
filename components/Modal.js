@@ -97,24 +97,24 @@ function Modal({setProfilePicture, setProfileName}) {
     const storageRef = firebase.storage().ref();
     const uploadTask = storageRef.child(`images/${state.loadedPictureData.name}`).put(state.loadedPictureData);
     uploadTask.on('state_changed', snapshot => {
-            console.log(snapshot) // 파일 업로드중
-            const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-            console.log('Upload is ' + progress + '% done');
-            switch (snapshot.state) {
-              case firebase.storage.TaskState.PAUSED: // or 'paused'
-                console.log('Upload is paused');
-                break;
-              case firebase.storage.TaskState.RUNNING: // or 'running'
-                console.log('Upload is running');
-                break;
-            }
+            // console.log(snapshot) // 파일 업로드중
+            // const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+            // console.log('Upload is ' + progress + '% done');
+            // switch (snapshot.state) {
+            //   case firebase.storage.TaskState.PAUSED: // or 'paused'
+            //     console.log('Upload is paused');
+            //     break;
+            //   case firebase.storage.TaskState.RUNNING: // or 'running'
+            //     console.log('Upload is running');
+            //     break;
+            // }
         }, error => {
             console.log(error);
             // 사진 삭제
         }, () => {
             console.log('성공'); // 파일 업로드 완료
             uploadTask.snapshot.ref.getDownloadURL().then(function(downloadURL) {
-              console.log('File available at', downloadURL);
+              // console.log('File available at', downloadURL);
               // setProfilePicture(downloadURL);
 
               const userInfoData = {userName, userAge, userGender, userProfileImg: downloadURL};
