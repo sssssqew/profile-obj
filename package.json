@@ -1,0 +1,30 @@
+{
+  "name": "profile-obj",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "directories": {
+    "lib": "lib",
+    "test": "test"
+  },
+  "scripts": {
+    "start": "RD /S /Q dist && RD /S /Q .cache/ && parcel index.html --open",
+    "build": "RD /S /Q dist && RD /S /Q .cache/ && parcel build index.html",
+    "production": "npm install parcel-bundler && npm run build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sssssqew/profile-obj.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sssssqew/profile-obj/issues"
+  },
+  "homepage": "https://github.com/sssssqew/profile-obj#readme",
+  "dependencies": {
+    "css": "^3.0.0",
+    "parcel-bundler": "^1.12.5"
+  }
+}

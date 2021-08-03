@@ -1,15 +1,15 @@
 @import url('https://fonts.googleapis.com/css2?family=Gloria+Hallelujah&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Nunito&display=swap');
 
-@import url('css/pages/home.css');
-@import url('css/pages/about.css');
-@import url('css/pages/notfound.css');
+@import url('~css/pages/home.css');
+@import url('~css/pages/about.css');
+@import url('~css/pages/notfound.css');
 
-@import url('css/components/nav.css');
-@import url('css/components/card.css');
-@import url('css/components/modal.css');
-@import url('css/components/userInfo.css');
-@import url('css/components/alert.css');
+@import url('~css/components/nav.css');
+@import url('~css/components/card.css');
+@import url('~css/components/modal.css');
+@import url('~css/components/userInfo.css');
+@import url('~css/components/alert.css');
 
 
 /* Global style */
