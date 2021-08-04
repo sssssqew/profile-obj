@@ -8,9 +8,10 @@
     "test": "test"
   },
   "scripts": {
-    "start": "RD /S /Q dist && RD /S /Q .cache/ && parcel index.html --open",
-    "build": "RD /S /Q dist && RD /S /Q .cache/ && parcel build index.html",
-    "production": "npm install parcel-bundler && npm run build"
+    "cleanup": "if exist dist rmdir /s /q dist & if exist .cache rmdir /s /q .cache",
+    "start": "npm run cleanup & parcel index.html --open",
+    "build": "npm run cleanup & parcel build index.html",
+    "production": "npm install parcel-bundler & npm run build"
   },
   "repository": {
     "type": "git",
