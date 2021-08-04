@@ -26,11 +26,34 @@ function Home(){
   // 새로고침 후에도 사진 데이터가 사라지지 않음
   function fetchServer(){
     const userInfoData = JSON.parse(sessionStorage.getItem('userInfoData'));
-    if($(userInfoData).userProfileImg && $(userInfoData).userName){
+    console.log('user info:'+userInfoData)
+    if($(userInfoData).userProfileImg && $(userInfoData).userName && $(userInfoData).userAge && $(userInfoData).userGender){
       setProfilePicture(userInfoData.userProfileImg);
       setProfileName(userInfoData.userName);
     }else{
-      console.log('No profile image yet :(');
+      // 브라우저를 처음 열면 세션 데이터가 존재하지 않으므로 서버에서 데이터를 가져와 세션에 저장함
+      console.log('get user data from server ...')
+      firebase.database().ref().on('value', (snapshot) => {
+        const data = snapshot.val();
+        console.log(data);
+
+        if(data){
+          const storageRef = firebase.storage().ref();
+          storageRef.child(`images/${data.fileName}`).getDownloadURL().then(function(url) {
+            console.log("url from server: " + url)
+            // 파이어베이스에서 가져온 최신 데이터로 프로필 사진 프로필 이름 셋팅
+            setProfilePicture(url);
+            setProfileName(data.userName);
+            // 파이어베이스에서 가져온 최신 데이터를 세션 스토리지에 저장하기
+            sessionStorage.setItem('userInfoData', JSON.stringify({...data, userProfileImg: url}));
+          }).catch(function(error){
+            console.log('failed to get img url from server :(')
+          })
+        }else{
+          console.log('data does not exist yet')
+        }
+      })
+      
     }
   }
   

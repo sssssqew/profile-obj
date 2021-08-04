@@ -91,35 +91,32 @@ function Modal({setProfilePicture, setProfileName}) {
     if (!validateUserInfo(userName, userAge, userGender)) return;
     return true;
   }
-  function saveUserInfo(userName, userAge, userGender) {
+  function saveUserInfo(userName, userAge, userGender, imgURL) {
+    const file = state.loadedPictureData;
+    const userInfoData = {userName, userAge, userGender, userProfileImg: imgURL, fileName: file.name};
+    sessionStorage.setItem('userInfoData', JSON.stringify(userInfoData));
 
     // 서버로 이미지 파일 전송
     const storageRef = firebase.storage().ref();
-    const uploadTask = storageRef.child(`images/${state.loadedPictureData.name}`).put(state.loadedPictureData);
+    const uploadTask = storageRef.child(`images/${file.name}`).put(file);
     uploadTask.on('state_changed', snapshot => {
-            // console.log(snapshot) // 파일 업로드중
-            // const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-            // console.log('Upload is ' + progress + '% done');
-            // switch (snapshot.state) {
-            //   case firebase.storage.TaskState.PAUSED: // or 'paused'
-            //     console.log('Upload is paused');
-            //     break;
-            //   case firebase.storage.TaskState.RUNNING: // or 'running'
-            //     console.log('Upload is running');
-            //     break;
-            // }
+            console.log(snapshot) // 파일 업로드중
+            const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+            console.log('Upload is ' + progress + '% done');
+            switch (snapshot.state) {
+              case firebase.storage.TaskState.PAUSED: // or 'paused'
+                console.log('Upload is paused');
+                break;
+              case firebase.storage.TaskState.RUNNING: // or 'running'
+                console.log('Upload is running');
+                break;
+            }
         }, error => {
             console.log(error);
             // 사진 삭제
         }, () => {
-            console.log('성공'); // 파일 업로드 완료
-            uploadTask.snapshot.ref.getDownloadURL().then(function(downloadURL) {
-              // console.log('File available at', downloadURL);
-              // setProfilePicture(downloadURL);
-
-              const userInfoData = {userName, userAge, userGender, userProfileImg: downloadURL};
-              sessionStorage.setItem('userInfoData', JSON.stringify(userInfoData));
-            });
+            console.log('uploaded file to firebase successfully !'); // 파일 업로드 완료
+            firebase.database().ref().set(userInfoData); // 사진이 성공적으로 업로드되면 최신 사용자 정보를 파이어베이스 db에 저장함
         }
       );
   }
@@ -165,7 +162,7 @@ function Modal({setProfilePicture, setProfileName}) {
     } else {
       setProfileName(userName);
       setProfilePicture(imgURL);
-      saveUserInfo(userName, userAge, userGender); // 프로필 정보 페이지에서 사용할 데이터 저장
+      saveUserInfo(userName, userAge, userGender, imgURL); // 프로필 정보 페이지에서 사용할 데이터 저장
       clearModal();
       hideModal();
       showAlert('profile updated successfully !', 1000);
