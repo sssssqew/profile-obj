@@ -4,6 +4,7 @@ import Nav from '../components/Nav.js';
 import Card from '../components/Card.js';
 import Modal from '../components/Modal.js';
 import Alert from '../components/Alert.js';
+import Loading from '../components/Loading.js';
 
 function Home(){
   // state
@@ -15,12 +16,38 @@ function Home(){
   
 
   // 지역함수
+  function showAlert(msg, duration){
+    setTimeout(function(){
+      updateElement('alert-component', {'className': 'alert-component show-alert'})
+      updateElement('alert-msg', {}, [msg])
+    }, duration)
+  }
   function setProfilePicture(userProfileImg) {
     // TODO: createObjectURL 사용하면 해당위치에서 img.onload = URL.revokeObjectURL(img.src); 핸들러 연결해줘야 할듯
     updateElement('card-picture-img', {'src': userProfileImg, 'className': 'card-picture-img show-profileImg'});
   }
   function setProfileName(userName) {
     updateElement('card-name', {}, [userName]);
+  }
+  function showLoading(){
+    updateElement('loading-component', {'className': 'loading-component show-loading'})
+  }
+  function hideLoading(){
+    updateElement('loading-component', {'className': 'loading-component'})
+  }
+  function showProfileHome(){
+    updateElement('profile-home', {'className': 'profile-home'})
+  }
+  function hideProfileHome(){
+    updateElement('profile-home', {'className': 'profile-home hide-profileHome'})
+  }
+  function displayLoading(){
+    hideProfileHome()
+    showLoading()
+  }
+  function displayProfileHome(){
+    hideLoading()
+    showProfileHome()
   }
   
   // 새로고침 후에도 사진 데이터가 사라지지 않음
@@ -31,6 +58,9 @@ function Home(){
       setProfilePicture(userInfoData.userProfileImg);
       setProfileName(userInfoData.userName);
     }else{
+      // 로딩화면 보여주기
+      displayLoading()
+
       // 브라우저를 처음 열면 세션 데이터가 존재하지 않으므로 서버에서 데이터를 가져와 세션에 저장함
       console.log('get user data from server ...')
       firebase.database().ref().on('value', (snapshot) => {
@@ -41,16 +71,26 @@ function Home(){
           const storageRef = firebase.storage().ref();
           storageRef.child(`images/${data.fileName}`).getDownloadURL().then(function(url) {
             console.log("url from server: " + url)
+            
             // 파이어베이스에서 가져온 최신 데이터로 프로필 사진 프로필 이름 셋팅
             setProfilePicture(url);
             setProfileName(data.userName);
+
+            // 다시 프로필 홈페이지 보여주기
+            displayProfileHome()
+            showAlert('succeed to fetch user information from server !', 1000);
+
             // 파이어베이스에서 가져온 최신 데이터를 세션 스토리지에 저장하기
             sessionStorage.setItem('userInfoData', JSON.stringify({...data, userProfileImg: url}));
           }).catch(function(error){
             console.log('failed to get img url from server :(')
+            displayProfileHome()
+            showAlert('Failed to get img url from server !', 1000);
           })
         }else{
           console.log('data does not exist yet')
+          displayProfileHome()
+          showAlert('Click "submit profile" button to upload first profile !', 1000);
         }
       })
       
@@ -67,7 +107,7 @@ function Home(){
   
   // 컴포넌트 생성
   function buildComponent(){
-    const homePage = buildElement('div', {'id': 'profile-home'}, [
+    const homePage = buildElement('div', {'id': 'profile-home', 'className': 'profile-home'}, [
       buildElement('div', {'id': 'profile-main'}, [
         buildElement('div', {'id': 'profile-nav'}),
         buildElement('div', {'id': 'profile-card'}, [
@@ -91,8 +131,9 @@ function Home(){
   function addComponents(){
     Nav();
     Card(); 
-    Modal({setProfilePicture, setProfileName});
+    Modal({setProfilePicture, setProfileName, showAlert});
     Alert();
+    Loading();
   }
   function doSomethingAfterRendering(){
     fetchServer();

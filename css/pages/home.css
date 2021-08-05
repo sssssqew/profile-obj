@@ -1,6 +1,9 @@
-#profile-home {
+.profile-home {
   width: 100%;
   height: 100vh;
+}
+.hide-profileHome{
+  display: none;
 }
 #profile-main {
   height: 100%;

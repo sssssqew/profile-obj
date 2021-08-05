@@ -1,16 +1,10 @@
 import {buildElement, updateElement, displayMessage, searchElement} from '../lib/helpers.js';
 
-function Modal({setProfilePicture, setProfileName}) {
+function Modal({setProfilePicture, setProfileName, showAlert}) {
   const state = {
     loadedPictureData: ""
   }
   // 지역함수
-  function showAlert(msg, duration){
-    setTimeout(function(){
-      updateElement('alert-component', {'className': 'alert-component show-alert'})
-      updateElement('alert-msg', {}, [msg])
-    }, duration)
-  }
   function clearModal() {
     state.loadedPictureData = "";
     updateElement('modal-info-name', {'value': ''});
