@@ -50,13 +50,14 @@ function Home(){
     showProfileHome()
   }
   
-  // 새로고침 후에도 사진 데이터가 사라지지 않음
+  // 세션 스토리지에 최신 사용자 정보가 있으면 해당 정보를 보여준다
   function fetchServer(){
     const userInfoData = JSON.parse(sessionStorage.getItem('userInfoData'));
     console.log('user info:'+userInfoData)
     if($(userInfoData).userProfileImg && $(userInfoData).userName && $(userInfoData).userAge && $(userInfoData).userGender){
       setProfilePicture(userInfoData.userProfileImg);
       setProfileName(userInfoData.userName);
+    // 세션 스토리지에 최신 사용자 정보가 없으면 서버에서 최신 정보를 가져와서 보여준다
     }else{
       // 로딩화면 보여주기
       displayLoading()
