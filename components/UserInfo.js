@@ -3,11 +3,17 @@ import router from '../lib/router.js';
 
 function UserInfo(){
   // 이벤트 핸들러 정의
+  /**
+   * Handle to hide profile image when error occures
+   * @param {Object} event - user event
+   */
   function hideProfileImg(event) {
     updateElement(event.target.id, {'className': 'userInfo-profile-img'});
   }
   
   // 컴포넌트 생성
+  /**
+   * Build specific component */
   function buildComponent(){
     const userInfoData = JSON.parse(sessionStorage.getItem('userInfoData'));
     const userInfoComponent = buildElement('div', {'id': 'userInfo-component'}, [
@@ -27,10 +33,15 @@ function UserInfo(){
   }
 
   // 이벤트 핸들러 연결
+  /**
+   * Attach event handlers related to specific component
+   */
   function attachHandlers(){
     searchElement('userInfo-profile-img').addEventListener("error", hideProfileImg);
   }
-  
+  /**
+   * initialize component when rendering on browser
+   */
   function init(){
     buildComponent();
     attachHandlers();

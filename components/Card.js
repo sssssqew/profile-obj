@@ -1,11 +1,20 @@
 import {buildElement, updateElement, searchElement} from '../lib/helpers.js';
 
+/**
+ * Card component to display profile image
+ */
 function Card(){
   // 이벤트 핸들러 정의
+  /**
+   * Hide Profile image when error occure
+   * @param {Object} event - user event
+   */
   function hideProfileImg(event) {
     updateElement(event.target.id, {'className': 'card-picture-img'});
   }
   // 컴포넌트 생성
+  /**
+   * Build specific component */
   function buildComponent(){  
     const cardComponent = buildElement('div', {'id': 'card-component'}, [
       buildElement('div', {'id': 'card-picture'}, [
@@ -19,14 +28,20 @@ function Card(){
     profileCardContainer.insertBefore(cardComponent, profileCardContainer.firstChild);
   }
   // 이벤트 핸들러 연결
+  /**
+   * Attach event handlers related to specific component
+   */
   function attachHandlers(){
     searchElement('card-picture-img').addEventListener("error", hideProfileImg);
   }
+  /**
+   * initialize component when rendering on browser
+   */
   function init(){
     buildComponent();
     attachHandlers();
   }
-  init(); // 컴포넌트 생성 + 이벤트핸들러 연결
+  init(); 
 }
 
 export default Card;
