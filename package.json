@@ -11,7 +11,8 @@
     "cleanup": "if exist dist rmdir /s /q dist & if exist .cache rmdir /s /q .cache",
     "start": "npm run cleanup & parcel index.html --open",
     "build": "npm run cleanup & parcel build index.html",
-    "production": "npm install parcel-bundler & npm run build"
+    "production": "npm install parcel-bundler & npm run build",
+    "deploy": "npm run build & firebase deploy"
   },
   "repository": {
     "type": "git",

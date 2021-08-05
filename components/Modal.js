@@ -90,6 +90,8 @@ function Modal({setProfilePicture, setProfileName, showAlert}) {
     const userInfoData = {userName, userAge, userGender, userProfileImg: imgURL, fileName: file.name};
     sessionStorage.setItem('userInfoData', JSON.stringify(userInfoData));
 
+    // 서버로 파일 전송중에는 profile submit 버튼 비활성화
+    updateElement('profile-submit', {'disabled': true});
     // 서버로 이미지 파일 전송
     const storageRef = firebase.storage().ref();
     const uploadTask = storageRef.child(`images/${file.name}`).put(file);
@@ -107,9 +109,11 @@ function Modal({setProfilePicture, setProfileName, showAlert}) {
             }
         }, error => {
             console.log(error);
-            // 사진 삭제
+            updateElement('profile-submit', {'disabled': false}); // 서버 전송이 완료되면 버튼 활성화
+            showAlert('Failed to save img file to server !', 1000);
         }, () => {
             console.log('uploaded file to firebase successfully !'); // 파일 업로드 완료
+            updateElement('profile-submit', {'disabled': false}); // 서버 전송이 완료되면 버튼 활성화
             firebase.database().ref().set(userInfoData); // 사진이 성공적으로 업로드되면 최신 사용자 정보를 파이어베이스 db에 저장함
         }
       );

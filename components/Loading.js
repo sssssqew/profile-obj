@@ -1,5 +1,6 @@
 import {buildElement, updateElement, searchElement} from '../lib/helpers.js';
 
+// loading 화면은 추후 스스로 만들어서 전자책에 추가한다
 function Loading(){
   // 컴포넌트 생성
   function buildComponent(){  
