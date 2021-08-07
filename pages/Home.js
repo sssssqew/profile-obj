@@ -6,6 +6,9 @@ import Modal from '../components/Modal.js';
 import Alert from '../components/Alert.js';
 import Loading from '../components/Loading.js';
 
+/**
+ * Home page to display user's profile
+ */
 function Home(){
   // state
   // 페이지나 컴포넌트 내부에서 사용하는 데이터는 state로 정의
@@ -16,41 +19,75 @@ function Home(){
   
 
   // 지역함수
+  /**
+   * Show alert message to user
+   * @param {string} msg - message to display to user
+   * @param {number} duration - integer to delay before displaying message
+   */
   function showAlert(msg, duration){
     setTimeout(function(){
       updateElement('alert-component', {'className': 'alert-component show-alert'})
       updateElement('alert-msg', {}, [msg])
     }, duration)
   }
+  /**
+   * Display profile picture for given image url
+   * @param {string} userProfileImg - image url to load
+   */
   function setProfilePicture(userProfileImg) {
     // TODO: createObjectURL 사용하면 해당위치에서 img.onload = URL.revokeObjectURL(img.src); 핸들러 연결해줘야 할듯
     updateElement('card-picture-img', {'src': userProfileImg, 'className': 'card-picture-img show-profileImg'});
   }
+  /**
+   * Display user name for given user name
+   * @param {string} userName - user name given by user
+   */
   function setProfileName(userName) {
     updateElement('card-name', {}, [userName]);
   }
+  /**
+   * Show loading icon
+   */
   function showLoading(){
     updateElement('loading-component', {'className': 'loading-component show-loading'})
   }
+  /**
+   * Hide loading icon
+   */
   function hideLoading(){
     updateElement('loading-component', {'className': 'loading-component'})
   }
+  /**
+   * Show home page
+   */
   function showProfileHome(){
     updateElement('profile-home', {'className': 'profile-home'})
   }
+  /**
+   * Hide home page
+   */
   function hideProfileHome(){
     updateElement('profile-home', {'className': 'profile-home hide-profileHome'})
   }
+  /**
+   * Display loading 
+   */
   function displayLoading(){
     hideProfileHome()
     showLoading()
   }
+  /**
+   * Display home page
+   */
   function displayProfileHome(){
     hideLoading()
     showProfileHome()
   }
   
   // 세션 스토리지에 최신 사용자 정보가 있으면 해당 정보를 보여준다
+  /**
+   * Fetch data from server 
+   */
   function fetchServer(){
     const userInfoData = JSON.parse(sessionStorage.getItem('userInfoData'));
     console.log('user info:'+userInfoData)
@@ -99,14 +136,22 @@ function Home(){
   }
   
   // 이벤트 핸들러 정의
+  /**
+   * Show Modal window
+   */
   function showModal() {
     updateElement('profile-modal', {'className': 'profile-modal show-modal'});
   }
+  /**
+   * Handle event when user click 'profile submit' button
+   */
   function handleProfileSubmit() {
     showModal();
   }
   
   // 컴포넌트 생성
+  /**
+   * Build specific component */
   function buildComponent(){
     const homePage = buildElement('div', {'id': 'profile-home', 'className': 'profile-home'}, [
       buildElement('div', {'id': 'profile-main'}, [
@@ -125,10 +170,16 @@ function Home(){
     updateElement('root', {}, [homePage]);
   }
   // 이벤트 핸들러 연결
+  /**
+   * Attach event handlers related to specific component
+   */
   function attachHandlers(){
     searchElement("profile-submit").addEventListener("click", handleProfileSubmit);
   }
   // 하위 컴포넌트 생성
+  /**
+   * Render needed components for this page
+   */
   function addComponents(){
     Nav();
     Card(); 
@@ -136,10 +187,17 @@ function Home(){
     Alert();
     Loading();
   }
+
+  /**
+   * Process something after rendering page
+   */
   function doSomethingAfterRendering(){
     fetchServer();
   }
 
+  /**
+   * initialize component when rendering on browser
+   */
   function init(){
     buildComponent();
     attachHandlers();
