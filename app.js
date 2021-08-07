@@ -2,12 +2,12 @@ import router from './lib/router.js';
 import testAllModules from './test/index.js';
 import firebaseConfig from './firebase-config.js';
 
-firebase.initializeApp(firebaseConfig); // 파이어베이스 초기화
-// var storageRef = firebase.storage().ref();
-
 var testMode = false; // 테스트모드 설정
 
 if(!testMode){
+  firebase.initializeApp(firebaseConfig); // 파이어베이스 초기화
+  // var storageRef = firebase.storage().ref();
+
   window.popped = false;
 
   router('/');
