@@ -30,6 +30,14 @@ function Home(){
       updateElement('alert-msg', {}, [msg])
     }, duration)
   }
+
+  /**
+   * handle event when profile image load
+   */
+  function handleProfileImgLoad(){
+    displayProfileHome() // 파이어베이스에서 이미지가 완전히 로드된 후에 home 화면 보여주기
+  }
+
   /**
    * Display profile picture for given image url
    * @param {string} userProfileImg - image url to load
@@ -94,11 +102,10 @@ function Home(){
     if($(userInfoData).userProfileImg && $(userInfoData).userName && $(userInfoData).userAge && $(userInfoData).userGender){
       setProfilePicture(userInfoData.userProfileImg);
       setProfileName(userInfoData.userName);
+
+      showAlert('succeed to fetch user information from server !', 1000);
     // 세션 스토리지에 최신 사용자 정보가 없으면 서버에서 최신 정보를 가져와서 보여준다
     }else{
-      // 로딩화면 보여주기
-      displayLoading()
-
       // 브라우저를 처음 열면 세션 데이터가 존재하지 않으므로 서버에서 데이터를 가져와 세션에 저장함
       console.log('get user data from server ...')
       firebase.database().ref().on('value', (snapshot) => {
@@ -114,8 +121,6 @@ function Home(){
             setProfilePicture(url);
             setProfileName(data.userName);
 
-            // 다시 프로필 홈페이지 보여주기
-            displayProfileHome()
             showAlert('succeed to fetch user information from server !', 1000);
 
             // 파이어베이스에서 가져온 최신 데이터를 세션 스토리지에 저장하기
@@ -182,7 +187,7 @@ function Home(){
    */
   function addComponents(){
     Nav();
-    Card(); 
+    Card({handleProfileImgLoad}); 
     Modal({setProfilePicture, setProfileName, showAlert});
     Alert();
     Loading();
@@ -192,7 +197,8 @@ function Home(){
    * Process something after rendering page
    */
   function doSomethingAfterRendering(){
-    fetchServer();
+    displayLoading() // 로딩화면 보여주기
+    fetchServer(); // 서버에서 데이터 가져오기
   }
 
   /**

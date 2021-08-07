@@ -3,7 +3,7 @@ import {buildElement, updateElement, searchElement} from '../lib/helpers.js';
 /**
  * Card component to display profile image
  */
-function Card(){
+function Card({handleProfileImgLoad}){
   // 이벤트 핸들러 정의
   /**
    * Hide Profile image when error occure
@@ -33,6 +33,7 @@ function Card(){
    */
   function attachHandlers(){
     searchElement('card-picture-img').addEventListener("error", hideProfileImg);
+    searchElement('card-picture-img').addEventListener("load", handleProfileImgLoad);
   }
   /**
    * initialize component when rendering on browser
