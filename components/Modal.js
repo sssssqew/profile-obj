@@ -166,6 +166,7 @@ function Modal({showAlert}) {
         }, () => {
             console.log('uploaded file to firebase successfully !'); // 파일 업로드 완료
             setDataToFirebase(userInfoData)
+            updateElement('profile-submit', {'disabled': false});
         });
   }
   /**
