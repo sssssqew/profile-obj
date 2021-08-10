@@ -2,11 +2,9 @@ import {buildElement, updateElement, displayMessage, searchElement} from '../lib
 
 /**
  * Modal component to pop up 
- * @param {Fuction} setProfilePicture - function to set profile image
- * @param {Fuction} setProfileName - function to set profile name
  * @param {Fuction} showAlert - function to show alert for an amount period of time
  */
-function Modal({setProfilePicture, setProfileName, showAlert}) {
+function Modal({showAlert}) {
   const state = {
     loadedPictureData: ""
   }
@@ -55,7 +53,7 @@ function Modal({setProfilePicture, setProfileName, showAlert}) {
     // var reader = new FileReader();
     // reader.onload = function (e) {
     //   console.log("loaded profile picture!");
-    //   state.loadedPictureData = e.target.result;
+    //   // state.loadedPictureData = e.target.result;
     //   // console.log(state.loadedPictureData)
     // };
     // reader.readAsDataURL(fileData);
@@ -147,53 +145,43 @@ function Modal({setProfilePicture, setProfileName, showAlert}) {
     if (!validateUserInfo(userName, userAge, userGender)) return;
     return true;
   }
-  /**
-   * Save user information to session storage and firebase server
-   * @param {string} userName - user name given by user
-   * @param {string} userAge - user age given by user
-   * @param {string} userGender - user gender given by user
-   * @param {DOMString} imgURL - img url made from createObjectURL function
-   */
-  function saveUserInfo(userName, userAge, userGender, imgURL) {
-    const file = state.loadedPictureData;
-    const userInfoData = {userName, userAge, userGender, userProfileImg: imgURL, fileName: file.name};
-    sessionStorage.setItem('userInfoData', JSON.stringify(userInfoData));
-
-    // 서버로 파일 전송중에는 profile submit 버튼 비활성화
-    updateElement('profile-submit', {'disabled': true});
-
-    // 서버로 이미지 파일 전송
+  // 최신 사용자 정보를 파이어베이스 db에 저장함
+  function setDataToFirebase(data){
+    firebase.database().ref().set(data, function(error){
+      if(error) console.log('failed to save user information on realtime database !');
+      else console.log('saved data into realtime databse successfully !')
+    }) 
+  }
+  // 서버로 이미지 파일 전송
+  function sendFileToFirebase(fileData, userInfoData){
     const storageRef = firebase.storage().ref();
-    const uploadTask = storageRef.child(`images/${file.name}`).put(file);
+    const uploadTask = storageRef.child(`images/${fileData.name}`).put(fileData);
     uploadTask.on('state_changed', snapshot => {
-            console.log(snapshot) // 파일 업로드중
             const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
             console.log('Upload is ' + progress + '% done');
-            switch (snapshot.state) {
-              case firebase.storage.TaskState.PAUSED: // or 'paused'
-                console.log('Upload is paused');
-                break;
-              case firebase.storage.TaskState.RUNNING: // or 'running'
-                console.log('Upload is running');
-                break;
-            }
         }, error => {
             console.log(error);
             showAlert('Failed to save img file to server !', 1000);
             updateElement('profile-submit', {'disabled': false}); // 서버 전송이 완료되면 버튼 활성화
         }, () => {
             console.log('uploaded file to firebase successfully !'); // 파일 업로드 완료
-            firebase.database().ref().set(userInfoData, (error) => {
-              if (error) {
-                console.log('error occured while saving data into realtime database :(', error)
-              } else {
-                console.log('saved data into realtime databse successfully !')
-              }
-              updateElement('profile-submit', {'disabled': false}); // 서버 전송이 완료되면 버튼 활성화
-            }); // 사진이 성공적으로 업로드되면 최신 사용자 정보를 파이어베이스 db에 저장함
-            
-        }
-      );
+            setDataToFirebase(userInfoData)
+        });
+  }
+  /**
+   * Save user information to session storage and firebase server
+   * @param {string} userName - user name given by user
+   * @param {string} userAge - user age given by user
+   * @param {string} userGender - user gender given by user
+   */
+  function saveUserInfo(userName, userAge, userGender) {
+    const file = state.loadedPictureData;
+    const userInfoData = {userName, userAge, userGender, fileName: file.name};
+    
+    // 서버로 파일 전송중에는 profile submit 버튼 비활성화
+    updateElement('profile-submit', {'disabled': true});
+    sendFileToFirebase(file, userInfoData)
+    
   }
   
 
@@ -246,16 +234,15 @@ function Modal({setProfilePicture, setProfileName, showAlert}) {
     const userName = searchElement("modal-info-name").value.trim();
     const userAge = searchElement("modal-info-age").value.trim();
     const userGender = searchElement("modal-info-gender").value.trim();
-    const imgURL = window.URL.createObjectURL(state.loadedPictureData)
-    console.log('createobjec URL:'+imgURL)
   
     // 입력 데이터 검증
     if (!validateInputData(userName, userAge, userGender)) {
       alert("user information is not valid :(");
     } else {
-      setProfileName(userName);
-      setProfilePicture(imgURL);
-      saveUserInfo(userName, userAge, userGender, imgURL); // 프로필 정보 페이지에서 사용할 데이터 저장
+      // snapshot 때문에 파이어베이스에 변경사항이 있으면 다시 home 페이지의 snapshot 함수가 비동기적으로 실행된다 
+      // setProfileName(userName);
+      // setProfilePicture(state.loadedPictureData);
+      saveUserInfo(userName, userAge, userGender); // 프로필 정보 페이지에서 사용할 데이터 저장
       clearModal();
       hideModal();
       showAlert('profile updated successfully !', 1000);

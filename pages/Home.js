@@ -38,6 +38,7 @@ function Home(){
    * handle event when profile image load
    */
   function handleProfileImgLoad(event){
+    console.log('load end')
     updateElement('card-picture-img', {'className': 'card-picture-img card-show-profileImg'});
     displayProfileHome() // 파이어베이스에서 이미지가 완전히 로드된 후에 home 화면 보여주기
     showAlert('succeed to fetch user information from server !', 500);
@@ -45,7 +46,7 @@ function Home(){
     // 초반에 'card-picture-img' DOM을 생성할때 src가 비어있어서 초기 렌더링시 error 이벤트가 발생하므로 
     // 이미지를 로드한 이후에 사진을 다시 숨겨버린다
     // 그러나 이미지 로드한 이후에는 더이상 사진을 숨길 필요가 없으므로 error 이벤트를 제거함
-    searchElement('card-picture-img').removeEventListener("error", hideProfileImg);
+    // searchElement('card-picture-img').removeEventListener("error", hideProfileImg);
   }
 
   function hideProfileImg(event) {
@@ -111,21 +112,21 @@ function Home(){
    * Fetch data from server 
    */
   function fetchServer(){
-    const userInfoData = JSON.parse(sessionStorage.getItem('userInfoData'));
-    console.log('user info:')
-    console.log(userInfoData)
+    // const userInfoData = JSON.parse(sessionStorage.getItem('userInfoData'));
+    // console.log('user info:')
+    // console.log(userInfoData)
   
-    if($(userInfoData).userProfileImg && $(userInfoData).userName && $(userInfoData).userAge && $(userInfoData).userGender){
-      setProfilePicture(userInfoData.userProfileImg);
-      setProfileName(userInfoData.userName);
+    // if($(userInfoData).userProfileImg && $(userInfoData).userName && $(userInfoData).userAge && $(userInfoData).userGender){
+    //   setProfilePicture(userInfoData.userProfileImg);
+    //   setProfileName(userInfoData.userName);
      
-    // 세션 스토리지에 최신 사용자 정보가 없으면 서버에서 최신 정보를 가져와서 보여준다
-    }else{
+    // // 세션 스토리지에 최신 사용자 정보가 없으면 서버에서 최신 정보를 가져와서 보여준다
+    // }else{
       // 브라우저를 처음 열면 세션 데이터가 존재하지 않으므로 서버에서 데이터를 가져와 세션에 저장함
       console.log('get user data from server ...')
       firebase.database().ref().on('value', (snapshot) => {
         const data = snapshot.val();
-        console.log(data);
+        console.log('server', data);
 
         if(data){
           const storageRef = firebase.storage().ref();
@@ -150,7 +151,7 @@ function Home(){
         }
       })
       
-    }
+    // }
   }
   
   // 이벤트 핸들러 정의
@@ -201,7 +202,7 @@ function Home(){
   function addComponents(){
     Nav();
     Card({hideProfileImg, handleProfileImgLoad}); 
-    Modal({setProfilePicture, setProfileName, showAlert});
+    Modal({showAlert});
     Alert();
     Loading();
   }
