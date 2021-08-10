@@ -38,7 +38,7 @@ function About(){
   function doSomethingAfterRendering(){
     const userInfoData = JSON.parse(sessionStorage.getItem('userInfoData'));
     if($(userInfoData).userProfileImg){
-      updateElement('userInfo-profile-img', {'className': 'userInfo-profile-img show-profileImg'}); // 프로필 사진 보여주기
+      updateElement('userInfo-profile-img', {'className': 'userInfo-profile-img userInfo-show-profileImg'}); // 프로필 사진 보여주기
     } 
   }
 

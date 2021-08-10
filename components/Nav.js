@@ -1,4 +1,4 @@
-import {buildElement, updateElement, searchElement} from '../lib/helpers.js';
+import {buildElement, updateElement, searchElement, readElementProp} from '../lib/helpers.js';
 import router from '../lib/router.js';
 
 function Nav(){
@@ -8,7 +8,7 @@ function Nav(){
    * @param {Object} event - user event
    */
   function handleNavigation(event){ // 이벤트 위임
-    const url = event.target.dataset.url;
+    const url = event.target.getAttribute('data-url'); // 비표준 속성인 data-url은 IE에서 event.target.dataset으로 값을 읽어오지 못함
     if(url) router(url);
   }
   

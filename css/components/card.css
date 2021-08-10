@@ -20,7 +20,7 @@
   height: 100%;
   image-rendering: -webkit-optimize-contrast;
 }
-.show-profileImg{
+.card-show-profileImg{
   display: block !important;
 }
 #card-name {

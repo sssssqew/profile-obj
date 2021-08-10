@@ -1,4 +1,4 @@
-import {buildElement, updateElement, $, searchElement} from '../lib/helpers.js';
+import {buildElement, updateElement, $, searchElement, readElementProp} from '../lib/helpers.js';
 
 import Nav from '../components/Nav.js';
 import Card from '../components/Card.js';
@@ -26,16 +26,30 @@ function Home(){
    */
   function showAlert(msg, duration){
     setTimeout(function(){
-      updateElement('alert-component', {'className': 'alert-component show-alert'})
-      updateElement('alert-msg', {}, [msg])
+      // 아래 코드는 1초 후에 실행되는데 아래 코드가 실행되기 전에 About 페이지로 이동하면 alert-component가 존재하지 않는다는 오류가 남
+      if(document.getElementById('alert-component')){
+        updateElement('alert-component', {'className': 'alert-component show-alert'})
+        updateElement('alert-msg', {}, [msg])
+      }
     }, duration)
   }
 
   /**
    * handle event when profile image load
    */
-  function handleProfileImgLoad(){
+  function handleProfileImgLoad(event){
+    updateElement('card-picture-img', {'className': 'card-picture-img card-show-profileImg'});
     displayProfileHome() // 파이어베이스에서 이미지가 완전히 로드된 후에 home 화면 보여주기
+    showAlert('succeed to fetch user information from server !', 500);
+    
+    // 초반에 'card-picture-img' DOM을 생성할때 src가 비어있어서 초기 렌더링시 error 이벤트가 발생하므로 
+    // 이미지를 로드한 이후에 사진을 다시 숨겨버린다
+    // 그러나 이미지 로드한 이후에는 더이상 사진을 숨길 필요가 없으므로 error 이벤트를 제거함
+    searchElement('card-picture-img').removeEventListener("error", hideProfileImg);
+  }
+
+  function hideProfileImg(event) {
+    updateElement(event.target.id, {'className': 'card-picture-img'});
   }
 
   /**
@@ -44,7 +58,7 @@ function Home(){
    */
   function setProfilePicture(userProfileImg) {
     // TODO: createObjectURL 사용하면 해당위치에서 img.onload = URL.revokeObjectURL(img.src); 핸들러 연결해줘야 할듯
-    updateElement('card-picture-img', {'src': userProfileImg, 'className': 'card-picture-img show-profileImg'});
+    updateElement('card-picture-img', {'src': userProfileImg});
   }
   /**
    * Display user name for given user name
@@ -98,12 +112,13 @@ function Home(){
    */
   function fetchServer(){
     const userInfoData = JSON.parse(sessionStorage.getItem('userInfoData'));
-    console.log('user info:'+userInfoData)
+    console.log('user info:')
+    console.log(userInfoData)
+  
     if($(userInfoData).userProfileImg && $(userInfoData).userName && $(userInfoData).userAge && $(userInfoData).userGender){
       setProfilePicture(userInfoData.userProfileImg);
       setProfileName(userInfoData.userName);
-
-      showAlert('succeed to fetch user information from server !', 1000);
+     
     // 세션 스토리지에 최신 사용자 정보가 없으면 서버에서 최신 정보를 가져와서 보여준다
     }else{
       // 브라우저를 처음 열면 세션 데이터가 존재하지 않으므로 서버에서 데이터를 가져와 세션에 저장함
@@ -121,19 +136,17 @@ function Home(){
             setProfilePicture(url);
             setProfileName(data.userName);
 
-            showAlert('succeed to fetch user information from server !', 1000);
-
             // 파이어베이스에서 가져온 최신 데이터를 세션 스토리지에 저장하기
             sessionStorage.setItem('userInfoData', JSON.stringify({...data, userProfileImg: url}));
           }).catch(function(error){
             console.log('failed to get img url from server :(')
             displayProfileHome()
-            showAlert('Failed to get img url from server !', 1000);
+            showAlert('Failed to get img url from server !', 500);
           })
         }else{
           console.log('data does not exist yet')
           displayProfileHome()
-          showAlert('Click "submit profile" button to upload first profile !', 1000);
+          showAlert('Click "submit profile" button to upload first profile !', 500);
         }
       })
       
@@ -187,7 +200,7 @@ function Home(){
    */
   function addComponents(){
     Nav();
-    Card({handleProfileImgLoad}); 
+    Card({hideProfileImg, handleProfileImgLoad}); 
     Modal({setProfilePicture, setProfileName, showAlert});
     Alert();
     Loading();
