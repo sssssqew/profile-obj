@@ -9,7 +9,7 @@ if(!testMode){
   router('/');
 }else{
   // 개발하는 동안 테스트 코드 실행 (Production 인 경우 주석처리)
-  testAllModules()
+  testAllModules();
 }
 
 

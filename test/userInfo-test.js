@@ -16,7 +16,7 @@ function userInfoComponentTest(){
     // ui 생성
     const userInfoComponent = buildElement('div', {'id': 'userInfo-component'}, [
       buildElement('div',{'id': 'userInfo-profile'}, [
-        buildElement('img', {'id': 'userInfo-profile-img', 'className': 'userInfo-profile-img show-profileImg','src': `${$(userInfoData).userProfileImg? userInfoData.userProfileImg: ''}`, 'alt': ''})
+        buildElement('img', {'id': 'userInfo-profile-img', 'className': 'userInfo-profile-img userInfo-show-profileImg','src': `${$(userInfoData).userProfileImg? userInfoData.userProfileImg: ''}`, 'alt': ''})
       ]),
       buildElement('div', {'id': 'userInfo-container'}, [
         buildElement('div', {'id': 'userInfo-info'}, [

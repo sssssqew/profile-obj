@@ -125,6 +125,12 @@ function createImgData(str){
   return 'data:image/png;base64,'+img;
 }
 
+function createFile(data, name, type){
+  const file = new Blob([data], { type }); 
+  file.name = name;
+  return file;
+}
+
 function setModalComponent(fakeData){
   updateElement('modal-info-name', {'value': fakeData.name});
   updateElement('modal-info-age', {'value': fakeData.age});
@@ -214,8 +220,8 @@ function modalComponentTest(){
 
   test(test4, ()=>{
     const testCases = [
-      {file: [new File([""], "dummy.png", { type: 'image/png' })], exp: true},
-      {file: [new File([""], "dummy.pdf", { type: 'application/pdf' })], exp: false}
+      {file: [createFile("", "dummy.png", 'image/png')], exp: true},
+      {file: [createFile("", "dummy.pdf", 'application/pdf')], exp: false}
     ]
     
     const result = testCases.every(function(c){
@@ -247,6 +253,10 @@ function modalComponentTest(){
   })
 
   test(test5, ()=>{
+    const filedata = 'test data';
+    const filename = "dummy.png";
+    const filetype = 'image/png';
+
     document.body.appendChild(createModalComponent())
     
     function setUploadedFileName(fileData) {
@@ -254,49 +264,36 @@ function modalComponentTest(){
     }
     function handlePictureUpload(event) {
       // console.log('file is uploading on testing ...')
-
-      const selectedFiles = [new File([""], "dummy.png", { type: 'image/png' })]; // 사용자가 직접 파일을 선택하지 못하므로 file 객체를 생성해서 사용함 (mocking)
-      setUploadedFileName(selectedFiles[0]);
+  
+      const file = createFile(filedata, filename, filetype) // 사용자가 직접 파일을 선택하지 못하므로 file 객체를 생성해서 사용함 (mocking)
+      setUploadedFileName(file);
     }
     searchElement("modal-file").addEventListener("change", handlePictureUpload);
 
     const event = new Event('change');
     searchElement('modal-file').dispatchEvent(event)
 
-    assert(readElementProp('modal-filename', 'innerText') === 'dummy.png', 'uploaded file name is updated on UI successfully !', 'uploaded file name is failed to be updated on UI !')
+    assert(readElementProp('modal-filename', 'innerText') === filename, 'uploaded file name is updated on UI successfully !', 'uploaded file name is failed to be updated on UI !')
     document.body.removeChild(searchElement('profile-modal'))
     console.log('\n')
   })
 
   test(test6, ()=>{
-    document.body.appendChild(createModalComponent())
+    const filedata = 'test data';
+    const filename = "dummy.png";
+    const filetype = 'image/png';
     const state = {loadedPictureData: ''};
-    const str = "I don't care about a broken image";
-    const imgData = createImgData(str);
+    const file = createFile(filedata, filename, filetype)
+
+    document.body.appendChild(createModalComponent())
     
     function loadPictureData(fileData) {
-      var reader = new FileReader();
-      reader.onload = function (e) {
-        // console.log("loaded profile picture!");
-        // readAsDataURL 역할이 파일 객체의 str 데이터를 base64 문자열로 변경하므로 결과적으로 createImgData 와 같다
-        // readAsDataURL는 이벤트루프에 등록되어 비동기로 실행되는데 테스트는 동기적으로 실행되어야 하므로 createImgData를 사용한다
-        state.loadedPictureData = createImgData(str); 
-      };
-      // load event를 동기적으로 발생시키기 위해서 아래와 같이 한다
-      const event = new Event('load');
-      reader.dispatchEvent(event)
-
-      // reader.readAsDataURL(fileData); // 파일객체의 str 데이터를 base64 문자열로 변경함 (createImgData 와 같은 역할)    
-      // console.log(fileData.text()) // file 객체의 데이터를 텍스트로 읽어온다 (비동기적으로 실행되며 여기서는 str과 같은 값이다)
-      // const url = URL.createObjectURL(fileData) // file 객체를 이용하여 blob 링크를 생성한다 (동기적으로 실행되며 img src에 주입한다)
-      // URL.createObjectURL() // readAsDataURL 함수는 비동기지만 이 함수는 동기적으로 실행된다
-
+      state.loadedPictureData = fileData;
     }
     function handlePictureUpload(event) {
       // console.log('file is uploading on testing ...')
 
-      const selectedFiles = [new File([str], "dummy.png", { type: 'image/png' })]; // 사용자가 직접 파일을 선택하지 못하므로 file 객체를 생성해서 사용함 (mocking)
-      loadPictureData(selectedFiles[0]);
+      loadPictureData(file);
     }
     searchElement("modal-file").addEventListener("change", handlePictureUpload);
 
@@ -305,7 +302,7 @@ function modalComponentTest(){
 
     // 파일을 읽을때 어느정도 시간이 걸리고 onload 핸들러는 이벤트루프에 등록되어 맨 나중에 실행되기 때문에
     // 결과값 비교를 onload 핸들러 실행뒤에 하려면 결과값 비교 코드블럭을 setTimeout으로 묶어 onload 핸들러 이후에 이벤트루프에 등록해야 한다 (이렇게 하면 다음 테스트 이후에 실행되기 때문에 이렇게 하면 안된다)
-    assert(state.loadedPictureData === imgData, 'loaded file data successfully !', 'failed to load file data !')
+    assert(state.loadedPictureData === file, 'loaded file data successfully !', 'failed to load file data !')
     document.body.removeChild(searchElement('profile-modal'))
     console.log('\n')
   
@@ -471,13 +468,13 @@ function modalComponentTest(){
 
   test(test12, () => {
     const testCases = [
-      {file: new File([""], "test.pdf", { type: 'application/pdf' }), exp: undefined},
-      {file: new File([""], "test.mp4", { type: 'audio/mp4' }), exp: undefined},
-      {file: new File([""], "test.ttf", { type: 'font/ttf' }), exp: undefined},
-      {file: new File([""], "test.png", { type: 'image/png' }), exp: true},
-      {file: new File([""], "test.3mf", { type: 'model/3mf' }), exp: undefined},
-      {file: new File([""], "test.html", { type: 'text/html' }), exp: undefined},
-      {file: new File([""], "test.mp4", { type: 'video/mp4' }), exp: undefined},
+      {file: createFile("", "test.pdf", 'application/pdf'), exp: undefined},
+      {file: createFile("", "test.mp4", 'audio/mp4'), exp: undefined},
+      {file: createFile("", "test.ttf", 'font/ttf'), exp: undefined},
+      {file: createFile("", "test.png", 'image/png'), exp: true},
+      {file: createFile("", "test.3mf", 'model/3mf'), exp: undefined},
+      {file: createFile("", "test.html", 'text/html'), exp: undefined},
+      {file: createFile("", "test.mp4", 'video/mp4'), exp: undefined},
     ]
 
     const result = testCases.every(function(c){

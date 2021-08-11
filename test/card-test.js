@@ -14,7 +14,7 @@ function cardComponentTest(){
     
     // ui 생성
     const profileImg = buildElement('div', {'id': 'card-picture'}, [
-      buildElement('img', {'id': 'card-picture-img', 'className': 'card-picture-img show-profileImg', 'src': imgData, 'alt': ''})
+      buildElement('img', {'id': 'card-picture-img', 'className': 'card-picture-img card-show-profileImg', 'src': imgData, 'alt': ''})
     ]);
     // ui 렌더링
     document.body.appendChild(profileImg)
