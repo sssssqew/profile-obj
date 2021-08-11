@@ -15,16 +15,16 @@ function UserInfo(){
   /**
    * Build specific component */
   function buildComponent(){
-    const userInfoData = JSON.parse(sessionStorage.getItem('userInfoData'));
+    const userInfo = JSON.parse(sessionStorage.getItem('userInfo'));
     const userInfoComponent = buildElement('div', {'id': 'userInfo-component'}, [
       buildElement('div',{'id': 'userInfo-profile'}, [
-        buildElement('img', {'id': 'userInfo-profile-img', 'className': 'userInfo-profile-img', 'src': `${$(userInfoData).userProfileImg? userInfoData.userProfileImg: ''}`, 'alt': ''})
+        buildElement('img', {'id': 'userInfo-profile-img', 'className': 'userInfo-profile-img', 'src': `${$(userInfo).url? userInfo.url: ''}`, 'alt': ''})
       ]),
       buildElement('div', {'id': 'userInfo-container'}, [
         buildElement('div', {'id': 'userInfo-info'}, [
-          buildElement('p', {'id': 'profile-name'}, [$(userInfoData).userName? `Name: ${userInfoData.userName}`: '']),
-          buildElement('p', {'id': 'profile-age'}, [$(userInfoData).userAge? `Age: ${userInfoData.userAge}`: '']),
-          buildElement('p', {'id': 'profile-gender'}, [$(userInfoData).userGender? `Gender: ${userInfoData.userGender}`: ''])
+          buildElement('p', {'id': 'profile-name'}, [$(userInfo).userName? `Name: ${userInfo.userName}`: '']),
+          buildElement('p', {'id': 'profile-age'}, [$(userInfo).userAge? `Age: ${userInfo.userAge}`: '']),
+          buildElement('p', {'id': 'profile-gender'}, [$(userInfo).userGender? `Gender: ${userInfo.userGender}`: ''])
         ])
       ])
     ])

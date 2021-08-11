@@ -38,10 +38,9 @@ function Home(){
    * handle event when profile image load
    */
   function handleProfileImgLoad(event){
-    console.log('load end')
     updateElement('card-picture-img', {'className': 'card-picture-img card-show-profileImg'});
     displayProfileHome() // 파이어베이스에서 이미지가 완전히 로드된 후에 home 화면 보여주기
-    showAlert('succeed to fetch user information from server !', 500);
+    // showAlert('succeed to fetch user information from server !', 500);
     
     // 초반에 'card-picture-img' DOM을 생성할때 src가 비어있어서 초기 렌더링시 error 이벤트가 발생하므로 
     // 이미지를 로드한 이후에 사진을 다시 숨겨버린다
@@ -55,11 +54,11 @@ function Home(){
 
   /**
    * Display profile picture for given image url
-   * @param {string} userProfileImg - image url to load
+   * @param {string} url - image url to load
    */
-  function setProfilePicture(userProfileImg) {
+  function setProfilePicture(url) {
     // TODO: createObjectURL 사용하면 해당위치에서 img.onload = URL.revokeObjectURL(img.src); 핸들러 연결해줘야 할듯
-    updateElement('card-picture-img', {'src': userProfileImg});
+    updateElement('card-picture-img', {'src': url});
   }
   /**
    * Display user name for given user name
@@ -112,46 +111,40 @@ function Home(){
    * Fetch data from server 
    */
   function fetchServer(){
-    // const userInfoData = JSON.parse(sessionStorage.getItem('userInfoData'));
-    // console.log('user info:')
-    // console.log(userInfoData)
-  
-    // if($(userInfoData).userProfileImg && $(userInfoData).userName && $(userInfoData).userAge && $(userInfoData).userGender){
-    //   setProfilePicture(userInfoData.userProfileImg);
-    //   setProfileName(userInfoData.userName);
-     
-    // // 세션 스토리지에 최신 사용자 정보가 없으면 서버에서 최신 정보를 가져와서 보여준다
-    // }else{
-      // 브라우저를 처음 열면 세션 데이터가 존재하지 않으므로 서버에서 데이터를 가져와 세션에 저장함
-      console.log('get user data from server ...')
-      firebase.database().ref().on('value', (snapshot) => {
-        const data = snapshot.val();
-        console.log('server', data);
+    // snapshot 때문에 파이어베이스에 변경사항이 있으면 다시 home 페이지의 snapshot 함수가 비동기적으로 실행된다 
+    // 세션 스토리지에 최신 사용자 정보가 없으면 서버에서 최신 정보를 가져와서 보여준다
+    // 브라우저를 처음 열면 세션 데이터가 존재하지 않으므로 서버에서 데이터를 가져와 세션에 저장함
+    console.log('get user data from server ...')
+    const dbRef = firebase.database().ref();
 
-        if(data){
-          const storageRef = firebase.storage().ref();
-          storageRef.child(`images/${data.fileName}`).getDownloadURL().then(function(url) {
-            console.log("url from server: " + url)
-            
-            // 파이어베이스에서 가져온 최신 데이터로 프로필 사진 프로필 이름 셋팅
-            setProfilePicture(url);
-            setProfileName(data.userName);
+    dbRef.on('value', (snapshot) => {
+      const data = snapshot.val();
+      console.log('realtime database: ', data);
 
-            // 파이어베이스에서 가져온 최신 데이터를 세션 스토리지에 저장하기
-            sessionStorage.setItem('userInfoData', JSON.stringify({...data, userProfileImg: url}));
-          }).catch(function(error){
-            console.log('failed to get img url from server :(')
-            displayProfileHome()
-            showAlert('Failed to get img url from server !', 500);
-          })
-        }else{
-          console.log('data does not exist yet')
+      if(data){
+        const storageRef = firebase.storage().ref();
+
+        storageRef.child(`images/${data.fileName}`).getDownloadURL().then((url) => {
+          console.log("img url from Storage: ", url)
+          
+          // 파이어베이스에서 가져온 최신 데이터로 프로필 사진 프로필 이름 업데이트
+          setProfilePicture(url);
+          setProfileName(data.userName);
+
+          // 파이어베이스에서 가져온 최신 데이터를 세션 스토리지에 저장하기 (About 페이지에서 사용하기 위함)
+          sessionStorage.setItem('userInfo', JSON.stringify({...data, url}));
+        }).catch((error) => {
+          console.log('failed to get img url from Storage :(')
           displayProfileHome()
-          showAlert('Click "submit profile" button to upload first profile !', 500);
-        }
-      })
+          showAlert('Failed to get img url from Storage !', 500);
+        })
+      }else{
+        console.log('data does not exist yet')
+        displayProfileHome()
+        showAlert('Click "submit profile" button to upload first profile !', 500);
+      }
+    })
       
-    // }
   }
   
   // 이벤트 핸들러 정의
